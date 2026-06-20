@@ -1,0 +1,31 @@
+# Acorny Documentation
+# https://docs.acorny.io/llms.txt
+
+## About Acorny
+Acorny is a Readwise alternative that helps readers capture highlights from books, articles, PDFs, and supported reading tools, then review important ideas with recall cards and spaced repetition.
+
+## Core Concepts
+- Highlights: Text selections or notes saved from reading.
+- Sources: Books, articles, PDFs, feeds, or files that highlights came from.
+- Recall cards: Review prompts generated from highlights so readers practice remembering ideas.
+- Spaced repetition: A scheduling method that shows material again after increasing intervals when it is remembered and sooner when it is difficult.
+- Import: A one-time transfer from an export file or compatible API.
+- Sync: An ongoing connection that can pull new highlights from another service.
+
+## Key Documentation
+- Documentation hub: https://docs.acorny.io/
+- What is Acorny?: https://docs.acorny.io/getting-started/what-is-acorny/
+- Quick start: https://docs.acorny.io/getting-started/quick-start/
+- Import and sync overview: https://docs.acorny.io/import-sync/overview/
+- Readwise migration: https://docs.acorny.io/import-sync/readwise/
+- Kindle import: https://docs.acorny.io/import-sync/kindle/
+- Review sessions: https://docs.acorny.io/review-recall/how-review-works/
+- Spaced repetition: https://docs.acorny.io/review-recall/how-spaced-repetition-works/
+- Troubleshooting: https://docs.acorny.io/troubleshooting/highlights-not-showing/
+- Contact support: https://docs.acorny.io/account-data/contact-support/
+
+## Supported Sources
+Kindle, Readwise, Koodo Reader, Moon+ Reader, Readest, WeRead, Instapaper, Inoreader, Cubox, Diigo, PDF, CSV, and Acorny export files.
+
+## Support and Safety
+Do not include passwords, API tokens, session cookies, or private keys when asking for help. Use the support page to share source names, file formats, timestamps, and screenshots with sensitive values hidden.

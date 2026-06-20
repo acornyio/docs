@@ -1,0 +1,25 @@
+{
+  "name": "@acorny/docs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Acorny public user documentation",
+  "packageManager": "pnpm@11.1.2",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node ./scripts/inject-structured-data.mjs",
+    "preview": "astro preview",
+    "test": "pnpm run build && node --test ./scripts/docs-site.test.mjs ./scripts/inject-structured-data.test.mjs",
+    "lint": "astro check"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/starlight": "^0.39.2",
+    "astro": "^6.3.7",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
