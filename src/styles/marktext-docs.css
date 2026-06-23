@@ -130,11 +130,20 @@ body::before {
 .header-shell kbd kbd {
   /* Starlight renders the Ctrl+K shortcut as a nested kbd wrapper around one
    * inner kbd per key. Style only the inner keys so the wrapper stays
-   * transparent (see reset rule above). */
+   * transparent (see reset rule above).
+   *
+   * Matches the design reference's `.docnav-search .kbd`: just a thin border
+   * and a muted label color — no fill, so the shortcut reads as a transparent
+   * outline that doesn't fight with the search field's own background. */
   border: 1px solid color-mix(in oklch, var(--ac-doc-text) 22%, transparent);
   color: color-mix(in oklch, var(--ac-doc-text) 82%, var(--ac-doc-muted));
-  background: color-mix(in oklch, var(--ac-doc-text) 10%, var(--ac-doc-panel));
+  background: transparent;
   box-shadow: none;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 11px;
+  line-height: 1;
+  font-family: var(--__sl-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
 }
 
 .right-group select,
