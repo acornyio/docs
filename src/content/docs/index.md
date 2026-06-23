@@ -1,18 +1,9 @@
 ---
-title: Documentation & Guides
+title: User Documentation
 description: Learn how to import, sync, save, and review highlights with Acorny.
-template: splash
-hero:
-  tagline: Acorny Help Center
-  title: Remember what you read.
-  actions:
-    - text: Quick start
-      link: /getting-started/quick-start/
-      icon: right-arrow
-    - text: Import & Sync
-      link: /import-sync/overview/
-      icon: document
 ---
+
+Welcome to Acorny Docs.
 
 Acorny is a Readwise alternative for readers who want their highlights to become something they can remember. It helps you capture highlights from web pages and supported reading tools, import older notes from files or connected services, and review important ideas as recall cards with spaced repetition.
 

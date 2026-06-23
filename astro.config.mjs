@@ -7,7 +7,7 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     starlight({
-      title: 'Acorny Help Center',
+      title: 'Acorny Docs',
       description: 'Learn how to import, sync, save, and review highlights with Acorny.',
       favicon: '/favicon.ico',
       head: [
@@ -75,10 +75,12 @@ export default defineConfig({
       ],
       lastUpdated: true,
       credits: true,
+      customCss: ['./src/styles/marktext-docs.css'],
       sidebar: [
         {
           label: 'Getting Started',
           items: [
+            { slug: 'index', label: 'Introduction' },
             { slug: 'getting-started/what-is-acorny', label: 'What is Acorny?' },
             { slug: 'getting-started/quick-start', label: 'Quick start' },
           ],
@@ -137,6 +139,7 @@ export default defineConfig({
       components: {
         Head: './src/components/Head.astro',
         Header: './src/components/Header.astro',
+        PageTitle: './src/components/PageTitle.astro',
         MobileMenuFooter: './src/components/MobileMenuFooter.astro',
       },
     }),

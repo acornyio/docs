@@ -1,11 +1,19 @@
 import assert from 'node:assert/strict'
-import { readFile } from 'node:fs/promises'
+import { readdir, readFile } from 'node:fs/promises'
 import test from 'node:test'
 
 const distDir = new URL('../dist/', import.meta.url)
+const astroAssetsDir = new URL('_astro/', distDir)
 
 async function readDist(relativePath) {
   return readFile(new URL(relativePath, distDir), 'utf8')
+}
+
+async function readBuiltCss() {
+  const files = await readdir(astroAssetsDir)
+  const cssFiles = files.filter((file) => file.endsWith('.css'))
+  const css = await Promise.all(cssFiles.map((file) => readFile(new URL(file, astroAssetsDir), 'utf8')))
+  return css.join('\n')
 }
 
 test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () => {
@@ -54,7 +62,7 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
   }
 
   const home = await readDist('index.html')
-  assert.match(home, /<title>Documentation (&amp;|&) Guides \| Acorny Help Center<\/title>/)
+  assert.match(home, /<title>User Documentation \| Acorny Docs<\/title>/)
   assert.match(home, /<link rel="canonical" href="https:\/\/docs\.acorny\.io\/" ?\/?>/)
   assert.match(home, /Learn how to import, sync, save, and review highlights with Acorny\./)
   assert.match(home, /property="og:image" content="https:\/\/docs\.acorny\.io\/acorny_og-image\.png"/)
@@ -67,10 +75,36 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
   assert.match(notFound, /name="robots" content="noindex"/)
 })
 
+test('docs UI uses the Acorny MarkText-inspired documentation shell', async () => {
+  const css = await readBuiltCss()
+
+  assert.match(css, /--acorny-marktext-docs-polish:\s*1/)
+  assert.match(css, /--acorny-marktext-docs-dark-shell:\s*1/)
+  assert.match(css, /--ac-doc-sidebar-width:\s*19rem/)
+  assert.match(css, /--sl-content-width:\s*46rem/)
+  assert.match(css, /\.header-shell/)
+  assert.match(css, /\.docs-section-tabs/)
+  assert.match(css, /\.docs-brand/)
+  assert.match(css, /\.docs-title-stack/)
+  assert.match(css, /\.docs-breadcrumb/)
+  assert.match(css, /\.sl-sidebar/)
+  assert.match(css, /\.sl-markdown-content/)
+  assert.match(css, /--sl-content-margin-inline:\s*0 auto/)
+
+  const home = await readDist('index.html')
+  assert.match(home, /src="\/android-chrome-192x192\.png"/)
+  assert.match(home, /Acorny<\/span>/)
+  assert.match(home, /<span class="docs-brand-section[^"]*">Docs<\/span>/)
+  assert.match(home, /Documentation sections/)
+  assert.match(home, /User docs/)
+  assert.match(home, /Developer docs/)
+  assert.match(home, /class="docs-eyebrow[^"]*">User Documentation<\/p>/)
+})
+
 test('phase 3 structured data renders JSON-LD for web pages, breadcrumbs, and how-to guides', async () => {
   const home = await readDist('index.html')
   assert.match(home, /"@type":"WebPage"/)
-  assert.match(home, /"name":"Documentation & Guides"/)
+  assert.match(home, /"name":"User Documentation"/)
   assert.match(home, /"url":"https:\/\/docs\.acorny\.io\/"/)
   assert.match(home, /"@type":"WebSite"/)
   assert.match(home, /"@type":"Organization"/)

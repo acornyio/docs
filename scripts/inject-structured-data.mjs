@@ -180,7 +180,7 @@ function buildJsonLd(page) {
     {
       '@type': 'WebSite',
       '@id': websiteId,
-      name: 'Acorny Help Center',
+      name: 'Acorny Docs',
       url: `${siteUrl}/`,
       publisher: { '@id': organizationId },
       potentialAction: {
@@ -255,7 +255,7 @@ async function main() {
     await injectStructuredData({
       route,
       source,
-      title: frontmatter.title ?? 'Acorny Help Center',
+      title: frontmatter.title ?? 'Acorny Docs',
       description: frontmatter.description ?? 'Learn how to import, sync, save, and review highlights with Acorny.',
       url: `${siteUrl}${route}`,
     })

@@ -3,7 +3,6 @@ import config from 'virtual:starlight/user-config';
 
 import LanguageSelect from 'virtual:starlight/components/LanguageSelect';
 import Search from 'virtual:starlight/components/Search';
-import SiteTitle from 'virtual:starlight/components/SiteTitle';
 import SocialIcons from 'virtual:starlight/components/SocialIcons';
 import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
 
@@ -11,31 +10,60 @@ const shouldRenderSearch =
   config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
 ---
 
-<div class="header">
-  <div class="title-wrapper sl-flex">
-    <SiteTitle />
-  </div>
-  <div class="sl-flex print:hidden">
-    {shouldRenderSearch && <Search />}
-  </div>
-  <div class="sl-hidden md:sl-flex print:hidden right-group">
-    <div class="sl-flex social-icons">
-      <a href="https://acorny.io" class="back-link" rel="noopener noreferrer" target="_blank">Back to Acorny</a>
-      <SocialIcons />
+<div class="docs-header-frame">
+  <div class="header header-shell docs-header-top">
+    <div class="title-wrapper sl-flex">
+      <a href="/" class="docs-brand" aria-label="Acorny Docs home">
+        <img src="/android-chrome-192x192.png" alt="Acorny logo" width="28" height="28" />
+        <span class="docs-brand-name" translate="no">Acorny</span>
+        <span class="docs-brand-divider" aria-hidden="true"></span>
+        <span class="docs-brand-section">Docs</span>
+      </a>
     </div>
-    <ThemeSelect />
-    <LanguageSelect />
+    <div class="sl-flex print:hidden">
+      {shouldRenderSearch && <Search />}
+    </div>
+    <div class="sl-hidden md:sl-flex print:hidden right-group">
+      <div class="sl-flex social-icons">
+        <a href="https://acorny.io" class="download-link" rel="noopener noreferrer" target="_blank">Open Acorny</a>
+        <SocialIcons />
+      </div>
+      <ThemeSelect />
+      <LanguageSelect />
+    </div>
   </div>
+  <nav class="docs-section-tabs header-shell" aria-label="Documentation sections">
+    <a href="/" class="docs-section-tab active" aria-current="page">
+      <svg class="docs-section-icon" aria-hidden="true" viewBox="0 0 16 16" width="16" height="16">
+        <path d="M4.5 2.5h5.1l1.9 1.9v9.1h-7z" />
+        <path d="M9.5 2.7v2h1.9" />
+        <path d="M6.2 7.2h3.6M6.2 9.2h3.6M6.2 11.2h2.4" />
+      </svg>
+      User docs
+    </a>
+    <span class="docs-section-tab muted" aria-disabled="true">
+      <svg class="docs-section-icon" aria-hidden="true" viewBox="0 0 16 16" width="16" height="16">
+        <path d="M5.3 8H3.8a1.8 1.8 0 1 1 1.8-1.8V8Zm0 0v2.2A1.8 1.8 0 1 1 3.5 8.4H8m2.7-.4h1.5a1.8 1.8 0 1 0-1.8-1.8V8Zm0 0v2.2a1.8 1.8 0 1 0 1.8-1.8H8" />
+      </svg>
+      Developer docs
+    </span>
+  </nav>
 </div>
 
 <style>
   @layer starlight.core {
+    .docs-header-frame {
+      display: grid;
+      grid-template-rows: 3.75rem 3rem;
+      height: 100%;
+    }
+
     .header {
       display: flex;
       gap: var(--sl-nav-gap);
       justify-content: space-between;
       align-items: center;
-      height: 100%;
+      height: 3.75rem;
     }
 
     .title-wrapper {
@@ -47,6 +75,93 @@ const shouldRenderSearch =
       min-width: 0;
     }
 
+    .docs-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.64rem;
+      min-width: 0;
+      color: var(--ac-doc-text);
+      text-decoration: none;
+      font-size: 0.98rem;
+      font-weight: 720;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .docs-brand img {
+      width: 1.9rem;
+      height: 1.9rem;
+      flex: none;
+      border-radius: 0.55rem;
+      box-shadow:
+        0 10px 20px rgba(40, 24, 46, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.42);
+    }
+
+    .docs-brand-divider {
+      width: 1px;
+      height: 1.15rem;
+      background: var(--sl-color-hairline);
+    }
+
+    .docs-brand-section {
+      color: color-mix(in oklch, var(--ac-doc-text) 68%, var(--ac-doc-muted));
+      font-weight: 560;
+    }
+
+    .docs-section-tabs {
+      display: flex;
+      align-items: end;
+      gap: 2.15rem;
+      height: 3rem;
+      margin-inline: auto;
+      border-bottom: 1px solid transparent;
+    }
+
+    .docs-section-tab {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.52rem;
+      height: 100%;
+      color: color-mix(in oklch, var(--ac-doc-text) 58%, var(--ac-doc-muted));
+      text-decoration: none;
+      font-size: 0.93rem;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+    }
+
+    .docs-section-tab.active {
+      color: var(--ac-doc-text);
+    }
+
+    .docs-section-tab.active::after {
+      content: "";
+      position: absolute;
+      inset-inline: -0.08rem;
+      bottom: 0;
+      height: 2px;
+      border-radius: 999px 999px 0 0;
+      background: var(--sl-color-accent);
+      box-shadow: 0 -8px 24px color-mix(in oklch, var(--ac-doc-accent) 24%, transparent);
+    }
+
+    .docs-section-tab.muted {
+      opacity: 0.7;
+    }
+
+    .docs-section-icon {
+      flex: none;
+      width: 0.96rem;
+      height: 0.96rem;
+      color: currentColor;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.45;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .right-group,
     .social-icons {
       gap: 1rem;
@@ -56,18 +171,6 @@ const shouldRenderSearch =
       content: '';
       height: 2rem;
       border-inline-end: 1px solid var(--sl-color-gray-5);
-    }
-
-    .back-link {
-      color: var(--sl-color-text-accent);
-      text-decoration: none;
-      font-size: var(--sl-text-sm);
-      font-weight: 600;
-      padding: 0.5em;
-      margin: -0.5em;
-    }
-    .back-link:hover {
-      color: var(--sl-color-white);
     }
 
     @media (min-width: 50rem) {
@@ -98,6 +201,20 @@ const shouldRenderSearch =
           /* 3 (right items): use the space that these need. */
           auto;
         align-content: center;
+      }
+    }
+
+    @media (max-width: 50rem) {
+      .docs-header-frame {
+        grid-template-rows: 3.6rem;
+      }
+
+      .header {
+        height: 3.6rem;
+      }
+
+      .docs-section-tabs {
+        display: none;
       }
     }
   }
