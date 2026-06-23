@@ -3,7 +3,7 @@
 **Date:** 2026-06-24
 **Author:** brainstorm session
 **Status:** awaiting user review
-**Scope:** `docs.acorny.io` homepage (`src/content/docs/index.md`) + shared styles and components used by the homepage only. All other docs pages keep their existing `.md` files unchanged.
+**Scope:** `docs.acorny.io` homepage (`src/content/docs/index.md`) + shared styles and components used by the homepage only, **plus a targeted header change to replace the theme dropdown with a single toggle button**. All other docs pages keep their existing `.md` files unchanged. Other header elements (search, language, social, CTA, brand) remain as currently implemented.
 
 ## 1. Context and motivation
 
@@ -22,7 +22,7 @@ Goal: align the docs homepage structure and visual treatment with the reference 
 
 ## 3. Component library
 
-All components live under `src/components/docs/`. Each has a single responsibility and a small, explicit prop interface.
+Homepage-only components live under `src/components/docs/`. The theme toggle (used by the header) lives at `src/components/ThemeToggle.astro` because it is wired into `Header.astro` and `MobileMenuFooter.astro`, not the homepage body. Each component has a single responsibility and a small, explicit prop interface (where applicable).
 
 ### 3.1 `Hero.astro`
 
@@ -91,6 +91,25 @@ interface Props {
 // Body via <slot /> — typically <pre><code>…</code></pre>
 ```
 
+### 3.7 `ThemeToggle.astro` (header-level component, **not** under `src/components/docs/`)
+
+Replaces Starlight's `<ThemeSelect>` dropdown with a single icon button matching the reference design's toggle.
+
+Props: none. The component reads the current theme from `document.documentElement.dataset.theme` and renders:
+
+- A `<button class="icon-btn" type="button" aria-label="Toggle theme" aria-pressed="…" title="…">`.
+- Two `<svg>` icons (sun and moon), shown/hidden via `[data-theme]` attribute selectors (no client JS for visibility).
+- A small inline `<script>` (no external file needed) that:
+  - Reads the persisted theme from `localStorage.getItem('acorny-theme')` on init and sets `data-theme` if a stored value exists.
+  - On click, toggles `data-theme` between `"light"` and `"dark"`, persists the new value, and updates `aria-pressed` + `title`.
+
+Storage key: `acorny-theme` (matching the reference design).
+
+### 3.8 Header updates
+
+- `src/components/Header.astro`: replace the existing `<ThemeSelect />` import and usage with `<ThemeToggle />`. Keep all other header elements (brand, search, language, social, CTA, section tabs) unchanged.
+- `src/components/MobileMenuFooter.astro`: same replacement for visual consistency between desktop and mobile.
+
 ## 4. CSS additions
 
 All new styles append to `src/styles/marktext-docs.css`. No new files.
@@ -105,6 +124,7 @@ New class prefixes / blocks:
 | Quick grid | `.quick-grid`, `.quick-link`, `.quick-link b`, `.quick-link span` |
 | Callout | `.ac-callout`, `.ac-callout--tip`, `.ac-callout--note` |
 | Code bar | `.code-bar`, `.code-bar__lang`, `.code-bar__copy` |
+| Theme toggle | `.icon-btn`, `.theme-icon`, `[data-theme] .theme-icon-light`, `[data-theme] .theme-icon-dark` (matches `.icon-btn` styling already used in the existing `Header.astro` so no new tokens are needed) |
 
 Rules:
 
@@ -157,6 +177,12 @@ Updates:
 - In `'docs UI uses the Acorny MarkText-inspired documentation shell'`, append CSS class assertions for `.intro-panel`, `.intro-panel__bar`, `.flow-stack`, `.flow-card`, `.quick-grid`, `.quick-link`, `.ac-callout`, `.ac-callout--tip`, `.ac-callout--note`, `.code-bar`.
 - Add a new test: `'docs homepage renders hero, intro panel, flow stack, quick grid'` that asserts the homepage HTML contains `class="docs-hero"`, `class="intro-panel__bar"`, the literal `01 Capture Save the quote…` sequence, and the four quick-grid titles.
 - Add asserts for `class="code-bar__copy"` and `data-copy-target="flow-code"`.
+- In `'docs UI uses the Acorny MarkText-inspired documentation shell'`, also assert that the theme toggle button is present in the rendered HTML (so we know the dropdown was replaced):
+  ```js
+  assert.match(home, /aria-label="Toggle theme"/)
+  assert.match(home, /theme-icon-light/)
+  assert.match(home, /theme-icon-dark/)
+  ```
 
 Unchanged tests:
 
@@ -174,6 +200,7 @@ Unchanged tests:
 ## 9. Out of scope
 
 - Other docs pages (`getting-started/*`, `import-sync/*`, etc.) — content and styling unchanged.
+- Other header elements: brand, search, language selector, social icons, "Open Acorny" link, and the User docs / Developer docs section tabs all stay exactly as they are. The only header change is the theme selector.
 - New SEO / structured-data work — existing `inject-structured-data.mjs` continues to run as-is.
 - Translations — the existing `LanguageSelect` continues to behave the same way; no new locales.
 
@@ -192,3 +219,4 @@ Unchanged tests:
 2. `pnpm test` passes all existing assertions plus the new homepage/CSS assertions.
 3. `docs/designs/acorny-docs-homepage.html` exists at the new path; the project root no longer contains `acorny-docs.html`.
 4. All other `.md` files are unchanged.
+5. The rendered header (homepage and any other page) shows a single icon-button theme toggle, not a `<select>` dropdown. Same for the mobile menu footer.
