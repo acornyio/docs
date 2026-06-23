@@ -5,6 +5,7 @@
   --ac-doc-toc-width: 15.5rem;
   --ac-doc-shell-width: 92.5rem;
   --ac-doc-content-offset: 1.4rem;
+  --ac-doc-main-gutter: 3rem;
   --ac-doc-accent: oklch(65.6% 0.212 354.3);
   --ac-doc-accent-ink: oklch(53% 0.16 351);
   --ac-doc-bg: oklch(98.7% 0.004 286);
@@ -132,18 +133,29 @@ body::before {
    * inner kbd per key. Style only the inner keys so the wrapper stays
    * transparent (see reset rule above).
    *
-   * Matches the design reference's `.docnav-search .kbd`: just a thin border
-   * and a muted label color — no fill, so the shortcut reads as a transparent
-   * outline that doesn't fight with the search field's own background. */
+   * Matches the MarkText reference's `.docnav-search .kbd` (see
+   * marktext/packages/website/src/app/docs/docs.css line 101):
+   *   - thin border, monospace label, ~11px, padding 3px/7px, radius 6px
+   *   - subtle `background: var(--panel)` fill so the shortcut reads as a
+   *     keyboard cap against the search field, not as a floating outline
+   *     (the design mockup shows the same fill — the earlier "transparent"
+   *     interpretation was wrong, see commit 9529433 for the correction).
+   *
+   * MarkText's `--panel` is `rgba(255,255,255,0.025)` in dark mode and
+   * `rgba(10,10,25,0.025)` in light mode. Re-create that ~2.5% tint by mixing
+   * the text color into the panel at low opacity, so the shortcut stays
+   * theme-aware without depending on Starlight's --sl-color-gray-6 (which
+   * computed to a much heavier fill and re-introduced the original bug). */
   border: 1px solid color-mix(in oklch, var(--ac-doc-text) 22%, transparent);
   color: color-mix(in oklch, var(--ac-doc-text) 82%, var(--ac-doc-muted));
-  background: transparent;
+  background: color-mix(in oklch, var(--ac-doc-text) 4%, var(--ac-doc-panel));
   box-shadow: none;
   border-radius: 6px;
-  padding: 2px 6px;
+  padding: 3px 7px;
   font-size: 11px;
   line-height: 1;
-  font-family: var(--__sl-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-weight: 500;
+  font-family: var(--ac-doc-mono, var(--__sl-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace));
 }
 
 .right-group select,
@@ -605,6 +617,14 @@ body::before {
   [data-has-sidebar][data-has-toc] .main-pane {
     --sl-content-margin-inline: 0 auto;
     width: calc(var(--sl-content-width) + var(--ac-doc-content-offset));
+    /* Tighter sidebar ↔ main gutter. Starlight's default centres the main
+     * pane within the available flex space, which leaves a 100+px gap to the
+     * right of the sidebar items. The MarkText reference uses a 48px gutter
+     * (`--doc-gut: 48px`); we set this directly because Starlight's
+     * `margin-inline: var(--sl-content-margin-inline, auto)` lives inside
+     * `@layer starlight.core` and gets overridden when the variable carries
+     * an explicit value. */
+    margin-inline-start: var(--ac-doc-main-gutter, 3rem);
   }
 
   [data-has-sidebar][data-has-toc] .right-sidebar-container {

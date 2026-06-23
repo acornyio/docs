@@ -7,7 +7,7 @@
 
 ## 1. Context and motivation
 
-The reference design `acorny-docs.html` (at the project root, to be archived under `docs/designs/`) describes a structured docs homepage: hero, intro panel with a numbered flow stack, quick-link grid, callouts, and a workflow code block. The current `src/content/docs/index.md` is plain prose without the design's visual treatment.
+The reference design `acorny-docs.html` (at the project root, to be archived under `docs/designs/`) describes a structured docs homepage modeled on the MarkText docs website (`marktext/packages/website`): hero, intro panel with a numbered flow stack, quick-link grid, callouts, and a workflow code block. The current `src/content/docs/index.md` is plain prose without the design's visual treatment. The header treatment (search shortcut, sidebar ↔ main gutter) also needs to be brought in line with the MarkText reference — Starlight's defaults diverge on both.
 
 Goal: align the docs homepage structure and visual treatment with the reference design, using Acorny-specific copy. Do not retrofit every subpage.
 
@@ -112,9 +112,9 @@ Storage key: `acorny-theme` (matching the reference design).
 - **`src/styles/marktext-docs.css`: fix a layout overflow bug in the existing `.page > header` rule.** Starlight's default styles give `<header>` a `padding: 12px 24px`, leaving only 84px of vertical content area inside a 108px-tall header (`--sl-nav-height: 6.75rem`). The custom `.docs-header-frame` uses `grid-template-rows: 3.75rem 3rem` (60 + 48 = 108px), so the second row (the section tabs) overflows the frame and renders below the header's `border-bottom`. The active tab's underline (`::after { bottom: 0 }`) then lands ~10px below the header divider, in the body content area. **Fix:** add `padding-block: 0; padding-inline: var(--sl-nav-pad-x);` to the existing `.page > header` rule so the frame gets the full 108px to lay out into, matching the reference design's `.dochdr` pattern. No other header CSS needs to change.
 - **`src/styles/marktext-docs.css`: fix the search-shortcut `kbd` styling so it does not double-box the shortcut indicator.** Starlight renders the `Ctrl K` shortcut inside the search button as nested `<kbd>` elements — an outer wrapper `<kbd>` containing one inner `<kbd>` per key. The existing `.header-shell kbd { border: …; background: …; }` rule matched *every* `kbd` in the header (including the outer wrapper), producing a visible "box around two boxes" artifact (the outer wrapper's background painted a dark slab around the inner key kbds). **Fix (three parts):**
   1. Add a reset rule `.header-shell kbd { background: transparent; border: 0; }` so the outer wrapper inherits no key styling.
-  2. Scope the key-styling rule to `.header-shell kbd kbd` (descendant combinator) so only the innermost keys get the border, padding, and color.
-  3. **Set `background: transparent` on the inner keys.** The reference design's `.docnav-search .kbd` is *fill-less* (only border + label color). An earlier revision of this fix used `background: color-mix(in oklch, var(--ac-doc-text) 10%, var(--ac-doc-panel))`, which coincidentally computed to almost exactly `--sl-color-gray-6` (Starlight's kbd background token) and visually looked identical to the un-fixed artifact. Background must be transparent so the shortcut reads as a thin outline that does not fight with the search field's own background.
-  Net effect: outer wrapper stays transparent, inner keys render as two clean side-by-side outline pills (border + monospace label color, no fill) with no wrapper border or background slab around the pair.
+  2. Scope the key-styling rule to `.header-shell kbd kbd` (descendant combinator) so only the innermost keys get the border, padding, color, and fill.
+  3. **Give the inner keys a subtle `color-mix(in oklch, var(--ac-doc-text) 4%, var(--ac-doc-panel))` fill** (≈ MarkText's `rgba(255,255,255,0.025)` `--panel`), not transparent. An earlier revision used `color-mix(... 10%, ...)` which coincidentally computed to almost exactly `--sl-color-gray-6` (Starlight's kbd background token) and re-introduced the original dark-slab artifact; another revision used `transparent`, which deviated from the MarkText reference. The 4% mix produces a faint theme-aware tint that reads as a "keyboard cap" against the search field, matching `marktext/packages/website/src/app/docs/docs.css:101` (`.docnav-search .kbd { background: var(--panel) }`).
+  Net effect: outer wrapper stays transparent; inner keys render as two clean side-by-side keyboard caps (border + monospace label + faint panel fill) with no wrapper border or heavy background slab around the pair.
 
 ## 4. CSS additions
 
@@ -229,4 +229,5 @@ Unchanged tests:
 4. All other `.md` files are unchanged.
 5. The rendered header (homepage and any other page) shows a single icon-button theme toggle, not a `<select>` dropdown. Same for the mobile menu footer.
 6. The active tab's underline lands inside the `<header>` (not below its `border-bottom` line).
-7. The search shortcut indicator renders as separate "Ctrl" and "K" outline keys (thin border + label color, no fill), with no extra wrapper border or background slab around the pair.
+7. The search shortcut indicator renders as separate "Ctrl" and "K" keyboard-cap keys (thin border + label color + faint panel fill matching MarkText's `rgba(255,255,255,0.025)`), with no extra wrapper border or heavy background slab around the pair.
+8. The visible gap between the right edge of the sidebar items and the left edge of the main content area is **~48px** (matching MarkText's `--doc-gut: 48px` from the reference design), down from Starlight's default ~110px.
