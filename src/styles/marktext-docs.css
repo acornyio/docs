@@ -119,10 +119,18 @@ body::before {
   background: color-mix(in oklch, var(--ac-doc-panel-soft) 94%, transparent);
 }
 
+.header-shell kbd {
+  /* Reset: the outer shortcut wrapper is just a layout container, not a key.
+   * Without this, Starlight's default kbd background paints a dark slab around
+   * the inner key kbds. The descendant rule below overrides these on inner kbds. */
+  background: transparent;
+  border: 0;
+}
+
 .header-shell kbd kbd {
   /* Starlight renders the Ctrl+K shortcut as a nested kbd wrapper around one
-   * inner kbd per key. Use the descendant combinator so the wrapper (which is
-   * just a layout container) does not pick up the key border/background. */
+   * inner kbd per key. Style only the inner keys so the wrapper stays
+   * transparent (see reset rule above). */
   border: 1px solid color-mix(in oklch, var(--ac-doc-text) 22%, transparent);
   color: color-mix(in oklch, var(--ac-doc-text) 82%, var(--ac-doc-muted));
   background: color-mix(in oklch, var(--ac-doc-text) 10%, var(--ac-doc-panel));

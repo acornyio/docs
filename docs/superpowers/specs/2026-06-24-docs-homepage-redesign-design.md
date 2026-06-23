@@ -110,7 +110,10 @@ Storage key: `acorny-theme` (matching the reference design).
 - `src/components/Header.astro`: replace the existing `<ThemeSelect />` import and usage with `<ThemeToggle />`. Keep all other header elements (brand, search, language, social, CTA, section tabs) unchanged.
 - `src/components/MobileMenuFooter.astro`: same replacement for visual consistency between desktop and mobile.
 - **`src/styles/marktext-docs.css`: fix a layout overflow bug in the existing `.page > header` rule.** Starlight's default styles give `<header>` a `padding: 12px 24px`, leaving only 84px of vertical content area inside a 108px-tall header (`--sl-nav-height: 6.75rem`). The custom `.docs-header-frame` uses `grid-template-rows: 3.75rem 3rem` (60 + 48 = 108px), so the second row (the section tabs) overflows the frame and renders below the header's `border-bottom`. The active tab's underline (`::after { bottom: 0 }`) then lands ~10px below the header divider, in the body content area. **Fix:** add `padding-block: 0; padding-inline: var(--sl-nav-pad-x);` to the existing `.page > header` rule so the frame gets the full 108px to lay out into, matching the reference design's `.dochdr` pattern. No other header CSS needs to change.
-- **`src/styles/marktext-docs.css`: fix the search-shortcut `kbd` styling so it does not double-box the shortcut indicator.** Starlight renders the `Ctrl K` shortcut inside the search button as nested `<kbd>` elements — an outer wrapper `<kbd>` containing one inner `<kbd>` per key. The existing `.header-shell kbd { border: …; background: …; }` rule matched *every* `kbd` in the header (including the outer wrapper), producing a visible "box around two boxes" artifact. **Fix:** change the selector to `.header-shell kbd kbd` so only the innermost keys get the border, padding, and background. The outer wrapper keeps whatever default spacing Starlight gives it (no extra styling needed).
+- **`src/styles/marktext-docs.css`: fix the search-shortcut `kbd` styling so it does not double-box the shortcut indicator.** Starlight renders the `Ctrl K` shortcut inside the search button as nested `<kbd>` elements — an outer wrapper `<kbd>` containing one inner `<kbd>` per key. The existing `.header-shell kbd { border: …; background: …; }` rule matched *every* `kbd` in the header (including the outer wrapper), producing a visible "box around two boxes" artifact (the outer wrapper's background painted a dark slab around the inner key kbds). **Fix (two parts):**
+  1. Add a reset rule `.header-shell kbd { background: transparent; border: 0; }` so the outer wrapper inherits no key styling.
+  2. Scope the key-styling rule to `.header-shell kbd kbd` (descendant combinator) so only the innermost keys get the border, padding, and background.
+  Net effect: outer wrapper keeps Starlight's default spacing, inner keys render as two clean side-by-side pills with no extra wrapper border or background around the pair.
 
 ## 4. CSS additions
 
@@ -215,7 +218,7 @@ Unchanged tests:
 | Tests become brittle to copy edits | Keep new assertions scoped to structural class names and short, stable copy snippets; avoid matching full sentences. |
 | Copy-code script runs on pages without a `<CodeBar>` | `src/scripts/copy-code.ts` uses `Array.prototype.forEach.call(document.querySelectorAll('[data-copy-target]'), …)` — empty selection is a no-op. |
 | Header padding regression: Starlight default `padding: 12px 24px` reintroduced on `.page > header`, causing the section-tabs row to overflow and the active tab's underline to fall below the header | Keep the override pinned in `marktext-docs.css` and add a structural assertion to `scripts/docs-site.test.mjs` that the rendered `.docs-section-tab.active` element sits inside the `<header>` rect. |
-| `kbd` styling regression: the `.header-shell kbd` selector regresses to matching the outer shortcut wrapper as well as the inner keys | The pinned selector is `.header-shell kbd kbd` (descendant combinator), so any future `kbd` added directly inside `.header-shell` (not nested in another `kbd`) will not pick up the key styling. Document this in a comment near the rule. |
+| `kbd` styling regression: the `.header-shell kbd` selector regresses to matching the outer shortcut wrapper as well as the inner keys | The pinned setup is `.header-shell kbd { background: transparent; border: 0; }` (reset rule) plus `.header-shell kbd kbd { … }` (key-styling rule with descendant combinator), so the outer shortcut wrapper stays transparent and only the inner keys get the pill styling. If a future `kbd` is added directly inside `.header-shell` (not nested in another `kbd`), it will not pick up the key styling — that is intentional. Document this in a comment near the rule. |
 
 ## 11. Acceptance criteria
 
@@ -225,4 +228,4 @@ Unchanged tests:
 4. All other `.md` files are unchanged.
 5. The rendered header (homepage and any other page) shows a single icon-button theme toggle, not a `<select>` dropdown. Same for the mobile menu footer.
 6. The active tab's underline lands inside the `<header>` (not below its `border-bottom` line).
-7. The search shortcut indicator renders as separate "Ctrl" and "K" keys, with no extra wrapper border around the pair.
+7. The search shortcut indicator renders as separate "Ctrl" and "K" keys, with no extra wrapper border or background slab around the pair.
