@@ -109,6 +109,7 @@ Storage key: `acorny-theme` (matching the reference design).
 
 - `src/components/Header.astro`: replace the existing `<ThemeSelect />` import and usage with `<ThemeToggle />`. Keep all other header elements (brand, search, language, social, CTA, section tabs) unchanged.
 - `src/components/MobileMenuFooter.astro`: same replacement for visual consistency between desktop and mobile.
+- **`src/styles/marktext-docs.css`: fix a layout overflow bug in the existing `.page > header` rule.** Starlight's default styles give `<header>` a `padding: 12px 24px`, leaving only 84px of vertical content area inside a 108px-tall header (`--sl-nav-height: 6.75rem`). The custom `.docs-header-frame` uses `grid-template-rows: 3.75rem 3rem` (60 + 48 = 108px), so the second row (the section tabs) overflows the frame and renders below the header's `border-bottom`. The active tab's underline (`::after { bottom: 0 }`) then lands ~10px below the header divider, in the body content area. **Fix:** add `padding-block: 0; padding-inline: var(--sl-nav-pad-x);` to the existing `.page > header` rule so the frame gets the full 108px to lay out into, matching the reference design's `.dochdr` pattern. No other header CSS needs to change.
 
 ## 4. CSS additions
 
@@ -200,7 +201,7 @@ Unchanged tests:
 ## 9. Out of scope
 
 - Other docs pages (`getting-started/*`, `import-sync/*`, etc.) — content and styling unchanged.
-- Other header elements: brand, search, language selector, social icons, "Open Acorny" link, and the User docs / Developer docs section tabs all stay exactly as they are. The only header change is the theme selector.
+- Other header elements: brand, search, language selector, social icons, "Open Acorny" link, and the User docs / Developer docs section tabs all stay exactly as they are (apart from the theme-toggle replacement and the padding fix in §3.8).
 - New SEO / structured-data work — existing `inject-structured-data.mjs` continues to run as-is.
 - Translations — the existing `LanguageSelect` continues to behave the same way; no new locales.
 
@@ -212,6 +213,7 @@ Unchanged tests:
 | New CSS classes conflict with Starlight defaults | Use distinct prefixes (`.docs-hero`, `.intro-panel`, `.ac-callout`) and scope all new rules behind existing `var(--ac-doc-*)` tokens. |
 | Tests become brittle to copy edits | Keep new assertions scoped to structural class names and short, stable copy snippets; avoid matching full sentences. |
 | Copy-code script runs on pages without a `<CodeBar>` | `src/scripts/copy-code.ts` uses `Array.prototype.forEach.call(document.querySelectorAll('[data-copy-target]'), …)` — empty selection is a no-op. |
+| Header padding regression: Starlight default `padding: 12px 24px` reintroduced on `.page > header`, causing the section-tabs row to overflow and the active tab's underline to fall below the header | Keep the override pinned in `marktext-docs.css` and add a structural assertion to `scripts/docs-site.test.mjs` that the rendered `.docs-section-tab.active` element sits inside the `<header>` rect. |
 
 ## 11. Acceptance criteria
 
@@ -220,3 +222,4 @@ Unchanged tests:
 3. `docs/designs/acorny-docs-homepage.html` exists at the new path; the project root no longer contains `acorny-docs.html`.
 4. All other `.md` files are unchanged.
 5. The rendered header (homepage and any other page) shows a single icon-button theme toggle, not a `<select>` dropdown. Same for the mobile menu footer.
+6. The active tab's underline lands inside the `<header>` (not below its `border-bottom` line).
