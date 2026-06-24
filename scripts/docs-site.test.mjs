@@ -130,6 +130,7 @@ test('docs homepage uses verified facts and avoids unsupported promises', async 
   ]) {
     assert.match(home, new RegExp(text))
   }
+  assert.match(home, /<table/)
   assert.doesNotMatch(
     home,
     /SM-2|scheduler\.ts|encrypted at rest|within 24 hours|Connect Amazon account|folder watch|The beta is free|export ZIP|JSON \+ Markdown/i,
