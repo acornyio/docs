@@ -90,6 +90,7 @@ test('docs UI uses the Acorny MarkText-inspired documentation shell', async () =
   assert.match(css, /\.sl-sidebar/)
   assert.match(css, /\.sl-markdown-content/)
   assert.match(css, /--sl-content-margin-inline:\s*0 auto/)
+  assert.match(css, /margin-inline-end:\s*3\.25rem/)
 
   const home = await readDist('index.html')
   assert.match(home, /src="\/android-chrome-192x192\.png"/)
