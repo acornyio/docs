@@ -75,7 +75,7 @@ export default defineConfig({
       ],
       lastUpdated: true,
       credits: true,
-      customCss: ['./src/styles/marktext-docs.css'],
+      customCss: ['./src/styles/marktext-docs.css', './src/styles/docs-home.css'],
       sidebar: [
         {
           label: 'Getting Started',
@@ -139,6 +139,7 @@ export default defineConfig({
       components: {
         Head: './src/components/Head.astro',
         Header: './src/components/Header.astro',
+        Hero: './src/components/docs/HomeHero.astro',
         PageTitle: './src/components/PageTitle.astro',
         MobileMenuFooter: './src/components/MobileMenuFooter.astro',
       },

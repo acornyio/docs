@@ -47,7 +47,7 @@ async function listMarkdownFiles(directory) {
       if (entry.isDirectory()) {
         return listMarkdownFiles(fullPath)
       }
-      return entry.isFile() && entry.name.endsWith('.md') ? [fullPath] : []
+      return entry.isFile() && /\.mdx?$/.test(entry.name) ? [fullPath] : []
     }),
   )
 
@@ -72,8 +72,8 @@ function parseFrontmatter(source) {
 function routeFromMarkdownFile(filePath) {
   const relativePath = path.relative(contentRoot, filePath).replaceAll(path.sep, '/')
   if (relativePath === '404.md') return null
-  if (relativePath === 'index.md') return '/'
-  return `/${relativePath.replace(/\.md$/, '')}/`
+  if (/^index\.mdx?$/.test(relativePath)) return '/'
+  return `/${relativePath.replace(/\.mdx?$/, '')}/`
 }
 
 function htmlFileForRoute(route, targetDistRoot = distRoot) {

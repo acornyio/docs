@@ -62,9 +62,9 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
   }
 
   const home = await readDist('index.html')
-  assert.match(home, /<title>User Documentation \| Acorny Docs<\/title>/)
+  assert.match(home, /<title>Turn highlights into a reviewable reading memory \| Acorny Docs<\/title>/)
   assert.match(home, /<link rel="canonical" href="https:\/\/docs\.acorny\.io\/" ?\/?>/)
-  assert.match(home, /Learn how to import, sync, save, and review highlights with Acorny\./)
+  assert.match(home, /Acorny helps you capture highlights, import existing reading notes, and review important ideas as recall cards with spaced repetition\./)
   assert.match(home, /property="og:image" content="https:\/\/docs\.acorny\.io\/acorny_og-image\.png"/)
   assert.match(home, /rel="shortcut icon" href="\/favicon\.ico"/)
   assert.match(home, /Last updated:/)
@@ -98,13 +98,22 @@ test('docs UI uses the Acorny MarkText-inspired documentation shell', async () =
   assert.match(home, /Documentation sections/)
   assert.match(home, /User docs/)
   assert.match(home, /Developer docs/)
-  assert.match(home, /class="docs-eyebrow[^"]*">User Documentation<\/p>/)
+  assert.match(home, /class="docs-home-hero__eyebrow"[^>]*>User Documentation<\/p>/)
 })
 
+test('docs homepage renders one product-oriented hero heading', async () => {
+  const home = await readDist('index.html')
+  const h1Count = (home.match(/<h1\b/g) ?? []).length
+
+  assert.equal(h1Count, 1)
+  assert.match(home, /class="docs-home-hero"/)
+  assert.match(home, /Turn highlights into a reviewable reading memory/)
+  assert.match(home, /class="docs-home-hero__lead"/)
+})
 test('phase 3 structured data renders JSON-LD for web pages, breadcrumbs, and how-to guides', async () => {
   const home = await readDist('index.html')
   assert.match(home, /"@type":"WebPage"/)
-  assert.match(home, /"name":"User Documentation"/)
+  assert.match(home, /"name":"Turn highlights into a reviewable reading memory"/)
   assert.match(home, /"url":"https:\/\/docs\.acorny\.io\/"/)
   assert.match(home, /"@type":"WebSite"/)
   assert.match(home, /"@type":"Organization"/)
