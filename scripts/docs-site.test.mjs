@@ -136,6 +136,13 @@ test('docs homepage uses verified facts and avoids unsupported promises', async 
     /SM-2|scheduler\.ts|encrypted at rest|within 24 hours|Connect Amazon account|folder watch|The beta is free|export ZIP|JSON \+ Markdown/i,
   )
 })
+test('docs shell renders synchronized theme toggles', async () => {
+  const home = await readDist('index.html')
+  assert.equal((home.match(/<button[^>]*data-theme-toggle/g) ?? []).length, 2)
+  const source = await readFile(new URL('../src/components/ThemeToggle.astro', import.meta.url), 'utf8')
+  assert.match(source, /starlight-theme/)
+  assert.doesNotMatch(home, /<starlight-theme-select>/)
+})
 test('phase 3 structured data renders JSON-LD for web pages, breadcrumbs, and how-to guides', async () => {
   const home = await readDist('index.html')
   assert.match(home, /"@type":"WebPage"/)
