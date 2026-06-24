@@ -32,3 +32,6 @@ playwright-report/
 
 # TypeScript cache
 *.tsbuildinfo
+
+# Local Git worktrees
+.worktrees/
