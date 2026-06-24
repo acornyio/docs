@@ -87,6 +87,7 @@ export default defineConfig({
         },
         {
           label: 'Import & Sync',
+          collapsed: true,
           items: [
             { slug: 'import-sync/overview', label: 'Overview: import vs sync' },
             { slug: 'import-sync/weread', label: 'Import from WeRead' },
@@ -108,6 +109,7 @@ export default defineConfig({
         },
         {
           label: 'Review & Recall',
+          collapsed: true,
           items: [
             { slug: 'review-recall/how-review-works', label: 'How review sessions work' },
             { slug: 'review-recall/how-spaced-repetition-works', label: 'How spaced repetition works' },
@@ -115,12 +117,14 @@ export default defineConfig({
         },
         {
           label: 'Extensions & Apps',
+          collapsed: true,
           items: [
             { slug: 'extensions/browser-extension', label: 'Browser extension' },
           ],
         },
         {
           label: 'Account & Data',
+          collapsed: true,
           items: [
             { slug: 'account-data/account-security', label: 'Account security' },
             { slug: 'account-data/privacy-beta-pricing', label: 'Privacy, data, and beta pricing' },
@@ -130,6 +134,7 @@ export default defineConfig({
         },
         {
           label: 'Troubleshooting',
+          collapsed: true,
           items: [
             { slug: 'troubleshooting/highlights-not-showing', label: 'Highlights are not showing up' },
           ],

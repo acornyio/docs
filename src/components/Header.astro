@@ -1,13 +1,28 @@
 ---
-import config from 'virtual:starlight/user-config';
+import config from 'virtual:starlight/user-config'
 
-import LanguageSelect from 'virtual:starlight/components/LanguageSelect';
-import Search from 'virtual:starlight/components/Search';
-import SocialIcons from 'virtual:starlight/components/SocialIcons';
-import ThemeToggle from './ThemeToggle.astro';
+import LanguageSelect from 'virtual:starlight/components/LanguageSelect'
+import Search from 'virtual:starlight/components/Search'
+import SocialIcons from 'virtual:starlight/components/SocialIcons'
+import ThemeToggle from './ThemeToggle.astro'
 
-const shouldRenderSearch =
-  config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
+const shouldRenderSearch = config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro'
+const pathname = Astro.url.pathname
+const tabs = [
+  { label: 'User docs', href: '/', active: pathname === '/' || pathname.startsWith('/getting-started/') },
+  { label: 'Importing', href: '/import-sync/overview/', active: pathname.startsWith('/import-sync/') },
+  { label: 'Recall cards', href: '/review-recall/how-review-works/', active: pathname.startsWith('/review-recall/') },
+  {
+    label: 'Privacy',
+    href: '/account-data/privacy-beta-pricing/',
+    active: pathname.includes('/privacy') || pathname.includes('/pricing'),
+  },
+  {
+    label: 'Support',
+    href: '/account-data/contact-support/',
+    active: pathname.includes('/contact-support') || pathname.startsWith('/troubleshooting/'),
+  },
+]
 ---
 
 <div class="docs-header-frame">
@@ -20,7 +35,7 @@ const shouldRenderSearch =
         <span class="docs-brand-section">Docs</span>
       </a>
     </div>
-    <div class="sl-flex print:hidden">
+    <div class="header-search sl-flex print:hidden">
       {shouldRenderSearch && <Search />}
     </div>
     <div class="sl-hidden md:sl-flex print:hidden right-group">
@@ -33,20 +48,17 @@ const shouldRenderSearch =
     </div>
   </div>
   <nav class="docs-section-tabs header-shell" aria-label="Documentation sections">
-    <a href="/" class="docs-section-tab active" aria-current="page">
-      <svg class="docs-section-icon" aria-hidden="true" viewBox="0 0 16 16" width="16" height="16">
-        <path d="M4.5 2.5h5.1l1.9 1.9v9.1h-7z" />
-        <path d="M9.5 2.7v2h1.9" />
-        <path d="M6.2 7.2h3.6M6.2 9.2h3.6M6.2 11.2h2.4" />
-      </svg>
-      User docs
-    </a>
-    <span class="docs-section-tab muted" aria-disabled="true">
-      <svg class="docs-section-icon" aria-hidden="true" viewBox="0 0 16 16" width="16" height="16">
-        <path d="M5.3 8H3.8a1.8 1.8 0 1 1 1.8-1.8V8Zm0 0v2.2A1.8 1.8 0 1 1 3.5 8.4H8m2.7-.4h1.5a1.8 1.8 0 1 0-1.8-1.8V8Zm0 0v2.2a1.8 1.8 0 1 0 1.8-1.8H8" />
-      </svg>
-      Developer docs
-    </span>
+    {
+      tabs.map((tab) => (
+        <a
+          href={tab.href}
+          class:list={['docs-section-tab', { active: tab.active }]}
+          aria-current={tab.active ? 'page' : undefined}
+        >
+          {tab.label}
+        </a>
+      ))
+    }
   </nav>
 </div>
 
@@ -67,12 +79,10 @@ const shouldRenderSearch =
     }
 
     .title-wrapper {
-      /* Prevent long titles overflowing and covering the search and menu buttons on narrow viewports. */
       overflow: clip;
-      /* Avoid clipping focus ring around link inside title wrapper. */
-      padding: 0.25rem;
-      margin: -0.25rem;
       min-width: 0;
+      margin: -0.25rem;
+      padding: 0.25rem;
     }
 
     .docs-brand {
@@ -81,21 +91,19 @@ const shouldRenderSearch =
       gap: 0.64rem;
       min-width: 0;
       color: var(--ac-doc-text);
-      text-decoration: none;
       font-size: 0.98rem;
       font-weight: 720;
       letter-spacing: -0.02em;
+      text-decoration: none;
       white-space: nowrap;
     }
 
     .docs-brand img {
+      flex: none;
       width: 1.9rem;
       height: 1.9rem;
-      flex: none;
       border-radius: 0.55rem;
-      box-shadow:
-        0 10px 20px rgba(40, 24, 46, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.42);
+      box-shadow: 0 10px 20px rgba(40, 24, 46, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.42);
     }
 
     .docs-brand-divider {
@@ -107,6 +115,15 @@ const shouldRenderSearch =
     .docs-brand-section {
       color: color-mix(in oklch, var(--ac-doc-text) 68%, var(--ac-doc-muted));
       font-weight: 560;
+    }
+
+    .header-search {
+      flex: 1 1 28.75rem;
+      max-width: 28.75rem;
+    }
+
+    .header-search :global(button[data-open-modal]) {
+      max-width: none;
     }
 
     .docs-section-tabs {
@@ -122,13 +139,12 @@ const shouldRenderSearch =
       position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 0.52rem;
       height: 100%;
       color: color-mix(in oklch, var(--ac-doc-text) 58%, var(--ac-doc-muted));
-      text-decoration: none;
-      font-size: 0.93rem;
+      font-size: 0.9rem;
       font-weight: 650;
       letter-spacing: -0.01em;
+      text-decoration: none;
     }
 
     .docs-section-tab.active {
@@ -146,62 +162,16 @@ const shouldRenderSearch =
       box-shadow: 0 -8px 24px color-mix(in oklch, var(--ac-doc-accent) 24%, transparent);
     }
 
-    .docs-section-tab.muted {
-      opacity: 0.7;
-    }
-
-    .docs-section-icon {
-      flex: none;
-      width: 0.96rem;
-      height: 0.96rem;
-      color: currentColor;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.45;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
     .right-group,
     .social-icons {
-      gap: 1rem;
       align-items: center;
-    }
-    .social-icons::after {
-      content: '';
-      height: 2rem;
-      border-inline-end: 1px solid var(--sl-color-gray-5);
+      gap: 1rem;
     }
 
-    @media (min-width: 50rem) {
-      :global(:root[data-has-sidebar]) {
-        --__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
-      }
-      :global(:root:not([data-has-toc])) {
-        --__toc-width: 0rem;
-      }
-      .header {
-        --__sidebar-width: max(0rem, var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x));
-        --__main-column-fr: calc(
-          (
-              100% + var(--__sidebar-pad, 0rem) - var(--__toc-width, var(--sl-sidebar-width)) -
-                (2 * var(--__toc-width, var(--sl-nav-pad-x))) - var(--sl-content-inline-start, 0rem) -
-                var(--sl-content-width)
-            ) / 2
-        );
-        display: grid;
-        grid-template-columns:
-          /* 1 (site title): runs up until the main content column's left edge or the width of the title, whichever is the largest  */
-          minmax(
-            calc(var(--__sidebar-width) + max(0rem, var(--__main-column-fr) - var(--sl-nav-gap))),
-            auto
-          )
-          /* 2 (search box): all free space that is available. */
-          1fr
-          /* 3 (right items): use the space that these need. */
-          auto;
-        align-content: center;
-      }
+    .social-icons::after {
+      content: "";
+      height: 2rem;
+      border-inline-end: 1px solid var(--sl-color-gray-5);
     }
 
     @media (max-width: 50rem) {
@@ -211,6 +181,11 @@ const shouldRenderSearch =
 
       .header {
         height: 3.6rem;
+      }
+
+      .header-search {
+        flex: 0 0 auto;
+        margin-inline-start: auto;
       }
 
       .docs-section-tabs {

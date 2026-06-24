@@ -97,7 +97,6 @@ test('docs UI uses the Acorny MarkText-inspired documentation shell', async () =
   assert.match(home, /<span class="docs-brand-section[^"]*">Docs<\/span>/)
   assert.match(home, /Documentation sections/)
   assert.match(home, /User docs/)
-  assert.match(home, /Developer docs/)
   assert.match(home, /class="docs-home-hero__eyebrow"[^>]*>User Documentation<\/p>/)
 })
 
@@ -142,6 +141,16 @@ test('docs shell renders synchronized theme toggles', async () => {
   const source = await readFile(new URL('../src/components/ThemeToggle.astro', import.meta.url), 'utf8')
   assert.match(source, /starlight-theme/)
   assert.doesNotMatch(home, /<starlight-theme-select>/)
+})
+test('docs shell exposes real tabs and collapsed dense groups', async () => {
+  const home = await readDist('index.html')
+  const config = await readFile(new URL('../astro.config.mjs', import.meta.url), 'utf8')
+  for (const label of ['User docs', 'Importing', 'Recall cards', 'Privacy', 'Support']) {
+    assert.match(home, new RegExp(`>\\s*${label}\\s*<`))
+  }
+  assert.doesNotMatch(home, /Developer docs/)
+  assert.match(config, /label: 'Import & Sync',[\s\S]{0,120}collapsed: true/)
+  assert.match(config, /label: 'Account & Data',[\s\S]{0,120}collapsed: true/)
 })
 test('phase 3 structured data renders JSON-LD for web pages, breadcrumbs, and how-to guides', async () => {
   const home = await readDist('index.html')
