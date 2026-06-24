@@ -2,6 +2,28 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Workflow — mandatory worktree for code changes
+
+All code modifications **must** happen in a new git worktree. Never edit files on `main` (or any existing branch) directly.
+
+```bash
+# 1. Create a worktree with a descriptive branch name
+git worktree add .worktrees/<branch-name> -b <branch-name>
+
+# 2. Make changes inside the worktree
+cd .worktrees/<branch-name>
+# ... edit, commit, test ...
+
+# 3. After merging / finishing, clean up
+git worktree remove .worktrees/<branch-name>
+```
+
+Rules:
+- Branch name should describe the change (e.g. `fix/header-layout`, `feat/new-import-guide`).
+- Run `pnpm test` inside the worktree before merging.
+- Never commit directly to `main`.
+- Worktrees live under `.worktrees/` (already in `.gitignore`).
+
 ## What this is
 
 Source for the Acorny Help Center public docs site at <https://docs.acorny.io/>. Astro 6 + Starlight static site, deployed on Vercel. Package name `@acorny/docs` (private, `pnpm@11.1.2`, ESM).
