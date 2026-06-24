@@ -120,6 +120,22 @@ test('docs homepage renders flow, navigation, callout, and copy target', async (
   assert.match(home, /<pre id="review-loop"/)
   assert.match(home, /aria-live="polite"/)
 })
+test('docs homepage uses verified facts and avoids unsupported promises', async () => {
+  const home = await readDist('index.html')
+  for (const text of [
+    'File and local imports',
+    'Connected sync',
+    'Recall cards and ratings',
+    'Self-serve data export is not a public Help Center workflow yet',
+    'Acorny is currently in public beta',
+  ]) {
+    assert.match(home, new RegExp(text))
+  }
+  assert.doesNotMatch(
+    home,
+    /SM-2|scheduler\.ts|encrypted at rest|within 24 hours|Connect Amazon account|folder watch|The beta is free|export ZIP|JSON \+ Markdown/i,
+  )
+})
 test('phase 3 structured data renders JSON-LD for web pages, breadcrumbs, and how-to guides', async () => {
   const home = await readDist('index.html')
   assert.match(home, /"@type":"WebPage"/)

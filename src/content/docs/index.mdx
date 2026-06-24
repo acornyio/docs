@@ -37,3 +37,46 @@ import CodeBar from '../../components/docs/CodeBar.astro'
 make_highlight_eligible_for_review()
 show_recall_card_when_due()
 adjust_next_interval_from_rating()`} />
+
+## Supported sources
+
+### File and local imports
+
+Acorny accepts WeRead JSON, Readwise CSV, Moon+ Reader files, Cubox JSON, Diigo CSV, Kindle `My Clippings.txt`, annotated PDFs, Acorny JSON or CSV exports, and generic CSV files.
+
+### One-time API imports
+
+Readwise and Diigo can be imported through their APIs for a one-time transfer.
+
+### Connected sync
+
+Instapaper and Inoreader are the current connected sync providers. Koodo Reader, Moon+ Reader, and Readest can push highlights through Acorny’s Readwise-compatible endpoint using an Import API token.
+
+## Recall cards and ratings
+
+Acorny turns saved highlights into recall cards. Review asks you to remember the idea before rereading it, then rate the result.
+
+| Rating | Use it when | Scheduling effect |
+| --- | --- | --- |
+| Forgot | You could not recall the idea | Bring the card back sooner |
+| Hard | Recall required effort or missed details | Keep the interval short |
+| Good | You remembered the main idea | Increase the interval |
+| Easy | The idea felt immediate and stable | Increase the interval more |
+
+<Callout variant="note" title="Review timing">A highlight can exist in your library before it becomes due as a recall card. This is normal.</Callout>
+
+## Privacy and data export
+
+Acorny stores the highlights and account data needed to provide highlighting, import, sync, and review features. Self-serve data export is not a public Help Center workflow yet. If you need a copy of your data, contact support.
+
+## FAQ
+
+**Is Acorny still in beta?** Acorny is currently in public beta. Follow current in-product information for account-specific availability and pricing.
+
+**Does Acorny replace Readwise?** Acorny focuses on recall cards and review sessions. Start with a small migration before importing a full library.
+
+**Why is a saved highlight not in Review yet?** A highlight can be in your library before it becomes due. Check Highlights first, then return when cards are due.
+
+## Need help?
+
+Start with [Highlights are not showing up](/troubleshooting/highlights-not-showing/) or [Contact support](/account-data/contact-support/).
