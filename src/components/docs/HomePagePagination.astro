@@ -1,0 +1,8 @@
+---
+import DefaultPagination from '@astrojs/starlight/components/Pagination.astro'
+
+const pathname = Astro.url.pathname.replace(/\/index\.html$/, '/')
+const isHome = pathname === '/'
+---
+
+{!isHome && <DefaultPagination />}

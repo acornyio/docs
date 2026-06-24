@@ -1,0 +1,251 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "A Acorny Docs" [ref=e4] [cursor=pointer]:
+        - /url: ./acorny-home.html
+        - generic [ref=e5]: A
+        - generic [ref=e6]: Acorny
+        - generic [ref=e8]: Docs
+      - button "Search documentation" [ref=e9] [cursor=pointer]:
+        - generic [ref=e10]: ⌕
+        - generic [ref=e11]: Search documentation…
+        - generic [ref=e12]: /
+      - generic [ref=e13]:
+        - button "Toggle theme" [ref=e14] [cursor=pointer]:
+          - img [ref=e15]
+        - link "Open app site" [ref=e18] [cursor=pointer]:
+          - /url: ./acorny-home.html#start
+  - generic [ref=e20]:
+    - link "User docs" [ref=e21] [cursor=pointer]:
+      - /url: "#introduction"
+    - link "Importing" [ref=e22] [cursor=pointer]:
+      - /url: "#importing"
+    - link "Recall cards" [ref=e23] [cursor=pointer]:
+      - /url: "#cards"
+    - link "Privacy" [ref=e24] [cursor=pointer]:
+      - /url: "#privacy"
+    - link "FAQ" [ref=e25] [cursor=pointer]:
+      - /url: "#faq"
+  - generic [ref=e26]:
+    - complementary [ref=e27]:
+      - generic [ref=e28]:
+        - button "Quick start" [ref=e29]
+        - generic [ref=e30]:
+          - link "Introduction" [ref=e31] [cursor=pointer]:
+            - /url: "#introduction"
+          - link "Start here" [ref=e32] [cursor=pointer]:
+            - /url: "#start-here"
+          - link "Daily review loop" [ref=e33] [cursor=pointer]:
+            - /url: "#daily-loop"
+      - generic [ref=e34]:
+        - button "Capture" [ref=e35]
+        - generic [ref=e36]:
+          - link "Supported sources" [ref=e37] [cursor=pointer]:
+            - /url: "#importing"
+          - link "Browser extension" [ref=e38] [cursor=pointer]:
+            - /url: "#extension-flow"
+          - link "Reader imports" [ref=e39] [cursor=pointer]:
+            - /url: "#reader-imports"
+      - generic [ref=e40]:
+        - button "Review" [ref=e41]
+        - generic [ref=e42]:
+          - link "Card types" [ref=e43] [cursor=pointer]:
+            - /url: "#cards"
+          - link "Spaced repetition" [ref=e44] [cursor=pointer]:
+            - /url: "#spacing"
+          - link "Privacy & exports" [ref=e45] [cursor=pointer]:
+            - /url: "#privacy"
+      - generic [ref=e46]:
+        - link "Back to homepage" [ref=e47] [cursor=pointer]:
+          - /url: ./acorny-home.html
+        - link "Current Acorny site" [ref=e48] [cursor=pointer]:
+          - /url: https://acorny.io
+    - main [ref=e49]:
+      - article [ref=e50]:
+        - navigation "Breadcrumb" [ref=e51]:
+          - link "User docs" [ref=e52] [cursor=pointer]:
+            - /url: "#introduction"
+          - generic [ref=e53]: /
+          - generic [ref=e54]: Quick start
+          - generic [ref=e55]: /
+          - generic [ref=e56]: Introduction
+        - generic [ref=e57]: User documentation
+        - heading "Turn highlights into a reviewable reading memory." [level=1] [ref=e58]
+        - paragraph [ref=e59]: "Acorny is built for a simple loop: capture the line while you read, shape it into a card worth remembering, then surface it again with spaced repetition before it fades."
+        - generic [ref=e60]:
+          - generic [ref=e61]: "Best place to start: this page"
+          - generic [ref=e62]: Works alongside the homepage narrative
+          - generic [ref=e63]:
+            - text: Search with
+            - code [ref=e64]: /
+        - region "Acorny reading memory flow" [ref=e65]:
+          - generic [ref=e66]:
+            - generic [ref=e67]: docs/introduction
+            - generic [ref=e68]: Acorny quick start
+          - generic [ref=e69]:
+            - generic [ref=e70]:
+              - generic [ref=e71]: A docs home should feel like the shortest path into the product.
+              - paragraph [ref=e72]: "MarkText’s introduction page keeps the reading column calm and uses links as the map. This Acorny pass does the same: explain the capture-to-review loop first, then route people into setup, imports, cards, and privacy without making the page feel like a landing page."
+            - generic "Capture to review flow" [ref=e73]:
+              - generic [ref=e74]:
+                - generic [ref=e75]: 01 Capture
+                - generic [ref=e76]: Save the quote with its source context.
+              - generic [ref=e77]:
+                - generic [ref=e78]: 02 Shape
+                - generic [ref=e79]: Turn the highlight into Cloze or Q&A.
+              - generic [ref=e80]:
+                - generic [ref=e81]: 03 Review
+                - generic [ref=e82]: Recall first, reveal second, schedule next.
+        - generic [ref=e83]:
+          - heading "Start here" [level=2] [ref=e84]
+          - paragraph [ref=e85]: "Use this docs homepage the way MarkText uses its own introduction page: as a compact map of the product, not just a wall of text. The goal is to reduce the jump between “I get the idea” and “I know what to click next.”"
+          - generic "Quick start links" [ref=e86]:
+            - link "Supported sources Understand web capture, Kindle, PDF, Readwise, Cubox, and Diigo imports." [ref=e87] [cursor=pointer]:
+              - /url: "#importing"
+              - generic [ref=e88]: Supported sources
+              - generic [ref=e89]: Understand web capture, Kindle, PDF, Readwise, Cubox, and Diigo imports.
+            - link "Recall cards Choose the right prompt type before review quality drops." [ref=e90] [cursor=pointer]:
+              - /url: "#cards"
+              - generic [ref=e91]: Recall cards
+              - generic [ref=e92]: Choose the right prompt type before review quality drops.
+            - link "Privacy & exports See what is private, portable, and worth explaining early." [ref=e93] [cursor=pointer]:
+              - /url: "#privacy"
+              - generic [ref=e94]: Privacy & exports
+              - generic [ref=e95]: See what is private, portable, and worth explaining early.
+            - link "FAQ Resolve pricing, permissions, and migration questions after the loop is clear." [ref=e96] [cursor=pointer]:
+              - /url: "#faq"
+              - generic [ref=e97]: FAQ
+              - generic [ref=e98]: Resolve pricing, permissions, and migration questions after the loop is clear.
+          - list [ref=e99]:
+            - listitem [ref=e100]: Capture a highlight from a supported source such as a webpage, Kindle export, PDF, or a connected reading tool.
+            - listitem [ref=e101]:
+              - text: Choose whether the line deserves a
+              - strong [ref=e102]: Cloze
+              - text: or
+              - strong [ref=e103]: Q&A
+              - text: prompt.
+            - listitem [ref=e104]: Review it on the day it is due, then let Acorny schedule the next appearance based on how well you remembered.
+          - generic [ref=e106]:
+            - generic [ref=e107]: Quick recommendation
+            - text: Start by saving only lines you would genuinely want to recall a week later. Acorny becomes more useful when the capture step stays selective.
+          - heading "The daily review loop" [level=2] [ref=e108]
+          - paragraph [ref=e109]: The most important product idea is not storage. It is retrieval. That is why this docs direction keeps bringing the user back to the same three-step loop instead of diffusing attention across too many disconnected features.
+          - generic [ref=e110]:
+            - generic [ref=e111]:
+              - generic [ref=e112]: workflow
+              - button "Copy" [ref=e113] [cursor=pointer]
+            - code [ref=e115]: "capture(source, quote, note) -> createCard(type: \"cloze\" | \"qa\") -> reviewWhenDue() -> scheduleAgain(basedOnRecall)"
+          - heading "Supported sources" [level=2] [ref=e116]
+          - paragraph [ref=e117]: On the current Acorny site, source coverage is already one of the strongest trust signals. The docs homepage should make that coverage easier to scan and easier to act on.
+          - table [ref=e119]:
+            - rowgroup [ref=e120]:
+              - row "Source type Examples shown today What the docs should explain" [ref=e121]:
+                - columnheader "Source type" [ref=e122]
+                - columnheader "Examples shown today" [ref=e123]
+                - columnheader "What the docs should explain" [ref=e124]
+            - rowgroup [ref=e125]:
+              - row "Web capture Web pages Extension flow, saved context, permissions" [ref=e126]:
+                - cell "Web capture" [ref=e127]
+                - cell "Web pages" [ref=e128]
+                - cell "Extension flow, saved context, permissions" [ref=e129]
+              - row "Reader imports Kindle, Readwise, Cubox, Diigo Import setup, deduping, note handling" [ref=e130]:
+                - cell "Reader imports" [ref=e131]
+                - cell "Kindle, Readwise, Cubox, Diigo" [ref=e132]
+                - cell "Import setup, deduping, note handling" [ref=e133]
+              - row "Documents PDF and reader apps How source metadata is preserved" [ref=e134]:
+                - cell "Documents" [ref=e135]
+                - cell "PDF and reader apps" [ref=e136]
+                - cell "How source metadata is preserved" [ref=e137]
+          - heading "Browser extension capture" [level=3] [ref=e138]
+          - paragraph [ref=e139]: "The first-run experience should explain exactly what happens when a user highlights a line: where it is stored, what metadata comes with it, and how it becomes a review item later. That reduces the “is this just another clipper?” question immediately."
+          - heading "Reader imports" [level=3] [ref=e140]
+          - paragraph [ref=e141]: "Acorny should position reader imports as continuity, not ingestion for its own sake. The docs can frame imports around one promise: whatever tool you used to read, your review rhythm still happens in one place."
+          - heading "Recall cards" [level=2] [ref=e142]
+          - paragraph [ref=e143]: The homepage introduces the product. The docs should explain when to pick each card type.
+          - list [ref=e144]:
+            - listitem [ref=e145]:
+              - strong [ref=e146]: Cloze
+              - text: works best when the original sentence is already compact and you want to blank out the key concept.
+            - listitem [ref=e147]:
+              - strong [ref=e148]: Q&A
+              - text: works better when the line contains an idea that benefits from reframing into your own prompt.
+            - listitem [ref=e149]: Good cards are short, specific, and tied to a source worth revisiting.
+          - generic [ref=e151]:
+            - generic [ref=e152]: Design note carried into docs
+            - text: "MarkText’s docs feel trustworthy because the navigation, search, and reading column all stay disciplined. Acorny benefits from the same restraint: one accent, clean panels, and narrow prose."
+          - heading "Spaced repetition" [level=3] [ref=e153]
+          - paragraph [ref=e154]: Spaced repetition should be explained in product language, not textbook jargon. Users mainly need to understand that remembered cards move further out, while uncertain cards return sooner.
+          - heading "Privacy & exports" [level=2] [ref=e155]
+          - paragraph [ref=e156]: The current site already says reading data is private to the user account and that export matters. Those are powerful trust points. This docs direction gives them a dedicated place near the front instead of burying them deep in FAQ copy.
+          - list [ref=e157]:
+            - listitem [ref=e158]: Highlights are private unless the user chooses to share them.
+            - listitem [ref=e159]: Exports matter because reading data is part of the user’s knowledge base.
+            - listitem [ref=e160]: Permission scopes should be explained in the context of capture and restore, not generic tracking language.
+          - heading "FAQ" [level=2] [ref=e161]
+          - paragraph [ref=e162]: Use the FAQ as a friction reducer, not as the main sales layer. Questions about pricing, future paid features, exports, and browser permissions should remain, but they should come after the user already understands the product loop.
+          - navigation "Previous / next page" [ref=e163]:
+            - link "Back Homepage overview" [ref=e164] [cursor=pointer]:
+              - /url: ./acorny-home.html
+              - generic [ref=e165]: Back
+              - generic [ref=e166]: Homepage overview
+            - link "Next Importing from sources" [ref=e167] [cursor=pointer]:
+              - /url: "#importing"
+              - generic [ref=e168]: Next
+              - generic [ref=e169]: Importing from sources
+          - generic [ref=e170]:
+            - generic [ref=e171]: Docs homepage concept for Acorny. Built to match the revised homepage language.
+            - link "Back to launcher" [ref=e172] [cursor=pointer]:
+              - /url: ./index.html
+    - complementary [ref=e173]:
+      - generic [ref=e174]: On this page
+      - generic [ref=e175]:
+        - link "Start here" [ref=e176] [cursor=pointer]:
+          - /url: "#start-here"
+        - link "Daily review loop" [ref=e177] [cursor=pointer]:
+          - /url: "#daily-loop"
+        - link "Supported sources" [ref=e178] [cursor=pointer]:
+          - /url: "#importing"
+        - link "Browser extension" [ref=e179] [cursor=pointer]:
+          - /url: "#extension-flow"
+        - link "Reader imports" [ref=e180] [cursor=pointer]:
+          - /url: "#reader-imports"
+        - link "Recall cards" [ref=e181] [cursor=pointer]:
+          - /url: "#cards"
+        - link "Spaced repetition" [ref=e182] [cursor=pointer]:
+          - /url: "#spacing"
+        - link "Privacy & exports" [ref=e183] [cursor=pointer]:
+          - /url: "#privacy"
+        - link "FAQ" [ref=e184] [cursor=pointer]:
+          - /url: "#faq"
+      - generic [ref=e185]:
+        - generic [ref=e186]: Use the docs as onboarding
+        - paragraph [ref=e187]: The docs homepage should answer setup and trust questions quickly, then route people into deeper pages only when needed.
+        - link "See homepage CTA" [ref=e188] [cursor=pointer]:
+          - /url: ./acorny-home.html#start
+  - generic:
+    - dialog:
+      - generic:
+        - generic: ⌕
+        - textbox:
+          - /placeholder: Search documentation…
+        - generic: esc
+      - generic:
+        - generic: Quick start
+        - link:
+          - /url: "#start-here"
+          - generic: "1"
+          - generic:
+            - generic: Start here
+            - generic: Get into the highlight → card → review loop fast.
+        - link:
+          - /url: "#importing"
+          - generic: "2"
+          - generic:
+            - generic: Supported sources
+            - generic: See how imports are grouped and explained.
+        - link:
+          - /url: "#cards"
+          - generic: "3"
+          - generic:
+            - generic: Recall cards
+            - generic: When to use Cloze and when to use Q&A.

@@ -11,6 +11,7 @@ import FlowStack from '../../components/docs/FlowStack.astro'
 import QuickGrid from '../../components/docs/QuickGrid.astro'
 import Callout from '../../components/docs/Callout.astro'
 import CodeBar from '../../components/docs/CodeBar.astro'
+import Pager from '../../components/docs/Pager.astro'
 
 <IntroPanel path="docs/introduction" label="Acorny quick start" title="Keep the highlight and its source together." copy="Acorny keeps saved text tied to the article, book, file, or reading tool it came from, so review starts with useful context instead of an isolated sentence.">
   <FlowStack slot="aside" steps={[
@@ -106,3 +107,8 @@ Acorny stores the highlights and account data needed to provide highlighting, im
 ## Need help?
 
 Start with [Highlights are not showing up](/troubleshooting/highlights-not-showing/) or [Contact support](/account-data/contact-support/).
+
+<Pager
+  back={{ direction: 'back', label: 'Back to the Acorny app', href: 'https://acorny.io' }}
+  next={{ direction: 'next', label: 'Importing from sources', href: '/import-sync/overview/' }}
+/>

@@ -1,0 +1,34 @@
+---
+/**
+ * 上一篇 / 下一篇 翻页卡，仿照设计稿里的 .pager
+ */
+
+interface PagerLink {
+  direction: 'back' | 'next'
+  label: string
+  href: string
+}
+
+interface Props {
+  back?: PagerLink
+  next?: PagerLink
+}
+
+const { back, next } = Astro.props
+const slots: PagerLink[] = []
+if (back) slots.push(back)
+if (next) slots.push(next)
+---
+
+{
+  slots.length > 0 && (
+    <nav class="docs-home-pager" aria-label="Previous and next page">
+      {slots.map((slot) => (
+        <a href={slot.href} class:list={['docs-home-pager__card', `docs-home-pager__card--${slot.direction}`]}>
+          <span class="dir">{slot.direction === 'back' ? 'Back' : 'Next'}</span>
+          <span class="nm">{slot.label}</span>
+        </a>
+      ))}
+    </nav>
+  )
+}

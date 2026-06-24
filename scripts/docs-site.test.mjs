@@ -147,7 +147,7 @@ test('docs shell renders synchronized theme toggles', async () => {
 test('docs shell exposes real tabs and collapsed dense groups', async () => {
   const home = await readDist('index.html')
   const config = await readFile(new URL('../astro.config.mjs', import.meta.url), 'utf8')
-  for (const label of ['User docs', 'Importing', 'Recall cards', 'Privacy', 'Support']) {
+  for (const label of ['User docs', 'Importing', 'Recall cards', 'Privacy', 'FAQ']) {
     assert.match(home, new RegExp(`>\\s*${label}\\s*<`))
   }
   assert.doesNotMatch(home, /Developer docs/)

@@ -1,0 +1,69 @@
+---
+/**
+ * 右栏 "On this page" TOC + aside CTA 卡
+ * 仿照 docs/designs/acorny-docs-homepage.html 里的 .doc-toc
+ * 滚动时通过 scroll-spy 高亮当前章节
+ */
+
+interface TocItem {
+  href: string
+  label: string
+  sub?: boolean
+}
+
+interface Props {
+  items: TocItem[]
+  ctaTitle?: string
+  ctaCopy?: string
+  ctaHref?: string
+  ctaLabel?: string
+}
+
+const {
+  items,
+  ctaTitle = 'Use the docs as onboarding',
+  ctaCopy = 'The docs homepage should answer setup and trust questions quickly, then route people into deeper pages only when needed.',
+  ctaHref = 'https://acorny.io',
+  ctaLabel = 'See homepage CTA',
+} = Astro.props
+---
+
+<aside class="docs-home-toc" aria-label="On this page">
+  <div class="docs-home-toc__head">On this page</div>
+  <nav class="docs-home-toc__list" id="docsHomeToc">
+    {
+      items.map((item) => (
+        <a href={item.href} class:list={[{ sub: item.sub }]}>
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+  <div class="docs-home-toc__aside">
+    <b>{ctaTitle}</b>
+    <p>{ctaCopy}</p>
+    <a class="docs-home-toc__cta" href={ctaHref} rel="noopener noreferrer" target="_blank">
+      {ctaLabel}
+    </a>
+  </div>
+</aside>
+
+<script>
+  const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('#docsHomeToc a'))
+  const sections = tocLinks
+    .map((link) => document.getElementById(link.getAttribute('href')?.replace('#', '') ?? ''))
+    .filter((el): el is HTMLElement => el !== null)
+
+  function syncToc() {
+    if (!sections.length) return
+    let current = sections[0]!.id
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top < 160) current = section.id
+    }
+    for (const link of tocLinks) {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current)
+    }
+  }
+  syncToc()
+  window.addEventListener('scroll', syncToc, { passive: true })
+</script>

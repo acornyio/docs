@@ -146,6 +146,8 @@ export default defineConfig({
         Header: './src/components/Header.astro',
         Hero: './src/components/docs/HomeHero.astro',
         PageTitle: './src/components/PageTitle.astro',
+        PageSidebar: './src/components/docs/HomePageSidebar.astro',
+        Pagination: './src/components/docs/HomePagePagination.astro',
         MobileMenuFooter: './src/components/MobileMenuFooter.astro',
       },
     }),

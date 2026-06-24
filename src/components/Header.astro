@@ -18,9 +18,9 @@ const tabs = [
     active: pathname.includes('/privacy') || pathname.includes('/pricing'),
   },
   {
-    label: 'Support',
-    href: '/account-data/contact-support/',
-    active: pathname.includes('/contact-support') || pathname.startsWith('/troubleshooting/'),
+    label: 'FAQ',
+    href: '/#faq',
+    active: false,
   },
 ]
 ---
@@ -39,12 +39,12 @@ const tabs = [
       {shouldRenderSearch && <Search />}
     </div>
     <div class="sl-hidden md:sl-flex print:hidden right-group">
-      <div class="sl-flex social-icons">
-        <a href="https://acorny.io" class="download-link" rel="noopener noreferrer" target="_blank">Open Acorny</a>
-        <SocialIcons />
-      </div>
+      <a href="https://acorny.io" class="docs-cta" rel="noopener noreferrer" target="_blank">Open app site</a>
       <ThemeToggle />
-      <LanguageSelect />
+      <div class="sl-hidden lg:sl-flex desktop-extras">
+        <SocialIcons />
+        <LanguageSelect />
+      </div>
     </div>
   </div>
   <nav class="docs-section-tabs header-shell" aria-label="Documentation sections">
@@ -158,20 +158,45 @@ const tabs = [
       bottom: 0;
       height: 2px;
       border-radius: 999px 999px 0 0;
-      background: var(--sl-color-accent);
+      background: var(--ac-doc-grad);
       box-shadow: 0 -8px 24px color-mix(in oklch, var(--ac-doc-accent) 24%, transparent);
     }
 
     .right-group,
-    .social-icons {
+    .desktop-extras {
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
-    .social-icons::after {
-      content: "";
-      height: 2rem;
-      border-inline-end: 1px solid var(--sl-color-gray-5);
+    .docs-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.5rem;
+      padding: 0 1rem;
+      border-radius: 999px;
+      color: white;
+      background: var(--ac-doc-grad);
+      box-shadow: 0 8px 22px rgba(224, 78, 157, 0.22);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: -0.005em;
+      text-decoration: none;
+      transition: transform 0.18s var(--ease), box-shadow 0.18s;
+    }
+
+    .docs-cta:hover,
+    .docs-cta:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(224, 78, 157, 0.32);
+    }
+
+    .desktop-extras {
+      gap: 0.75rem;
+    }
+
+    .desktop-extras:empty {
+      display: none;
     }
 
     @media (max-width: 50rem) {

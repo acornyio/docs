@@ -35,6 +35,18 @@ declare module 'virtual:starlight/components/SocialIcons' {
   export default SocialIcons;
 }
 
+declare module '@astrojs/starlight/components/PageSidebar.astro' {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const PageSidebar: any;
+  export default PageSidebar;
+}
+
+declare module '@astrojs/starlight/components/Pagination.astro' {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const Pagination: any;
+  export default Pagination;
+}
+
 declare module 'virtual:starlight/components/ThemeSelect' {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ThemeSelect: any;

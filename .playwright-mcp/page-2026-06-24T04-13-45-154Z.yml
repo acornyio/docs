@@ -1,0 +1,320 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#_top"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - link "Acorny Docs home" [ref=e8] [cursor=pointer]:
+            - /url: /
+            - img "Acorny logo" [ref=e9]
+            - generic [ref=e10]: Acorny
+            - generic [ref=e12]: Docs
+          - button "Search" [ref=e15] [cursor=pointer]:
+            - img [ref=e16]
+            - generic [ref=e18]: Search
+            - generic [ref=e19]:
+              - generic [ref=e20]: Ctrl
+              - generic [ref=e21]: K
+          - generic [ref=e22]:
+            - link "Open Acorny" [ref=e24] [cursor=pointer]:
+              - /url: https://acorny.io
+            - button "Switch to dark mode" [ref=e25] [cursor=pointer]:
+              - img [ref=e26]
+        - navigation "Documentation sections" [ref=e29]:
+          - link "User docs" [ref=e30] [cursor=pointer]:
+            - /url: /
+          - link "Importing" [ref=e31] [cursor=pointer]:
+            - /url: /import-sync/overview/
+          - link "Recall cards" [ref=e32] [cursor=pointer]:
+            - /url: /review-recall/how-review-works/
+          - link "Privacy" [ref=e33] [cursor=pointer]:
+            - /url: /account-data/privacy-beta-pricing/
+          - link "Support" [ref=e34] [cursor=pointer]:
+            - /url: /account-data/contact-support/
+    - navigation "Main":
+      - list [ref=e38]:
+        - listitem [ref=e39]:
+          - group [ref=e40]:
+            - generic "Getting Started" [ref=e41] [cursor=pointer]:
+              - generic [ref=e42]: Getting Started
+              - img [ref=e43]
+            - list [ref=e45]:
+              - listitem [ref=e46]:
+                - link "Introduction" [ref=e47] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e48]:
+                - link "What is Acorny?" [ref=e49] [cursor=pointer]:
+                  - /url: /getting-started/what-is-acorny/
+              - listitem [ref=e50]:
+                - link "Quick start" [ref=e51] [cursor=pointer]:
+                  - /url: /getting-started/quick-start/
+        - listitem [ref=e52]:
+          - group [ref=e53]:
+            - generic "Import & Sync" [ref=e54] [cursor=pointer]:
+              - generic [ref=e55]: Import & Sync
+              - img [ref=e56]
+        - listitem [ref=e58]:
+          - group [ref=e59]:
+            - generic "Review & Recall" [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: Review & Recall
+              - img [ref=e62]
+        - listitem [ref=e64]:
+          - group [ref=e65]:
+            - generic "Extensions & Apps" [ref=e66] [cursor=pointer]:
+              - generic [ref=e67]: Extensions & Apps
+              - img [ref=e68]
+        - listitem [ref=e70]:
+          - group [ref=e71]:
+            - generic "Account & Data" [ref=e72] [cursor=pointer]:
+              - generic [ref=e73]: Account & Data
+              - img [ref=e74]
+        - listitem [ref=e76]:
+          - group [ref=e77]:
+            - generic "Troubleshooting" [ref=e78] [cursor=pointer]:
+              - generic [ref=e79]: Troubleshooting
+              - img [ref=e80]
+    - generic [ref=e83]:
+      - complementary [ref=e84]:
+        - navigation "On this page" [ref=e89]:
+          - heading "On this page" [level=2] [ref=e90]
+          - list [ref=e91]:
+            - listitem [ref=e92]:
+              - link "Overview" [ref=e93] [cursor=pointer]:
+                - /url: "#_top"
+            - listitem [ref=e94]:
+              - link "Start here" [ref=e95] [cursor=pointer]:
+                - /url: "#start-here"
+            - listitem [ref=e96]:
+              - link "The daily review loop" [ref=e97] [cursor=pointer]:
+                - /url: "#the-daily-review-loop"
+            - listitem [ref=e98]:
+              - link "Supported sources" [ref=e99] [cursor=pointer]:
+                - /url: "#supported-sources"
+              - list [ref=e100]:
+                - listitem [ref=e101]:
+                  - link "File and local imports" [ref=e102] [cursor=pointer]:
+                    - /url: "#file-and-local-imports"
+                - listitem [ref=e103]:
+                  - link "One-time API imports" [ref=e104] [cursor=pointer]:
+                    - /url: "#one-time-api-imports"
+                - listitem [ref=e105]:
+                  - link "Connected sync" [ref=e106] [cursor=pointer]:
+                    - /url: "#connected-sync"
+            - listitem [ref=e107]:
+              - link "Recall cards and ratings" [ref=e108] [cursor=pointer]:
+                - /url: "#recall-cards-and-ratings"
+            - listitem [ref=e109]:
+              - link "Privacy and data export" [ref=e110] [cursor=pointer]:
+                - /url: "#privacy-and-data-export"
+            - listitem [ref=e111]:
+              - link "FAQ" [ref=e112] [cursor=pointer]:
+                - /url: "#faq"
+            - listitem [ref=e113]:
+              - link "Need help?" [ref=e114] [cursor=pointer]:
+                - /url: "#need-help"
+      - main [ref=e116]:
+        - generic [ref=e118]:
+          - region "Turn highlights into a reviewable reading memory" [ref=e119]:
+            - navigation "Breadcrumb" [ref=e120]:
+              - link "User docs" [ref=e121] [cursor=pointer]:
+                - /url: /
+              - generic [ref=e122]: /
+              - generic [ref=e123]: Introduction
+            - paragraph [ref=e124]: User Documentation
+            - heading "Turn highlights into a reviewable reading memory" [level=1] [ref=e125]
+            - paragraph [ref=e126]: Acorny helps you capture highlights, import existing reading notes, and review important ideas as recall cards with spaced repetition.
+            - list [ref=e127]:
+              - listitem [ref=e128]: Capture from web pages and reading tools
+              - listitem [ref=e129]: Import files and connected services
+              - listitem [ref=e130]: Review recall cards with spaced repetition
+          - generic [ref=e131]:
+            - region "Keep the highlight and its source together." [ref=e132]:
+              - generic [ref=e133]:
+                - generic [ref=e134]: docs/introduction
+                - generic [ref=e135]: Acorny quick start
+              - generic [ref=e136]:
+                - generic [ref=e137]:
+                  - heading "Keep the highlight and its source together." [level=2] [ref=e138]
+                  - paragraph [ref=e139]: Acorny keeps saved text tied to the article, book, file, or reading tool it came from, so review starts with useful context instead of an isolated sentence.
+                - list [ref=e141]:
+                  - listitem [ref=e142]:
+                    - generic [ref=e143]: "01"
+                    - strong [ref=e144]: Capture
+                    - generic [ref=e145]: Save or import a complete idea with its source.
+                  - listitem [ref=e146]:
+                    - generic [ref=e147]: "02"
+                    - strong [ref=e148]: Prepare
+                    - generic [ref=e149]: Acorny makes saved highlights eligible for review.
+                  - listitem [ref=e150]:
+                    - generic [ref=e151]: "03"
+                    - strong [ref=e152]: Review
+                    - generic [ref=e153]: Rate recall so the next interval can move sooner or later.
+            - generic [ref=e154]:
+              - heading "Start here" [level=2] [ref=e155]
+              - link "Section titled “Start here”" [ref=e156] [cursor=pointer]:
+                - /url: "#start-here"
+                - img [ref=e158]
+                - generic [ref=e160]: Section titled “Start here”
+            - list [ref=e161]:
+              - listitem [ref=e162]:
+                - link "Quick start Save a first highlight and begin a review session." [ref=e163] [cursor=pointer]:
+                  - /url: /getting-started/quick-start/
+                  - strong [ref=e164]: Quick start
+                  - generic [ref=e165]: Save a first highlight and begin a review session.
+              - listitem [ref=e166]:
+                - link "Import & sync Choose the correct path for files, APIs, or connected services." [ref=e167] [cursor=pointer]:
+                  - /url: /import-sync/overview/
+                  - strong [ref=e168]: Import & sync
+                  - generic [ref=e169]: Choose the correct path for files, APIs, or connected services.
+              - listitem [ref=e170]:
+                - link "Review & recall Understand recall cards, ratings, and review intervals." [ref=e171] [cursor=pointer]:
+                  - /url: /review-recall/how-review-works/
+                  - strong [ref=e172]: Review & recall
+                  - generic [ref=e173]: Understand recall cards, ratings, and review intervals.
+              - listitem [ref=e174]:
+                - link "Privacy & data See what the product stores and how to request a data copy." [ref=e175] [cursor=pointer]:
+                  - /url: /account-data/privacy-beta-pricing/
+                  - strong [ref=e176]: Privacy & data
+                  - generic [ref=e177]: See what the product stores and how to request a data copy.
+            - complementary [ref=e178]:
+              - strong [ref=e179]: Start with one complete idea
+              - generic [ref=e180]: A full sentence with enough context is usually easier to review than a short fragment.
+            - generic [ref=e181]:
+              - heading "The daily review loop" [level=2] [ref=e182]
+              - link "Section titled “The daily review loop”" [ref=e183] [cursor=pointer]:
+                - /url: "#the-daily-review-loop"
+                - img [ref=e185]
+                - generic [ref=e187]: Section titled “The daily review loop”
+            - figure "workflow Copy workflow code" [ref=e188]:
+              - generic [ref=e189]:
+                - generic [ref=e190]: workflow
+                - button "Copy workflow code" [ref=e191] [cursor=pointer]: Copy
+              - code [ref=e193]: save_or_import_highlight() make_highlight_eligible_for_review() show_recall_card_when_due() adjust_next_interval_from_rating()
+            - generic [ref=e194]:
+              - heading "Supported sources" [level=2] [ref=e195]
+              - link "Section titled “Supported sources”" [ref=e196] [cursor=pointer]:
+                - /url: "#supported-sources"
+                - img [ref=e198]
+                - generic [ref=e200]: Section titled “Supported sources”
+            - generic [ref=e201]:
+              - heading "File and local imports" [level=3] [ref=e202]
+              - link "Section titled “File and local imports”" [ref=e203] [cursor=pointer]:
+                - /url: "#file-and-local-imports"
+                - img [ref=e205]
+                - generic [ref=e207]: Section titled “File and local imports”
+            - paragraph [ref=e208]:
+              - text: Acorny accepts WeRead JSON, Readwise CSV, Moon+ Reader files, Cubox JSON, Diigo CSV, Kindle
+              - code [ref=e209]: My Clippings.txt
+              - text: ", annotated PDFs, Acorny JSON or CSV exports, and generic CSV files."
+            - generic [ref=e210]:
+              - heading "One-time API imports" [level=3] [ref=e211]
+              - link "Section titled “One-time API imports”" [ref=e212] [cursor=pointer]:
+                - /url: "#one-time-api-imports"
+                - img [ref=e214]
+                - generic [ref=e216]: Section titled “One-time API imports”
+            - paragraph [ref=e217]: Readwise and Diigo can be imported through their APIs for a one-time transfer.
+            - generic [ref=e218]:
+              - heading "Connected sync" [level=3] [ref=e219]
+              - link "Section titled “Connected sync”" [ref=e220] [cursor=pointer]:
+                - /url: "#connected-sync"
+                - img [ref=e222]
+                - generic [ref=e224]: Section titled “Connected sync”
+            - paragraph [ref=e225]: Instapaper and Inoreader are the current connected sync providers. Koodo Reader, Moon+ Reader, and Readest can push highlights through Acorny’s Readwise-compatible endpoint using an Import API token.
+            - generic [ref=e226]:
+              - heading "Recall cards and ratings" [level=2] [ref=e227]
+              - link "Section titled “Recall cards and ratings”" [ref=e228] [cursor=pointer]:
+                - /url: "#recall-cards-and-ratings"
+                - img [ref=e230]
+                - generic [ref=e232]: Section titled “Recall cards and ratings”
+            - paragraph [ref=e233]: Acorny turns saved highlights into recall cards. Review asks you to remember the idea before rereading it, then rate the result.
+            - table "How each recall rating affects the next review interval" [ref=e234]:
+              - caption [ref=e235]: How each recall rating affects the next review interval
+              - rowgroup [ref=e236]:
+                - row "Rating Use it when Scheduling effect" [ref=e237]:
+                  - columnheader "Rating" [ref=e238]
+                  - columnheader "Use it when" [ref=e239]
+                  - columnheader "Scheduling effect" [ref=e240]
+              - rowgroup [ref=e241]:
+                - row "Forgot You could not recall the idea Bring the card back sooner" [ref=e242]:
+                  - rowheader "Forgot" [ref=e243]
+                  - cell "You could not recall the idea" [ref=e244]
+                  - cell "Bring the card back sooner" [ref=e245]
+                - row "Hard Recall required effort or missed details Keep the interval short" [ref=e246]:
+                  - rowheader "Hard" [ref=e247]
+                  - cell "Recall required effort or missed details" [ref=e248]
+                  - cell "Keep the interval short" [ref=e249]
+                - row "Good You remembered the main idea Increase the interval" [ref=e250]:
+                  - rowheader "Good" [ref=e251]
+                  - cell "You remembered the main idea" [ref=e252]
+                  - cell "Increase the interval" [ref=e253]
+                - row "Easy The idea felt immediate and stable Increase the interval more" [ref=e254]:
+                  - rowheader "Easy" [ref=e255]
+                  - cell "The idea felt immediate and stable" [ref=e256]
+                  - cell "Increase the interval more" [ref=e257]
+            - complementary [ref=e258]:
+              - strong [ref=e259]: Review timing
+              - generic [ref=e260]: A highlight can exist in your library before it becomes due as a recall card. This is normal.
+            - generic [ref=e261]:
+              - heading "Privacy and data export" [level=2] [ref=e262]
+              - link "Section titled “Privacy and data export”" [ref=e263] [cursor=pointer]:
+                - /url: "#privacy-and-data-export"
+                - img [ref=e265]
+                - generic [ref=e267]: Section titled “Privacy and data export”
+            - paragraph [ref=e268]: Acorny stores the highlights and account data needed to provide highlighting, import, sync, and review features. Self-serve data export is not a public Help Center workflow yet. If you need a copy of your data, contact support.
+            - generic [ref=e269]:
+              - heading "FAQ" [level=2] [ref=e270]
+              - link "Section titled “FAQ”" [ref=e271] [cursor=pointer]:
+                - /url: "#faq"
+                - img [ref=e273]
+                - generic [ref=e275]: Section titled “FAQ”
+            - paragraph [ref=e276]:
+              - strong [ref=e277]: Is Acorny still in beta?
+              - text: Acorny is currently in public beta. Follow current in-product information for account-specific availability and pricing.
+            - paragraph [ref=e278]:
+              - strong [ref=e279]: Does Acorny replace Readwise?
+              - text: Acorny focuses on recall cards and review sessions. Start with a small migration before importing a full library.
+            - paragraph [ref=e280]:
+              - strong [ref=e281]: Why is a saved highlight not in Review yet?
+              - text: A highlight can be in your library before it becomes due. Check Highlights first, then return when cards are due.
+            - generic [ref=e282]:
+              - heading "Need help?" [level=2] [ref=e283]
+              - link "Section titled “Need help?”" [ref=e284] [cursor=pointer]:
+                - /url: "#need-help"
+                - img [ref=e286]
+                - generic [ref=e288]: Section titled “Need help?”
+            - paragraph [ref=e289]:
+              - text: Start with
+              - link "Highlights are not showing up" [ref=e290] [cursor=pointer]:
+                - /url: /troubleshooting/highlights-not-showing/
+              - text: or
+              - link "Contact support" [ref=e291] [cursor=pointer]:
+                - /url: /account-data/contact-support/
+              - text: .
+          - generic [ref=e292]:
+            - paragraph [ref=e294]:
+              - text: "Last updated:"
+              - time [ref=e295]: Jun 24, 2026
+            - link "Next What is Acorny?" [ref=e297] [cursor=pointer]:
+              - /url: /getting-started/what-is-acorny/
+              - img [ref=e298]
+              - generic [ref=e300]:
+                - text: Next
+                - text: What is Acorny?
+            - link "Built with Starlight" [ref=e301] [cursor=pointer]:
+              - /url: https://starlight.astro.build
+              - img [ref=e302]
+              - text: Built with Starlight
+  - generic [ref=e307]:
+    - button "Menu" [ref=e308]:
+      - img [ref=e310]
+      - generic: Menu
+    - button "Inspect" [ref=e314]:
+      - img [ref=e316]
+      - generic: Inspect
+    - button "Audit" [ref=e318]:
+      - img [ref=e320]
+      - generic: Audit
+    - button "Settings" [ref=e323]:
+      - img [ref=e325]
+      - generic: Settings
