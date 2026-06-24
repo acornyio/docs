@@ -6,4 +6,34 @@ hero:
   tagline: Acorny helps you capture highlights, import existing reading notes, and review important ideas as recall cards with spaced repetition.
 ---
 
-Welcome to Acorny Docs.
+import IntroPanel from '../../components/docs/IntroPanel.astro'
+import FlowStack from '../../components/docs/FlowStack.astro'
+import QuickGrid from '../../components/docs/QuickGrid.astro'
+import Callout from '../../components/docs/Callout.astro'
+import CodeBar from '../../components/docs/CodeBar.astro'
+
+<IntroPanel path="docs/introduction" label="Acorny quick start" title="Keep the highlight and its source together." copy="Acorny keeps saved text tied to the article, book, file, or reading tool it came from, so review starts with useful context instead of an isolated sentence.">
+  <FlowStack slot="aside" steps={[
+    { number: '01', title: 'Capture', copy: 'Save or import a complete idea with its source.' },
+    { number: '02', title: 'Prepare', copy: 'Acorny makes saved highlights eligible for review.' },
+    { number: '03', title: 'Review', copy: 'Rate recall so the next interval can move sooner or later.' },
+  ]} />
+</IntroPanel>
+
+## Start here
+
+<QuickGrid items={[
+  { title: 'Quick start', description: 'Save a first highlight and begin a review session.', href: '/getting-started/quick-start/' },
+  { title: 'Import & sync', description: 'Choose the correct path for files, APIs, or connected services.', href: '/import-sync/overview/' },
+  { title: 'Review & recall', description: 'Understand recall cards, ratings, and review intervals.', href: '/review-recall/how-review-works/' },
+  { title: 'Privacy & data', description: 'See what the product stores and how to request a data copy.', href: '/account-data/privacy-beta-pricing/' },
+]} />
+
+<Callout variant="tip" title="Start with one complete idea">A full sentence with enough context is usually easier to review than a short fragment.</Callout>
+
+## The daily review loop
+
+<CodeBar language="workflow" targetId="review-loop" code={`save_or_import_highlight()
+make_highlight_eligible_for_review()
+show_recall_card_when_due()
+adjust_next_interval_from_rating()`} />

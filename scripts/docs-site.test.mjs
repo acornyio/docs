@@ -110,6 +110,16 @@ test('docs homepage renders one product-oriented hero heading', async () => {
   assert.match(home, /Turn highlights into a reviewable reading memory/)
   assert.match(home, /class="docs-home-hero__lead"/)
 })
+test('docs homepage renders flow, navigation, callout, and copy target', async () => {
+  const home = await readDist('index.html')
+  assert.match(home, /class="docs-home-intro"/)
+  assert.equal((home.match(/class="docs-home-flow__item"/g) ?? []).length, 3)
+  assert.equal((home.match(/class="docs-home-quick__link"/g) ?? []).length, 4)
+  assert.match(home, /class="docs-home-callout docs-home-callout--tip"/)
+  assert.match(home, /data-copy-target="review-loop"/)
+  assert.match(home, /<pre id="review-loop"/)
+  assert.match(home, /aria-live="polite"/)
+})
 test('phase 3 structured data renders JSON-LD for web pages, breadcrumbs, and how-to guides', async () => {
   const home = await readDist('index.html')
   assert.match(home, /"@type":"WebPage"/)
