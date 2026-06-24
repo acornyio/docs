@@ -29,6 +29,16 @@ Thumbs.db
 coverage/
 test-results/
 playwright-report/
+.playwright/
 
 # TypeScript cache
 *.tsbuildinfo
+
+# Local tooling caches and scratch files
+.claude/
+.agents/
+.worktrees/
+.pnpm-store/
+.tmp/
+.tmp-*.png
+.tmp-*.log
