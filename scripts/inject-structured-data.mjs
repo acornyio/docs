@@ -116,8 +116,10 @@ function stripMarkdown(markdown) {
 }
 
 function buildHowToSchema(page) {
-  // HowTo schema is limited to procedural docs whose titles follow current guide naming.
-  // Add frontmatter opt-in before broadening this to non-import/export workflows.
+  // HowTo schema targets procedural guides. Titles are matched by prefix — English
+  // (Import/Sync/Run/Quick start) and the equivalent Chinese prefixes (从/导入/运行/快速开始).
+  // Every page whose title matches one of these is a procedural guide, and the numbered-list
+  // gate below still excludes non-procedural sections from becoming steps.
   if (!/^(Import|Sync|Run|Quick start|从|导入|运行|快速开始)/.test(page.title)) return null
 
   const sections = [...page.source.matchAll(/^##\s+(.+)$/gm)]

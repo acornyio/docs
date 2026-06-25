@@ -120,3 +120,28 @@ test('buildJsonLd keeps English breadcrumb and inLanguage for root pages', () =>
   assert.equal(graph.BreadcrumbList.itemListElement[0].name, 'Home')
   assert.equal(graph.BreadcrumbList.itemListElement[0].item, 'https://docs.acorny.io/')
 })
+
+test('buildJsonLd emits HowTo for a Chinese procedural title with numbered steps', () => {
+  const schema = buildJsonLd({
+    route: '/zh/import-sync/kindle/',
+    source: '## Import into Acorny\n1. Open Acorny, then go to Import.\n2. Choose Upload File.',
+    title: '从 Kindle 导入',
+    description: '从 Kindle My Clippings.txt 导入高亮和笔记。',
+    url: 'https://docs.acorny.io/zh/import-sync/kindle/',
+  })
+  const graph = Object.fromEntries(schema['@graph'].map((n) => [n['@type'], n]))
+  assert.ok(graph.HowTo, 'expected a HowTo node for a Chinese procedural title')
+  assert.equal(graph.HowTo.name, '从 Kindle 导入')
+})
+
+test('buildJsonLd omits HowTo for a Chinese non-procedural title', () => {
+  const schema = buildJsonLd({
+    route: '/zh/getting-started/what-is-acorny/',
+    source: '## What is Acorny\nAcorny is a tool.\n## Features\n- One\n- Two',
+    title: 'Acorny 是什么？',
+    description: '了解 Acorny 的功能。',
+    url: 'https://docs.acorny.io/zh/getting-started/what-is-acorny/',
+  })
+  const graph = Object.fromEntries(schema['@graph'].map((n) => [n['@type'], n]))
+  assert.equal(graph.HowTo, undefined, 'a non-procedural Chinese title must not produce HowTo')
+})
