@@ -49,6 +49,9 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
     '/account-data/contact-support/',
     '/account-data/pricing/',
     '/troubleshooting/highlights-not-showing/',
+    '/zh/',
+    '/zh/import-sync/kindle/',
+    '/zh/getting-started/quick-start/',
   ]) {
     assert.match(sitemap, new RegExp(`<loc>https://docs\\.acorny\\.io${route.replaceAll('/', '\\/')}</loc>`))
   }
@@ -61,6 +64,11 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
   assert.match(home, /rel="shortcut icon" href="\/favicon\.ico"/)
   assert.match(home, /Last updated:/)
   assert.match(home, /Built with Starlight/)
+
+  const kindleEn = await readDist('import-sync/kindle/index.html')
+  assert.match(kindleEn, /hreflang="zh-CN"/)
+  assert.match(kindleEn, /hreflang="en"/)
+  assert.match(kindleEn, /hreflang="x-default"/)
 
   const notFound = await readDist('404.html')
   assert.match(notFound, /<link rel="canonical" href="https:\/\/docs\.acorny\.io\/" ?\/?>/)
@@ -112,6 +120,10 @@ test('required first-wave pages render as static HTML', async () => {
     'account-data/contact-support/index.html',
     'account-data/pricing/index.html',
     'troubleshooting/highlights-not-showing/index.html',
+    'zh/index.html',
+    'zh/import-sync/kindle/index.html',
+    'zh/getting-started/quick-start/index.html',
+    'zh/account-data/contact-support/index.html',
   ]
 
   for (const file of requiredFiles) {
@@ -208,4 +220,26 @@ test('phase 2 content foundation includes screenshots and expanded search-intent
   const support = await readDist('account-data/contact-support/index.html')
   assert.match(support, /Do not send passwords/)
   assert.match(support, /source name/)
+})
+
+test('zh pages are built with translated titles and content', async () => {
+  const zhKindle = await readDist('zh/import-sync/kindle/index.html')
+  assert.match(zhKindle, /从 Kindle 导入/)
+  assert.match(zhKindle, /My Clippings\.txt/)
+  assert.match(zhKindle, /Acorny/)
+
+  const zhHome = await readDist('zh/index.html')
+  assert.match(zhHome, /记住你读过的内容。/)
+  assert.match(zhHome, /Acorny 帮助中心/)
+})
+
+test('zh pages emit locale-aware structured data', async () => {
+  const zhKindle = await readDist('zh/import-sync/kindle/index.html')
+  assert.match(zhKindle, /"@type":"WebPage"/)
+  assert.match(zhKindle, /"inLanguage":"zh-CN"/)
+  assert.match(zhKindle, /"@type":"BreadcrumbList"/)
+  assert.match(zhKindle, /"name":"首页"/)
+  assert.match(zhKindle, /"item":"https:\/\/docs\.acorny\.io\/zh\/import-sync\/overview\/"/)
+  assert.match(zhKindle, /"name":"导入与同步"/)
+  assert.match(zhKindle, /"@type":"HowTo"/)
 })
