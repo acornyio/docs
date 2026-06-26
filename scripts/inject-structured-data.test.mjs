@@ -4,7 +4,12 @@ import { tmpdir } from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
 
-import { injectStructuredData, insertBeforeClosingHead } from './inject-structured-data.mjs'
+import {
+  buildJsonLd,
+  injectStructuredData,
+  insertBeforeClosingHead,
+  localeFromRoute,
+} from './inject-structured-data.mjs'
 
 test('insertBeforeClosingHead injects JSON-LD before the closing head tag', () => {
   const script = '<script type="application/ld+json">{"@type":"WebPage"}</script>'
@@ -74,4 +79,69 @@ test('injectStructuredData writes JSON-LD into the selected dist file', async ()
   } finally {
     await rm(tempDir, { recursive: true, force: true })
   }
+})
+
+test('localeFromRoute detects the zh locale from a /zh/ route', () => {
+  assert.equal(localeFromRoute('/zh/import-sync/kindle/'), 'zh-CN')
+  assert.equal(localeFromRoute('/zh/'), 'zh-CN')
+})
+
+test('localeFromRoute returns en for root-locale routes', () => {
+  assert.equal(localeFromRoute('/import-sync/kindle/'), 'en')
+  assert.equal(localeFromRoute('/'), 'en')
+})
+
+test('buildJsonLd marks a zh page with inLanguage zh-CN and a localized breadcrumb', () => {
+  const schema = buildJsonLd({
+    route: '/zh/import-sync/kindle/',
+    source: '## Import into Acorny\n1. Step',
+    title: '从 Kindle 导入',
+    description: '从 Kindle My Clippings.txt 导入高亮和笔记。',
+    url: 'https://docs.acorny.io/zh/import-sync/kindle/',
+  })
+  const graph = Object.fromEntries(schema['@graph'].map((n) => [n['@type'], n]))
+  assert.equal(graph.WebPage.inLanguage, 'zh-CN')
+  assert.equal(graph.BreadcrumbList.itemListElement[0].name, '首页')
+  assert.equal(graph.BreadcrumbList.itemListElement[0].item, 'https://docs.acorny.io/zh/')
+  assert.equal(graph.BreadcrumbList.itemListElement[1].name, '导入与同步')
+  assert.equal(graph.BreadcrumbList.itemListElement[1].item, 'https://docs.acorny.io/zh/import-sync/overview/')
+})
+
+test('buildJsonLd keeps English breadcrumb and inLanguage for root pages', () => {
+  const schema = buildJsonLd({
+    route: '/import-sync/kindle/',
+    source: '## Import into Acorny\n1. Step',
+    title: 'Import from Kindle',
+    description: 'Import highlights and notes from Kindle My Clippings.txt.',
+    url: 'https://docs.acorny.io/import-sync/kindle/',
+  })
+  const graph = Object.fromEntries(schema['@graph'].map((n) => [n['@type'], n]))
+  assert.equal(graph.WebPage.inLanguage, 'en')
+  assert.equal(graph.BreadcrumbList.itemListElement[0].name, 'Home')
+  assert.equal(graph.BreadcrumbList.itemListElement[0].item, 'https://docs.acorny.io/')
+})
+
+test('buildJsonLd emits HowTo for a Chinese procedural title with numbered steps', () => {
+  const schema = buildJsonLd({
+    route: '/zh/import-sync/kindle/',
+    source: '## Import into Acorny\n1. Open Acorny, then go to Import.\n2. Choose Upload File.',
+    title: '从 Kindle 导入',
+    description: '从 Kindle My Clippings.txt 导入高亮和笔记。',
+    url: 'https://docs.acorny.io/zh/import-sync/kindle/',
+  })
+  const graph = Object.fromEntries(schema['@graph'].map((n) => [n['@type'], n]))
+  assert.ok(graph.HowTo, 'expected a HowTo node for a Chinese procedural title')
+  assert.equal(graph.HowTo.name, '从 Kindle 导入')
+})
+
+test('buildJsonLd omits HowTo for a Chinese non-procedural title', () => {
+  const schema = buildJsonLd({
+    route: '/zh/getting-started/what-is-acorny/',
+    source: '## What is Acorny\nAcorny is a tool.\n## Features\n- One\n- Two',
+    title: 'Acorny 是什么？',
+    description: '了解 Acorny 的功能。',
+    url: 'https://docs.acorny.io/zh/getting-started/what-is-acorny/',
+  })
+  const graph = Object.fromEntries(schema['@graph'].map((n) => [n['@type'], n]))
+  assert.equal(graph.HowTo, undefined, 'a non-procedural Chinese title must not produce HowTo')
 })
