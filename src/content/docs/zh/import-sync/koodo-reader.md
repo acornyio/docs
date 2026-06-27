@@ -5,7 +5,7 @@ description: 自动把 Koodo Reader 的高亮和笔记同步到 Acorny。
 
 当你在 Koodo Reader 中阅读电子书，并希望高亮和笔记自动出现在 Acorny 中时，请使用 Koodo Reader 同步。
 
-Koodo Reader 不会作为 Extensions & Apps 连接卡片出现，因为 Acorny 不会从 Koodo Reader 拉取数据。Koodo Reader 会通过 Acorny 兼容 Readwise 的端点把高亮推送到 Acorny。
+Koodo Reader 同步是在 Koodo Reader 内部设置的。在 Acorny 中，你只需要创建导入 API 令牌，并复制 Koodo Reader 需要使用的 Readwise URL。
 
 ## 设置
 
@@ -38,6 +38,6 @@ Koodo Reader 不会作为 Extensions & Apps 连接卡片出现，因为 Acorny �
 
 如果高亮没有出现在 Acorny 中，请检查以下内容：
 
-- 确认 Acorny Readwise URL 包含 `/api/v2/highlights/`，并且使用的是你在浏览器中使用的同一个 Acorny 主机。
+- 确认 Acorny Readwise URL 包含 `/api/v2/highlights/`，并且开头与你在浏览器中使用的 Acorny 网站地址一致。
 - 确认 Token 字段中填入的是 Acorny 导入 API 令牌，而不是你的 Acorny 登录密码。
 - 如果身份验证失败，请创建一个新的导入 API 令牌并重新配置 Koodo Reader。

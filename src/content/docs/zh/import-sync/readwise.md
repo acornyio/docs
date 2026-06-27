@@ -3,21 +3,18 @@ title: 从 Readwise 导入
 description: 将你现有的 Readwise 高亮移入 Acorny。
 ---
 
-当你希望迁移已保存在 Readwise 中的高亮，或当其他应用能把高亮发送到兼容 Readwise 的端点时，请使用 Readwise 导入。
+当你希望迁移已保存在 Readwise 中的高亮时，请使用 Readwise 导入。
 
 对大多数人来说，最稳妥的迁移路径是：先从 Readwise CSV 导出开始，导入一个小样本，确认预览看起来正确，然后再导入完整文件。
 
 ## 导入选项
 
-Acorny 通过文件导入和兼容的导入端点支持 Readwise 风格的数据。
+Acorny 支持通过 CSV 上传或一次性 API 导入来迁移 Readwise 数据。
 
 对大多数用户，请从以下路径之一开始：
 
 - Readwise API：使用 Import from API，并粘贴来自 https://readwise.io/access_token 的 Readwise API 令牌。
 - Readwise CSV：从 Readwise 导出一个 CSV 文件，然后在 Acorny 中上传它。
-- 兼容 Readwise 的客户端：在 Settings 中生成一个 Acorny 导入 API 令牌，并将客户端指向 Acorny 的 `/api/v2/highlights/` 端点。
-
-Moon+ Reader 使用兼容 Readwise 的路径，但它的设置细节在 Moon+ Reader 页面中说明。
 
 ![Readwise 导出页面，带有 CSV 导出按钮](/images/import-sync/readwise/readwise-csv.png)
 
@@ -36,15 +33,15 @@ Readwise 导入旨在保留让一条高亮在 Acorny 中有用的数据：
 - 笔记（如有提供）
 - 标签（如有提供）
 - 高亮或创建日期（如有提供）
-- Readwise 高亮标识（如有提供）
+- Acorny 可用于日后识别同一条高亮的信息
 
-该标识有助于在 Acorny 中识别重复项，便于在你再次导入同一个库时去重。
+这些信息有助于在你再次导入同一个库时避免重复。
 
 ## 不会保留哪些内容
 
-Acorny 不会尝试重建每一个 Readwise 账户设置。例如，它不会导入 Readwise 的邮件设置、每日复习偏好、在 Readwise 内配置的集成，或 Readwise 专属的 UI 状态。
+Acorny 不会尝试重建每一个 Readwise 账户设置。例如，它不会导入 Readwise 的邮件设置、每日复习偏好，或在 Readwise 内配置的集成。
 
-某些导出也会省略提供方专属字段。如果某个字段不在 CSV 或 API 负载中，Acorny 无法在事后推断它。
+某些导出也会省略可选字段。如果某个字段不在 CSV 或 API 结果中，Acorny 无法在事后推断它。
 
 ## 大批量迁移
 
@@ -74,4 +71,5 @@ Acorny 不会尝试重建每一个 Readwise 账户设置。例如，它不会导
 
 - [概览：导入与同步](/zh/import-sync/overview/)
 - [从 CSV 导入](/zh/import-sync/csv/)
+- [从 Moon+ Reader 导入](/zh/import-sync/moon-reader/)
 - [间隔重复如何运作](/zh/review-recall/how-spaced-repetition-works/)

@@ -47,9 +47,9 @@ Use this Help Center when you want to set up Acorny, migrate an existing highlig
 
 **Spaced repetition:** A scheduling method that shows material again after increasing intervals when you remember it and sooner when you struggle.
 
-**Import:** A one-time transfer from an export file or compatible API.
+**Import:** A one-time transfer from an export file or supported import screen.
 
-**Sync:** An ongoing connection that can pull new highlights from another service.
+**Sync:** An ongoing connection or reader app setup that keeps sending new highlights after initial setup.
 
 ## Need help?
 

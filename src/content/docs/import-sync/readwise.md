@@ -3,21 +3,18 @@ title: Import from Readwise
 description: Move your existing Readwise highlights into Acorny.
 ---
 
-Use Readwise import when you want to migrate highlights you already saved in Readwise or when another app can send highlights to a Readwise-compatible endpoint.
+Use Readwise import when you want to migrate highlights you already saved in Readwise.
 
 For most people, the safest migration path is to start with a Readwise CSV export, import a small sample, confirm the preview looks right, and then import the full file.
 
 ## Import options
 
-Acorny supports Readwise-style data through file import and compatible ingestion endpoints.
+Acorny supports Readwise data through CSV upload and one-time API import.
 
 For most users, start with one of these paths:
 
 - Readwise API: use Import from API and paste your Readwise API token from https://readwise.io/access_token.
 - Readwise CSV: export a CSV file from Readwise, then upload it in Acorny.
-- Readwise-compatible clients: generate an Acorny Import API token in Settings and point the client at Acorny's `/api/v2/highlights/` endpoint.
-
-Moon+ Reader uses the Readwise-compatible path, but its setup details are covered on the Moon+ Reader page.
 
 ![Readwise export page with the CSV export button](/images/import-sync/readwise/readwise-csv.png)
 
@@ -36,15 +33,15 @@ Readwise imports are designed to preserve the data that makes a highlight useful
 - Note when provided
 - Tags when provided
 - Highlighted or created date when provided
-- Readwise highlight identity when available
+- Details Acorny can use to recognize the same highlight later
 
-That identity helps Acorny recognize duplicates if you import the same library again.
+These details help Acorny avoid duplicates if you import the same library again.
 
 ## What does not transfer
 
-Acorny does not try to recreate every Readwise account setting. For example, it does not import Readwise email settings, daily review preferences, integrations configured inside Readwise, or Readwise-specific UI state.
+Acorny does not try to recreate every Readwise account setting. For example, it does not import Readwise email settings, daily review preferences, or integrations configured inside Readwise.
 
-Some exports also omit provider-specific fields. If a field is not in the CSV or API payload, Acorny cannot infer it later.
+Some exports also omit optional fields. If a field is missing from the CSV or API result, Acorny cannot infer it later.
 
 ## Large migrations
 
@@ -74,4 +71,5 @@ If API import fails, create a fresh Readwise API token and paste only the token 
 
 - [Overview: import vs sync](/import-sync/overview/)
 - [Import from CSV](/import-sync/csv/)
+- [Import and sync from Moon+ Reader](/import-sync/moon-reader/)
 - [How spaced repetition works](/review-recall/how-spaced-repetition-works/)

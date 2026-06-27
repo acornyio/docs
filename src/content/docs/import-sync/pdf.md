@@ -17,7 +17,7 @@ Acorny parses the PDF in the browser and converts detected highlights into Acorn
 
 ## What Acorny imports
 
-Acorny imports text highlights that can be extracted from the PDF. When available, it uses PDF metadata such as title, author, and fingerprint to create a stable source identity.
+Acorny imports text highlights that can be extracted from the PDF. When available, it also keeps details such as title and author so the highlights stay grouped with the right document.
 
 PDF comments or annotation notes may be imported when the PDF exposes them in a supported annotation shape.
 

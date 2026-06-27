@@ -2,15 +2,15 @@
 # https://docs.acorny.io/llms.txt
 
 ## About Acorny
-Acorny is a Readwise alternative that helps readers capture highlights from books, articles, PDFs, and supported reading tools, then review important ideas with recall cards and spaced repetition.
+Acorny is a Readwise alternative that helps readers capture highlights from books, articles, PDFs, and supported reading tools, migrate existing highlights, then review important ideas with recall cards and spaced repetition.
 
 ## Core Concepts
 - Highlights: Text selections or notes saved from reading.
 - Sources: Books, articles, PDFs, feeds, or files that highlights came from.
 - Recall cards: Review prompts generated from highlights so readers practice remembering ideas.
 - Spaced repetition: A scheduling method that shows material again after increasing intervals when it is remembered and sooner when it is difficult.
-- Import: A one-time transfer from an export file or compatible API.
-- Sync: An ongoing connection that can pull new highlights from another service.
+- Import: A one-time transfer from an export file or supported import screen.
+- Sync: An ongoing connection or reader app setup that keeps sending new highlights after initial setup.
 
 ## Key Documentation
 - Documentation hub: https://docs.acorny.io/

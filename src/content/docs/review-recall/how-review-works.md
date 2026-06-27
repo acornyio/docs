@@ -36,7 +36,7 @@ Being caught up does not mean your library is empty. It means Acorny does not cu
 
 ## What enters review
 
-Highlights can enter review from the browser extension, file imports, compatible APIs, or connected sync providers. A provider-specific import guide explains what metadata transfers with each source.
+Highlights can enter review from the browser extension, file imports, reader app sync, or connected sync providers. Each import guide explains what details Acorny can keep from that source.
 
 For best review quality, save highlights that contain complete ideas. A long passage with five claims may create a weaker card than one short passage with one clear claim.
 

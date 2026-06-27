@@ -5,7 +5,7 @@ description: 自动把 Readest 的高亮和笔记同步到 Acorny。
 
 当你在 Readest 中阅读电子书，并希望高亮和笔记自动出现在 Acorny 中时，请使用 Readest 同步。
 
-Readest 不会作为 Extensions & Apps 连接卡片出现，因为 Acorny 不会从 Readest 拉取数据。Readest 会通过 Acorny 兼容 Readwise 的端点把高亮推送到 Acorny。
+Readest 同步是在 Readest 内部设置的。在 Acorny 中，你只需要创建导入 API 令牌，并把它粘贴到 Readest 的 Readwise 集成设置里。
 
 ## 设置
 

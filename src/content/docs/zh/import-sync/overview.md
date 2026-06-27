@@ -30,21 +30,21 @@ Acorny 支持两种方式将来自其他工具的高亮带入你的库。
 
 ## 同步
 
-当某个已连接的服务会在初次设置后持续发送新高亮时，请使用同步。
+当某个服务会在初次设置后持续发送新高亮时，请使用同步。
 
 当前同步提供方：
 
 - Instapaper
 - Inoreader
 
-通过导入 API 令牌进行的推送同步：
+使用导入 API 令牌的阅读器应用同步：
 
 - Koodo Reader
 - Moon+ Reader
 - Readest
 
-Koodo Reader、Moon+ Reader 和 Readest 可以通过兼容 Readwise 的端点持续向 Acorny 发送新高亮。它们通过在 Settings 中配置 Acorny 导入 API 令牌来使用。它们不会作为 Extensions & Apps 连接卡片出现，因为 Acorny 不会从这些应用拉取数据；而是这些应用把高亮推送到 Acorny。
+Koodo Reader、Moon+ Reader 和 Readest 需要在阅读器应用内部设置。你只需要在 Acorny 的 Settings 中创建导入 API 令牌，再把它粘贴到阅读器的 Readwise 集成设置里。这些应用不会出现在 Extensions & Apps 卡片中，因为连接是从阅读器应用发起的。
 
 ## 选择正确的路径
 
-如果你有文件，请使用 Upload File。如果你拥有用于一次性拉取的 Readwise 或 Diigo 凭据，请使用 Import from API。如果 Acorny 为你的来源显示了已连接的服务卡片，请使用 Extensions & Apps。如果你的应用能把高亮发送到兼容 Readwise 的 URL，请使用导入 API 令牌。
+如果你有文件，请使用 Upload File。如果你拥有用于一次性拉取的 Readwise 或 Diigo 凭据，请使用 Import from API。如果 Acorny 为你的来源显示了连接卡片，请使用 Extensions & Apps。如果你的阅读器应用里有 Readwise 同步设置，请打开对应应用的指南，并在 Acorny Settings 中创建导入 API 令牌。

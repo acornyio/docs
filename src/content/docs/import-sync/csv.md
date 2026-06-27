@@ -7,7 +7,7 @@ Use CSV import when your highlights are not from a provider-specific export or w
 
 ## Required idea
 
-Each row should describe a highlight: the quoted text, source title, source URL or source identity, and optional note or tags.
+Each row should describe a highlight: the quoted text, source title, source URL or another detail that identifies the source, and optional note or tags.
 
 ## When to use provider-specific import
 

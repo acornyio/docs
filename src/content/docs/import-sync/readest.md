@@ -5,7 +5,7 @@ description: Sync highlights and notes from Readest into Acorny automatically.
 
 Use Readest sync when you read ebooks in Readest and want highlights and notes to appear in Acorny automatically.
 
-Readest does not appear as an Extensions & Apps connection card because Acorny does not pull data from Readest. Readest pushes highlights to Acorny through Acorny's Readwise-compatible endpoint.
+Readest sync is set up inside Readest. In Acorny, you only create an Import API token and paste it into Readest's Readwise integration settings.
 
 ## Setup
 

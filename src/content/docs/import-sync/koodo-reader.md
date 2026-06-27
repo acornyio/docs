@@ -5,7 +5,7 @@ description: Sync highlights and notes from Koodo Reader into Acorny automatical
 
 Use Koodo Reader sync when you read ebooks in Koodo Reader and want your highlights and notes to appear in Acorny automatically.
 
-Koodo Reader does not appear as an Extensions & Apps connection card because Acorny does not pull data from Koodo Reader. Koodo Reader pushes highlights to Acorny through Acorny's Readwise-compatible endpoint.
+Koodo Reader sync is set up inside Koodo Reader. In Acorny, you only create an Import API token and copy the Readwise URL that Koodo Reader needs.
 
 ## Setup
 
@@ -38,6 +38,6 @@ Import API tokens can create highlights in your Acorny account. Store them like 
 
 If highlights do not appear in Acorny, check the following:
 
-- Confirm the Acorny Readwise URL includes `/api/v2/highlights/` and uses the same Acorny host you use in the browser.
+- Confirm the Acorny Readwise URL includes `/api/v2/highlights/` and starts with the same Acorny website address you use in the browser.
 - Confirm the Token field contains the Acorny Import API token, not your Acorny login password.
 - Create a fresh Import API token and reconfigure Koodo Reader if authentication fails.

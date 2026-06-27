@@ -7,7 +7,7 @@ description: 连接 Instapaper 并把文章高亮同步到 Acorny。
 
 ## 连接 Instapaper
 
-在 Acorny 中打开 Extensions & Apps，找到 Instapaper，并连接你的账户。Instapaper 使用类似 xAuth 的连接流程，因此 Acorny 会要求提供申请访问令牌所需的凭据。
+在 Acorny 中打开 Extensions & Apps，找到 Instapaper，并连接你的账户。按照 Acorny 和 Instapaper 的提示完成授权即可。
 
 ## 同步会导入哪些内容
 

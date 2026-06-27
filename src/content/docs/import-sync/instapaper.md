@@ -7,7 +7,7 @@ Use Instapaper sync when you keep highlights in Instapaper and want Acorny to pu
 
 ## Connect Instapaper
 
-Open Extensions & Apps in Acorny, find Instapaper, and connect your account. Instapaper uses an xAuth-style connection flow, so Acorny asks for the credentials required to request an access token.
+Open Extensions & Apps in Acorny, find Instapaper, and connect your account. Follow the prompts from Acorny and Instapaper to authorize the connection.
 
 ## What sync imports
 
