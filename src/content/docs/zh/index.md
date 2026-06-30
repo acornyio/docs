@@ -1,7 +1,6 @@
 ---
 title: 文档与指南
 description: 了解如何使用 Acorny 导入、同步、保存和复习高亮。
-template: splash
 hero:
   tagline: Acorny 帮助中心
   title: 记住你读过的内容。
