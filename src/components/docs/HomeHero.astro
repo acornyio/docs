@@ -1,0 +1,25 @@
+---
+const { starlightRoute } = Astro.locals
+const hero = starlightRoute.entry.data.hero
+const title = hero?.title ?? starlightRoute.entry.data.title
+const tagline = hero?.tagline ?? starlightRoute.entry.data.description
+const meta = [
+  'Capture from web pages and reading tools',
+  'Import files and connected services',
+  'Review recall cards with spaced repetition',
+]
+---
+
+<section class="docs-home-hero" aria-labelledby="docs-home-title">
+  <nav class="docs-home-hero__breadcrumb" aria-label="Breadcrumb">
+    <a href="/">User docs</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Introduction</span>
+  </nav>
+  <p class="docs-home-hero__eyebrow">User Documentation</p>
+  <h1 id="docs-home-title">{title}</h1>
+  {tagline && <p class="docs-home-hero__lead">{tagline}</p>}
+  <ul class="docs-home-hero__meta" role="list">
+    {meta.map((item) => <li>{item}</li>)}
+  </ul>
+</section>

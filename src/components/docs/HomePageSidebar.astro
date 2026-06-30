@@ -1,0 +1,22 @@
+---
+import DefaultPageSidebar from '@astrojs/starlight/components/PageSidebar.astro'
+
+import HomeToc from './HomeToc.astro'
+
+const pathname = Astro.url.pathname.replace(/\/index\.html$/, '/')
+const isHome = pathname === '/'
+
+const homeTocItems = [
+  { href: '#start-here', label: 'Start here' },
+  { href: '#the-daily-review-loop', label: 'Daily review loop' },
+  { href: '#supported-sources', label: 'Supported sources' },
+  { href: '#file-and-local-imports', label: 'File and local imports', sub: true },
+  { href: '#one-time-api-imports', label: 'One-time API imports', sub: true },
+  { href: '#connected-sync', label: 'Connected sync', sub: true },
+  { href: '#recall-cards-and-ratings', label: 'Recall cards and ratings' },
+  { href: '#privacy-and-data-export', label: 'Privacy and data export' },
+  { href: '#faq', label: 'FAQ' },
+]
+---
+
+{isHome ? <HomeToc items={homeTocItems} /> : <DefaultPageSidebar />}

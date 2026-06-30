@@ -1,11 +1,19 @@
 import assert from 'node:assert/strict'
-import { readFile } from 'node:fs/promises'
+import { readdir, readFile } from 'node:fs/promises'
 import test from 'node:test'
 
 const distDir = new URL('../dist/', import.meta.url)
+const astroAssetsDir = new URL('_astro/', distDir)
 
 async function readDist(relativePath) {
   return readFile(new URL(relativePath, distDir), 'utf8')
+}
+
+async function readBuiltCss() {
+  const files = await readdir(astroAssetsDir)
+  const cssFiles = files.filter((file) => file.endsWith('.css'))
+  const css = await Promise.all(cssFiles.map((file) => readFile(new URL(file, astroAssetsDir), 'utf8')))
+  return css.join('\n')
 }
 
 test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () => {
@@ -57,9 +65,9 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
   }
 
   const home = await readDist('index.html')
-  assert.match(home, /<title>Documentation (&amp;|&) Guides \| Acorny Help Center<\/title>/)
+  assert.match(home, /<title>Turn highlights into a reviewable reading memory \| Acorny Help Center<\/title>/)
   assert.match(home, /<link rel="canonical" href="https:\/\/docs\.acorny\.io\/" ?\/?>/)
-  assert.match(home, /Learn how to import, sync, save, and review highlights with Acorny\./)
+  assert.match(home, /Acorny helps you capture highlights, import existing reading notes, and review important ideas as recall cards with spaced repetition\./)
   assert.match(home, /property="og:image" content="https:\/\/docs\.acorny\.io\/acorny_og-image\.png"/)
   assert.match(home, /rel="shortcut icon" href="\/favicon\.ico"/)
   assert.match(home, /Last updated:/)
@@ -75,10 +83,94 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
   assert.match(notFound, /name="robots" content="noindex"/)
 })
 
+test('docs UI uses the Acorny MarkText-inspired documentation shell', async () => {
+  const css = await readBuiltCss()
+
+  assert.match(css, /--acorny-marktext-docs-polish:\s*1/)
+  assert.match(css, /--acorny-marktext-docs-dark-shell:\s*1/)
+  assert.match(css, /--ac-doc-sidebar-width:\s*19rem/)
+  assert.match(css, /--sl-content-width:\s*46rem/)
+  assert.match(css, /\.header-shell/)
+  assert.match(css, /\.docs-section-tabs/)
+  assert.match(css, /\.docs-brand/)
+  assert.match(css, /\.docs-title-stack/)
+  assert.match(css, /\.docs-breadcrumb/)
+  assert.match(css, /\.sl-sidebar/)
+  assert.match(css, /\.sl-markdown-content/)
+  assert.match(css, /--sl-content-margin-inline:\s*0 auto/)
+  assert.match(css, /margin-inline-end:\s*3\.25rem/)
+
+  const home = await readDist('index.html')
+  assert.match(home, /src="\/android-chrome-192x192\.png"/)
+  assert.match(home, /Acorny<\/span>/)
+  assert.match(home, /<span class="docs-brand-section[^"]*">Docs<\/span>/)
+  assert.match(home, /Documentation sections/)
+  assert.match(home, /User docs/)
+  assert.match(home, /class="docs-home-hero__eyebrow"[^>]*>User Documentation<\/p>/)
+})
+
+test('docs homepage renders one product-oriented hero heading', async () => {
+  const home = await readDist('index.html')
+  const h1Count = (home.match(/<h1\b/g) ?? []).length
+
+  assert.equal(h1Count, 1)
+  assert.match(home, /class="docs-home-hero"/)
+  assert.match(home, /Turn highlights into a reviewable reading memory/)
+  assert.match(home, /class="docs-home-hero__lead"/)
+})
+test('docs homepage renders flow, navigation, callout, and copy target', async () => {
+  const home = await readDist('index.html')
+  assert.match(home, /class="docs-home-intro"/)
+  assert.equal((home.match(/class="docs-home-flow__item"/g) ?? []).length, 3)
+  assert.equal((home.match(/class="docs-home-quick__link"/g) ?? []).length, 4)
+  assert.match(home, /class="docs-home-callout docs-home-callout--tip"/)
+  assert.match(home, /data-copy-target="review-loop"/)
+  assert.match(home, /<pre id="review-loop"/)
+  assert.match(home, /aria-live="polite"/)
+})
+test('docs homepage uses verified facts and avoids unsupported promises', async () => {
+  const home = await readDist('index.html')
+  for (const text of [
+    'File and local imports',
+    'Connected sync',
+    'Recall cards and ratings',
+    'Self-serve data export is not a public Help Center workflow yet',
+    'Acorny is currently in public beta',
+  ]) {
+    assert.match(home, new RegExp(text))
+  }
+  assert.match(home, /<table/)
+  assert.doesNotMatch(
+    home,
+    /SM-2|scheduler\.ts|encrypted at rest|within 24 hours|Connect Amazon account|folder watch|The beta is free|export ZIP|JSON \+ Markdown/i,
+  )
+})
+test('docs shell renders synchronized theme toggles', async () => {
+  const home = await readDist('index.html')
+  assert.equal((home.match(/<button[^>]*data-theme-toggle/g) ?? []).length, 2)
+  const source = await readFile(new URL('../src/components/ThemeToggle.astro', import.meta.url), 'utf8')
+  assert.match(source, /starlight-theme/)
+  assert.doesNotMatch(home, /<starlight-theme-select>/)
+})
+test('docs shell exposes real tabs and collapsed dense groups', async () => {
+  const home = await readDist('index.html')
+  const config = await readFile(new URL('../astro.config.mjs', import.meta.url), 'utf8')
+  for (const label of ['User docs', 'Developer docs']) {
+    assert.match(home, new RegExp(`>\\s*${label}\\s*<`))
+  }
+  // The old per-section tabs (Importing / Recall cards / …) were replaced by the
+  // two-tab doc-set switcher; make sure they are no longer rendered as tabs.
+  for (const removed of ['Importing', 'Recall cards']) {
+    assert.doesNotMatch(home, new RegExp(`>\\s*${removed}\\s*<`))
+  }
+  assert.match(home, /href="https:\/\/acorny\.io\/developers"/)
+  assert.match(config, /label: 'Import & Sync',[\s\S]{0,120}collapsed: true/)
+  assert.match(config, /label: 'Account & Data',[\s\S]{0,120}collapsed: true/)
+})
 test('phase 3 structured data renders JSON-LD for web pages, breadcrumbs, and how-to guides', async () => {
   const home = await readDist('index.html')
   assert.match(home, /"@type":"WebPage"/)
-  assert.match(home, /"name":"Documentation & Guides"/)
+  assert.match(home, /"name":"Turn highlights into a reviewable reading memory"/)
   assert.match(home, /"url":"https:\/\/docs\.acorny\.io\/"/)
   assert.match(home, /"@type":"WebSite"/)
   assert.match(home, /"@type":"Organization"/)
@@ -194,7 +286,7 @@ test('phase 2 content foundation includes screenshots and expanded search-intent
   assert.match(moonReader, /alt="Moon\+ Reader share menu with notes and highlights export options"/)
   assert.match(moonReader, /alt="Moon\+ Reader bookmarks screen with the settings button highlighted"/)
   assert.match(moonReader, /alt="Moon\+ Reader bookmark settings with Readwise sharing enabled"/)
-  assert.match(moonReader, /alt="Moon\+ Reader Readwise sync settings with Acorny endpoint fields"/)
+  assert.match(moonReader, /alt="Moon\+ Reader Readwise sync settings with Acorny token and URL fields"/)
 
   const cubox = await readDist('import-sync/cubox/index.html')
   assert.match(cubox, /What transfers/)

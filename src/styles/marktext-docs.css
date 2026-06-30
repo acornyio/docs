@@ -1,0 +1,860 @@
+:root {
+  --acorny-marktext-docs-polish: 1;
+  --acorny-marktext-docs-dark-shell: 1;
+  --ac-doc-sidebar-width: 19rem;
+  --ac-doc-toc-width: 15.5rem;
+  --ac-doc-shell-width: 92.5rem;
+  --ac-doc-content-offset: 1.4rem;
+  --ac-doc-main-gutter: 3rem;
+  /* MarkText brand — exact values. Light theme. */
+  --ac-doc-accent: #ec4899;
+  --ac-doc-accent-2: #a855f7;
+  --ac-doc-accent-3: #fb7185;
+  --ac-doc-accent-ink: #c01d63; /* darkened pink for link/eyebrow contrast on white */
+  --ac-doc-grad: linear-gradient(110deg, var(--ac-doc-accent-2) 0%, var(--ac-doc-accent) 52%, var(--ac-doc-accent-3) 100%);
+  --ac-doc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ac-doc-bg: #fafafc;
+  --ac-doc-panel: #ffffff;
+  --ac-doc-panel-soft: #f3f3f7;
+  --ac-doc-text: #16161d;
+  --ac-doc-muted: #74747f;
+  --ac-doc-border: rgba(12, 12, 30, 0.1);
+  --ac-doc-border-strong: rgba(12, 12, 30, 0.16);
+  --ac-doc-shadow: 0 40px 100px -34px rgba(60, 20, 80, 0.18);
+  --sl-font: "Geist", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --sl-font-mono: "Geist Mono", "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --sl-content-width: 46rem;
+  --sl-sidebar-width: var(--ac-doc-sidebar-width);
+  --sl-nav-height: 6.75rem;
+  --sl-text-h1: clamp(2.4rem, 5vw, 3.2rem);
+  --sl-text-h2: 1.72rem;
+  --sl-text-h3: 1.24rem;
+  --sl-line-height: 1.72;
+  --sl-line-height-headings: 1.12;
+  --sl-color-bg: var(--ac-doc-bg);
+  --sl-color-bg-nav: color-mix(in oklch, var(--ac-doc-panel) 84%, transparent);
+  --sl-color-bg-sidebar: color-mix(in oklch, var(--ac-doc-bg) 92%, transparent);
+  --sl-color-bg-inline-code: color-mix(in oklch, var(--ac-doc-accent) 12%, var(--ac-doc-panel));
+  --sl-color-text: var(--ac-doc-text);
+  --sl-color-text-accent: var(--ac-doc-accent-ink);
+  --sl-color-accent: var(--ac-doc-accent);
+  --sl-color-accent-high: var(--ac-doc-accent-ink);
+  --sl-color-accent-low: color-mix(in oklch, var(--ac-doc-accent) 13%, white);
+  --sl-color-hairline: var(--ac-doc-border);
+  --sl-color-hairline-light: var(--ac-doc-border);
+  --sl-color-hairline-shade: var(--ac-doc-border);
+}
+
+:root[data-theme="dark"] {
+  /* MarkText brand — exact values. Dark theme = true near-black #08080b. */
+  --ac-doc-accent: #ec4899;
+  --ac-doc-accent-2: #a855f7;
+  --ac-doc-accent-3: #fb7185;
+  --ac-doc-accent-ink: #f472b6; /* lifted pink for link contrast on near-black */
+  --ac-doc-bg: #08080b;
+  --ac-doc-panel: #111119;
+  --ac-doc-panel-soft: #16161d;
+  --ac-doc-text: #ededf2;
+  --ac-doc-muted: #7c7c8c;
+  --ac-doc-border: rgba(255, 255, 255, 0.09);
+  --ac-doc-border-strong: rgba(255, 255, 255, 0.14);
+  --ac-doc-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.8);
+  --sl-color-accent-low: color-mix(in oklch, var(--ac-doc-accent) 18%, black);
+}
+
+html {
+  background: var(--ac-doc-bg);
+}
+
+body {
+  letter-spacing: 0;
+  background:
+    radial-gradient(circle at 48% -16%, color-mix(in oklch, var(--ac-doc-accent) 7%, transparent), transparent 34rem),
+    linear-gradient(180deg, color-mix(in oklch, var(--ac-doc-panel) 80%, var(--ac-doc-bg)), var(--ac-doc-bg) 28rem);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(color-mix(in oklch, var(--ac-doc-text) 11%, transparent) 0.7px, transparent 0.7px);
+  background-size: 28px 28px;
+  opacity: 0.18;
+  mask-image: linear-gradient(180deg, black 0, transparent 34rem);
+}
+
+.page > header {
+  height: var(--sl-nav-height);
+  padding-block: 0;
+  padding-inline: var(--sl-nav-pad-x);
+  border-bottom: 1px solid color-mix(in oklch, var(--ac-doc-border) 92%, transparent);
+  background: color-mix(in oklch, var(--ac-doc-bg) 88%, transparent);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(20px) saturate(165%);
+  -webkit-backdrop-filter: blur(20px) saturate(165%);
+}
+
+/* Full-bleed divider between the top header row (brand / search / controls)
+ * and the section-tabs row below it. The header is sticky (a positioned
+ * containing block), so this pseudo resolves against it; the negative inline
+ * inset cancels the header's horizontal padding so the line reaches both
+ * viewport edges like the bottom border. The top row is 3.75rem tall. */
+.page > header::after {
+  content: "";
+  position: absolute;
+  top: 3.75rem;
+  inset-inline: calc(-1 * var(--sl-nav-pad-x));
+  height: 1px;
+  background: color-mix(in oklch, var(--ac-doc-border) 92%, transparent);
+  pointer-events: none;
+}
+
+.header-shell {
+  width: min(var(--ac-doc-shell-width), calc(100vw - 2rem));
+  margin-inline: auto;
+}
+
+.header-shell .title-wrapper a {
+  letter-spacing: -0.02em;
+  font-weight: 650;
+}
+
+.header-shell button[data-open-modal],
+.header-shell .search {
+  border: 1px solid var(--ac-doc-border);
+  border-radius: 0.68rem;
+  background: color-mix(in oklch, var(--ac-doc-panel-soft) 82%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in oklch, white 8%, transparent);
+}
+
+.header-shell button[data-open-modal],
+.header-shell button[data-open-modal] *,
+.header-shell .search,
+.header-shell .search * {
+  color: color-mix(in oklch, var(--ac-doc-text) 70%, var(--ac-doc-muted));
+}
+
+.header-shell button[data-open-modal]:hover,
+.header-shell button[data-open-modal]:focus-visible {
+  border-color: var(--ac-doc-border-strong);
+  color: var(--ac-doc-text);
+  background: color-mix(in oklch, var(--ac-doc-panel-soft) 94%, transparent);
+}
+
+.header-shell kbd {
+  /* Render the whole Ctrl+K shortcut as ONE pill (the outer wrapper carries the
+   * border / fill), with the individual key labels as plain text inside it —
+   * a single combined-key cap, not two separate caps. */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  padding: 3px 8px;
+  border: 1px solid color-mix(in oklch, var(--ac-doc-text) 20%, transparent);
+  border-radius: 7px;
+  background: color-mix(in oklch, var(--ac-doc-text) 4%, var(--ac-doc-panel));
+  color: color-mix(in oklch, var(--ac-doc-text) 82%, var(--ac-doc-muted));
+  box-shadow: none;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 500;
+  font-family: var(--ac-doc-mono, var(--__sl-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace));
+}
+
+.header-shell kbd kbd {
+  /* Inner per-key labels inherit everything from the pill and carry no chrome
+   * of their own — otherwise Ctrl and K read as two boxed caps instead of one
+   * combined shortcut. */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+}
+
+.right-group select,
+.right-group button,
+.right-group summary {
+  color: color-mix(in oklch, var(--ac-doc-text) 72%, var(--ac-doc-muted));
+}
+
+.right-group select:hover,
+.right-group button:hover,
+.right-group summary:hover,
+.right-group select:focus-visible,
+.right-group button:focus-visible,
+.right-group summary:focus-visible {
+  color: var(--ac-doc-text);
+}
+
+.right-group,
+.social-icons {
+  gap: 0.75rem;
+}
+
+.back-link,
+.download-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.back-link {
+  color: var(--ac-doc-muted);
+}
+
+.back-link:hover {
+  color: var(--ac-doc-text);
+}
+
+.download-link {
+  padding: 0 0.9rem;
+  color: white;
+  background: linear-gradient(135deg, color-mix(in oklch, var(--ac-doc-accent) 86%, white), var(--ac-doc-accent));
+  box-shadow: 0 10px 26px color-mix(in oklch, var(--ac-doc-accent) 30%, transparent);
+}
+
+.download-link:hover {
+  transform: translateY(-1px);
+}
+
+.social-icons::after {
+  border-inline-end-color: var(--ac-doc-border);
+}
+
+.sidebar-pane {
+  border-inline-end: 0;
+  scrollbar-gutter: auto;
+  background: color-mix(in oklch, var(--ac-doc-bg) 96%, transparent);
+}
+
+.sidebar-content {
+  width: 100%;
+  padding: 2.2rem 0.75rem 0 1.625rem;
+  gap: 1.28rem;
+}
+
+.sl-sidebar,
+.sidebar-content .large {
+  font-size: 0.9rem;
+}
+
+.sidebar-content summary,
+.sidebar-content a {
+  border-radius: 0.62rem;
+}
+
+.sidebar-content summary {
+  min-height: 1.85rem;
+  padding: 0.2rem 0.68rem;
+  color: color-mix(in oklch, var(--ac-doc-text) 66%, var(--ac-doc-muted));
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.sidebar-content summary .large {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+.sidebar-content summary:hover {
+  color: var(--ac-doc-text);
+}
+
+.sidebar-content .top-level > li + li {
+  margin-top: 1.22rem;
+}
+
+/* Nest each group's items under a hairline rail so the parent group label and
+ * its child pages read as one indented branch — restoring the primary/secondary
+ * hierarchy. The rail lives on the list; each link carries a transparent
+ * left-border that overlaps it, and the active page lights that border (same
+ * pattern as the right-hand TOC rail). */
+.sidebar-content ul ul {
+  margin-top: 0.45rem;
+  margin-inline-start: 0.82rem;
+  padding-inline-start: 0;
+  border-inline-start: 1px solid var(--ac-doc-border);
+}
+
+.sidebar-content ul ul li {
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  border-inline-start: 0;
+}
+
+.sidebar-content ul ul a {
+  margin-inline-start: -1px;
+  padding-inline-start: 0.92rem;
+  border-inline-start: 2px solid transparent;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.sidebar-content a {
+  position: relative;
+  min-height: 2.08rem;
+  padding: 0.42rem 0.72rem;
+  color: color-mix(in oklch, var(--ac-doc-text) 72%, var(--ac-doc-muted));
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.35;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.sidebar-content a:hover,
+.sidebar-content a:focus-visible {
+  color: var(--ac-doc-text);
+  background: color-mix(in oklch, var(--ac-doc-panel-soft) 64%, transparent);
+}
+
+.sidebar-content a[aria-current="page"],
+.sidebar-content a[aria-current="true"] {
+  color: var(--ac-doc-text);
+  background: color-mix(in oklch, var(--ac-doc-accent) 17%, var(--ac-doc-bg));
+  border-inline-start-color: var(--ac-doc-accent);
+  font-weight: 650;
+  box-shadow: none;
+}
+
+.main-frame {
+  background: transparent;
+}
+
+.main-pane {
+  width: min(var(--ac-doc-shell-width), 100%);
+  margin-inline: auto;
+}
+
+.content-panel {
+  border-inline-start: 0;
+}
+
+.content-panel + .content-panel {
+  border-top: 0;
+}
+
+.docs-title-stack {
+  padding-top: 0.2rem;
+}
+
+.docs-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.58rem;
+  margin-bottom: 1.32rem;
+  color: var(--ac-doc-muted);
+  font-size: 0.86rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.docs-breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.docs-breadcrumb a:hover {
+  color: var(--ac-doc-text);
+}
+
+.docs-breadcrumb-sep {
+  color: color-mix(in oklch, var(--ac-doc-muted) 55%, transparent);
+}
+
+.docs-eyebrow {
+  margin: 0 0 1rem;
+  color: var(--ac-doc-accent);
+  font-size: 0.76rem;
+  font-weight: 780;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.docs-title-stack h1 {
+  max-width: none;
+  margin: 0;
+  color: var(--ac-doc-text);
+  font-size: clamp(2.85rem, 5vw, 3.42rem);
+  font-weight: 760;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  text-wrap: pretty;
+}
+
+.sl-markdown-content {
+  color: color-mix(in oklch, var(--ac-doc-text) 78%, var(--ac-doc-muted));
+  font-size: 1rem;
+  line-height: 1.74;
+}
+
+.sl-markdown-content > * + * {
+  margin-top: 1rem;
+}
+
+.sl-markdown-content h1 {
+  max-width: none;
+  color: var(--ac-doc-text);
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.sl-markdown-content h2 {
+  margin-top: 3.25rem;
+  padding-top: 0.3rem;
+  color: var(--ac-doc-text);
+  letter-spacing: -0.025em;
+}
+
+.sl-markdown-content h3 {
+  margin-top: 2.1rem;
+  color: var(--ac-doc-text);
+  letter-spacing: -0.015em;
+}
+
+.sl-markdown-content p,
+.sl-markdown-content li {
+  text-wrap: pretty;
+}
+
+.sl-markdown-content a:not(:where(.not-content *)) {
+  color: var(--ac-doc-accent-ink);
+  font-weight: 550;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.sl-markdown-content strong {
+  color: var(--ac-doc-text);
+  font-weight: 650;
+}
+
+.sl-markdown-content ul:not(:where(.not-content *)) {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.sl-markdown-content ul:not(:where(.not-content *)) > li {
+  position: relative;
+  padding-inline-start: 1.35rem;
+}
+
+.sl-markdown-content ul:not(:where(.not-content *)) > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0.16rem;
+  top: 0.8em;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 0.12rem;
+  background: var(--ac-doc-accent);
+}
+
+/* Wide tables (e.g. the import comparison tables) used to be clipped: the table
+ * carried `overflow: hidden` with no scroll, so anything past the 46rem content
+ * column was cut off. Make the table its own horizontal scroll container so the
+ * rounded frame is preserved AND wide content scrolls instead of vanishing. */
+.sl-markdown-content table:not(:where(.not-content *)) {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--ac-doc-border);
+  border-collapse: collapse;
+  border-radius: 0.9rem;
+  background: var(--ac-doc-panel);
+}
+
+.sl-markdown-content :is(th, td):not(:where(.not-content *)) {
+  padding: 0.62rem 0.95rem;
+  border-bottom: 1px solid var(--ac-doc-border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.sl-markdown-content tbody tr:last-child :is(th, td):not(:where(.not-content *)) {
+  border-bottom: 0;
+}
+
+.sl-markdown-content th:not(:where(.not-content *)) {
+  font-size: 0.86rem;
+  font-weight: 650;
+  letter-spacing: -0.005em;
+  color: var(--ac-doc-text);
+  background: var(--ac-doc-panel-soft);
+}
+
+.sl-markdown-content code:not(:where(.not-content *)) {
+  border: 1px solid var(--ac-doc-border);
+  border-radius: 0.4rem;
+  color: var(--ac-doc-accent-ink);
+  background: var(--sl-color-bg-inline-code);
+}
+
+.expressive-code .frame {
+  border-radius: 0.9rem;
+  border: 1px solid var(--ac-doc-border);
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.starlight-aside {
+  border-radius: 0.9rem;
+  border-inline-start-width: 3px;
+  background: color-mix(in oklch, var(--ac-doc-accent) 7%, var(--ac-doc-panel));
+}
+
+.right-sidebar {
+  font-size: 0.82rem;
+}
+
+.right-sidebar-panel .sl-container {
+  max-width: 14rem;
+  margin-inline: 0;
+}
+
+.right-sidebar h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.48rem;
+  color: var(--ac-doc-muted);
+  font-size: 0.72rem;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.right-sidebar h2::before {
+  content: "";
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 0.18rem;
+  background: linear-gradient(
+    90deg,
+    var(--ac-doc-muted) 0 18%,
+    transparent 18% 42%,
+    var(--ac-doc-muted) 42% 60%,
+    transparent 60% 100%
+  );
+  opacity: 0.62;
+}
+
+.right-sidebar a[aria-current="true"],
+.right-sidebar a[aria-current="location"] {
+  color: var(--ac-doc-text);
+  border-inline-start-color: var(--ac-doc-accent);
+}
+
+.pagination-links a {
+  border: 1px solid var(--ac-doc-border);
+  border-radius: 0.9rem;
+  color: var(--ac-doc-text);
+  background:
+    linear-gradient(180deg, color-mix(in oklch, white 4%, transparent), transparent),
+    color-mix(in oklch, var(--ac-doc-panel-soft) 90%, transparent);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.pagination-links a,
+.pagination-links a * {
+  color: inherit;
+}
+
+/* Starlight renders each pagination link as:
+ *   <a><svg/><span> Previous|Next <br/> <span class="link-title">Title</span> </span></a>
+ * so the direction label is loose text in the outer span and the page title is
+ * the inner `.link-title`. Style the outer span as the small uppercase label and
+ * the inner span as the larger bold title — mirroring the custom homepage pager
+ * (.docs-home-pager__card .dir / .nm). */
+.pagination-links a > span {
+  color: color-mix(in oklch, var(--ac-doc-text) 60%, var(--ac-doc-muted));
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.pagination-links a .link-title {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--ac-doc-text);
+  font-size: 0.95rem;
+  font-weight: 620;
+  letter-spacing: -0.015em;
+  text-transform: none;
+}
+
+.pagination-links a svg {
+  color: color-mix(in oklch, var(--ac-doc-text) 74%, var(--ac-doc-muted));
+}
+
+.pagination-links a:hover {
+  transform: translateY(-2px);
+  border-color: var(--ac-doc-border-strong);
+  background:
+    linear-gradient(180deg, color-mix(in oklch, var(--ac-doc-accent) 7%, transparent), transparent),
+    var(--ac-doc-panel-soft);
+}
+
+.pagination-links a:hover .link-title,
+.pagination-links a:hover svg {
+  color: var(--ac-doc-text);
+}
+
+.mobile-preferences {
+  border-top-color: var(--ac-doc-border);
+}
+
+.right-sidebar mobile-starlight-toc nav {
+  border-top-color: var(--ac-doc-border) !important;
+  background: color-mix(in oklch, var(--ac-doc-bg) 96%, transparent) !important;
+}
+
+.right-sidebar mobile-starlight-toc summary {
+  border-bottom-color: var(--ac-doc-border) !important;
+  background: color-mix(in oklch, var(--ac-doc-bg) 96%, transparent) !important;
+}
+
+.right-sidebar mobile-starlight-toc .toggle {
+  border-color: var(--ac-doc-border) !important;
+  color: var(--ac-doc-muted) !important;
+  background: color-mix(in oklch, var(--ac-doc-panel-soft) 76%, transparent) !important;
+}
+
+.right-sidebar mobile-starlight-toc details[open] .toggle,
+.right-sidebar mobile-starlight-toc .toggle:hover {
+  border-color: color-mix(in oklch, var(--ac-doc-accent) 62%, var(--ac-doc-border)) !important;
+  color: var(--ac-doc-text) !important;
+}
+
+.right-sidebar mobile-starlight-toc .dropdown {
+  border-color: var(--ac-doc-border) !important;
+  background: var(--ac-doc-bg) !important;
+  box-shadow: var(--ac-doc-shadow) !important;
+}
+
+.right-sidebar mobile-starlight-toc .isMobile a {
+  border-top-color: var(--ac-doc-border) !important;
+  color: color-mix(in oklch, var(--ac-doc-text) 82%, var(--ac-doc-muted)) !important;
+  background: transparent !important;
+}
+
+.right-sidebar mobile-starlight-toc .isMobile a:hover,
+.right-sidebar mobile-starlight-toc .isMobile a[aria-current="true"] {
+  color: var(--ac-doc-text) !important;
+  background: color-mix(in oklch, var(--ac-doc-accent) 12%, var(--ac-doc-bg)) !important;
+}
+
+@media (min-width: 72rem) {
+  :root {
+    --sl-content-pad-x: 1.65rem;
+    --ac-doc-shell-offset: max(0rem, calc((100vw - var(--ac-doc-shell-width)) / 2));
+  }
+
+  .page {
+    background: transparent;
+  }
+
+  /* Center the fixed sidebar to align with the start of the shell */
+  .sidebar-pane {
+    inset-inline-start: var(--ac-doc-shell-offset);
+    width: var(--sl-sidebar-width);
+  }
+
+  /* Push the main frame right by the centering offset + sidebar width */
+  .main-frame {
+    padding-inline-start: calc(var(--ac-doc-shell-offset) + var(--sl-content-inline-start));
+    padding-inline-end: var(--ac-doc-shell-offset);
+  }
+
+  [data-has-sidebar][data-has-toc] .main-pane {
+    --sl-content-margin-inline: 0 auto;
+    width: calc(var(--sl-content-width) + var(--ac-doc-content-offset));
+    /* Tighter sidebar ↔ main gutter. Starlight's default centres the main
+     * pane within the available flex space, which leaves a 100+px gap to the
+     * right of the sidebar items. The MarkText reference uses a 48px gutter
+     * (`--doc-gut: 48px`); we set this directly because Starlight's
+     * `margin-inline: var(--sl-content-margin-inline, auto)` lives inside
+     * `@layer starlight.core` and gets overridden when the variable carries
+     * an explicit value. */
+    margin-inline-start: var(--ac-doc-main-gutter, 3rem);
+  }
+
+  [data-has-sidebar][data-has-toc] .right-sidebar-container {
+    width: calc(var(--ac-doc-toc-width) + 2.25rem);
+  }
+
+  .right-sidebar {
+    border-inline-start: 0;
+    padding-inline-start: 0;
+  }
+
+  .content-panel {
+    padding-inline-start: var(--ac-doc-content-offset);
+  }
+
+  /* Align the header shell with the content grid below it. The shell is wider
+   * than the actual sidebar+content+TOC grid, so centring it (margin: auto)
+   * left the brand and the trailing controls overhanging the columns. Instead,
+   * pin the left edge to the sidebar content baseline and the right edge to the
+   * right-hand TOC card. The header itself already contributes --sl-nav-pad-x
+   * padding, so the left margin uses the raw shell offset; the right margin
+   * keeps compensating for that padding and for the empty gutter inside the TOC
+   * container (container width - the 14rem TOC card), so the controls stop
+   * exactly at the card's edge. */
+  .header-shell {
+    width: auto;
+    max-width: none;
+    margin-inline-start: var(--ac-doc-shell-offset);
+    margin-inline-end: calc(
+      var(--ac-doc-shell-offset) - var(--sl-nav-pad-x) + var(--ac-doc-toc-width) + 2.25rem - 14rem
+    );
+  }
+}
+
+@media (max-width: 50rem) {
+  :root {
+    --sl-nav-height: 3.6rem;
+  }
+
+  .header-shell {
+    width: calc(100vw - 1rem);
+  }
+
+  /* The section-tabs row is hidden on mobile, so the inter-row divider must go
+   * too — otherwise it floats below the single-row header. */
+  .page > header::after {
+    display: none;
+  }
+
+  .download-link {
+    display: none;
+  }
+
+
+  .sl-markdown-content h1 {
+    max-width: none;
+  }
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 0.68rem;
+  background: transparent;
+  color: var(--ac-doc-muted);
+  cursor: pointer;
+}
+
+.icon-btn:hover,
+.icon-btn:focus-visible {
+  border-color: var(--ac-doc-border);
+  background: color-mix(in oklch, var(--ac-doc-accent) 8%, transparent);
+  color: var(--ac-doc-text);
+}
+
+.theme-icon {
+  display: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:root[data-theme="light"] .theme-icon--light,
+:root[data-theme="dark"] .theme-icon--dark {
+  display: block;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+
+.right-sidebar nav ul {
+  margin: 0;
+  padding-inline-start: 0;
+  border-inline-start: 1px solid var(--ac-doc-border);
+  list-style: none;
+}
+
+.right-sidebar nav a {
+  display: block;
+  margin-inline-start: -1px;
+  padding: 0.38rem 0 0.38rem 1rem;
+  border-inline-start: 1.5px solid transparent;
+  color: var(--ac-doc-muted);
+  font-size: 0.81rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.right-sidebar nav a[style*="--depth: 1"],
+.right-sidebar nav a[style*="--depth: 2"],
+.right-sidebar nav a[style*="--depth: 3"] {
+  padding-inline-start: 1.85rem;
+  font-size: 0.78rem;
+}
+
+.right-sidebar nav a[aria-current="true"],
+.right-sidebar nav a[aria-current="location"] {
+  border-inline-start-color: var(--ac-doc-accent);
+  color: var(--ac-doc-text);
+  font-weight: 500;
+}
+
+@media (max-width: 50rem) {
+  .sidebar-pane {
+    background: var(--ac-doc-bg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .download-link,
+  .pagination-links a,
+  .docs-home-quick__link,
+  .icon-btn {
+    transition: none;
+  }
+
+  .download-link:hover,
+  .pagination-links a:hover,
+  .docs-home-quick__link:hover {
+    transform: none;
+  }
+}

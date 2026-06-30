@@ -80,17 +80,20 @@ export default defineConfig({
       ],
       lastUpdated: true,
       credits: true,
+      customCss: ['./src/styles/marktext-docs.css', './src/styles/docs-home.css'],
       sidebar: [
         {
           label: 'Getting Started',
           translations: { 'zh-CN': '入门' },
           items: [
+            { slug: 'index', label: 'Introduction', translations: { 'zh-CN': '介绍' } },
             { slug: 'getting-started/what-is-acorny', label: 'What is Acorny?', translations: { 'zh-CN': 'Acorny 是什么？' } },
             { slug: 'getting-started/quick-start', label: 'Quick start', translations: { 'zh-CN': '快速开始' } },
           ],
         },
         {
           label: 'Import & Sync',
+          collapsed: true,
           translations: { 'zh-CN': '导入与同步' },
           items: [
             { slug: 'import-sync/overview', label: 'Overview: import vs sync', translations: { 'zh-CN': '概览：导入与同步' } },
@@ -113,6 +116,7 @@ export default defineConfig({
         },
         {
           label: 'Review & Recall',
+          collapsed: true,
           translations: { 'zh-CN': '复习与回顾' },
           items: [
             { slug: 'review-recall/how-review-works', label: 'How review sessions work', translations: { 'zh-CN': '复习会话如何运作' } },
@@ -121,6 +125,7 @@ export default defineConfig({
         },
         {
           label: 'Extensions & Apps',
+          collapsed: true,
           translations: { 'zh-CN': '扩展与应用' },
           items: [
             { slug: 'extensions/browser-extension', label: 'Browser extension', translations: { 'zh-CN': '浏览器扩展' } },
@@ -128,6 +133,7 @@ export default defineConfig({
         },
         {
           label: 'Account & Data',
+          collapsed: true,
           translations: { 'zh-CN': '账户与数据' },
           items: [
             { slug: 'account-data/account-security', label: 'Account security', translations: { 'zh-CN': '账户安全' } },
@@ -138,6 +144,7 @@ export default defineConfig({
         },
         {
           label: 'Troubleshooting',
+          collapsed: true,
           translations: { 'zh-CN': '故障排查' },
           items: [
             { slug: 'troubleshooting/highlights-not-showing', label: 'Highlights are not showing up', translations: { 'zh-CN': '高亮未显示' } },
@@ -148,6 +155,10 @@ export default defineConfig({
       components: {
         Head: './src/components/Head.astro',
         Header: './src/components/Header.astro',
+        Hero: './src/components/docs/HomeHero.astro',
+        PageTitle: './src/components/PageTitle.astro',
+        PageSidebar: './src/components/docs/HomePageSidebar.astro',
+        Pagination: './src/components/docs/HomePagePagination.astro',
         MobileMenuFooter: './src/components/MobileMenuFooter.astro',
       },
     }),

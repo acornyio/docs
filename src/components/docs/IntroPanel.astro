@@ -1,0 +1,24 @@
+---
+interface Props {
+  path: string
+  label: string
+  title: string
+  copy: string
+}
+
+const { path, label, title, copy } = Astro.props
+---
+
+<section class="docs-home-intro" aria-labelledby="docs-home-intro-title">
+  <header class="docs-home-intro__bar">
+    <span>{path}</span>
+    <span>{label}</span>
+  </header>
+  <div class="docs-home-intro__body">
+    <div class="docs-home-intro__copy">
+      <h2 id="docs-home-intro-title">{title}</h2>
+      <p>{copy}</p>
+    </div>
+    <div class="docs-home-intro__aside"><slot name="aside" /></div>
+  </div>
+</section>

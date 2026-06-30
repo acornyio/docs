@@ -60,7 +60,7 @@ async function listMarkdownFiles(directory) {
       if (entry.isDirectory()) {
         return listMarkdownFiles(fullPath)
       }
-      return entry.isFile() && entry.name.endsWith('.md') ? [fullPath] : []
+      return entry.isFile() && /\.mdx?$/.test(entry.name) ? [fullPath] : []
     }),
   )
 
@@ -85,11 +85,11 @@ function parseFrontmatter(source) {
 function routeFromMarkdownFile(filePath) {
   const relativePath = path.relative(contentRoot, filePath).replaceAll(path.sep, '/')
   if (relativePath === '404.md') return null
-  if (relativePath === 'index.md') return '/'
-  if (relativePath.endsWith('/index.md')) {
-    return `/${relativePath.replace(/\/index\.md$/, '')}/`
+  if (/^index\.mdx?$/.test(relativePath)) return '/'
+  if (/\/index\.mdx?$/.test(relativePath)) {
+    return `/${relativePath.replace(/\/index\.mdx?$/, '')}/`
   }
-  return `/${relativePath.replace(/\.md$/, '')}/`
+  return `/${relativePath.replace(/\.mdx?$/, '')}/`
 }
 
 function htmlFileForRoute(route, targetDistRoot = distRoot) {
@@ -201,7 +201,7 @@ export function buildJsonLd(page) {
     {
       '@type': 'WebSite',
       '@id': websiteId,
-      name: 'Acorny Help Center',
+      name: 'Acorny Docs',
       url: `${siteUrl}/`,
       publisher: { '@id': organizationId },
       potentialAction: {
@@ -276,7 +276,7 @@ async function main() {
     await injectStructuredData({
       route,
       source,
-      title: frontmatter.title ?? 'Acorny Help Center',
+      title: frontmatter.title ?? 'Acorny Docs',
       description: frontmatter.description ?? 'Learn how to import, sync, save, and review highlights with Acorny.',
       url: `${siteUrl}${route}`,
     })

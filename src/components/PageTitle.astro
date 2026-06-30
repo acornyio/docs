@@ -1,0 +1,42 @@
+---
+const PAGE_TITLE_ID = '_top';
+const { starlightRoute } = Astro.locals;
+const title = starlightRoute.entry.data.title;
+const currentPath = Astro.url.pathname;
+
+type SidebarEntry = (typeof starlightRoute.sidebar)[number];
+
+function findCurrentGroup(entries: SidebarEntry[], groupLabel = 'User docs'): string | undefined {
+  for (const entry of entries) {
+    if (entry.type === 'link' && entry.isCurrent) return groupLabel;
+    if (entry.type === 'group') {
+      const found = findCurrentGroup(entry.entries, entry.label);
+      if (found) return found;
+    }
+  }
+}
+
+const groupLabel = findCurrentGroup(starlightRoute.sidebar) ?? 'User docs';
+const breadcrumbs = ['User docs', groupLabel, title].filter(
+  (item, index, items) => item && items.indexOf(item) === index
+);
+---
+
+<div class="docs-title-stack">
+  <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+    {breadcrumbs.map((item, index) => (
+      <>
+        {index > 0 && <span class="docs-breadcrumb-sep" aria-hidden="true">/</span>}
+        {index === 0 ? (
+          <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>{item}</a>
+        ) : index === breadcrumbs.length - 1 ? (
+          <span aria-current="page">{item}</span>
+        ) : (
+          <span>{item}</span>
+        )}
+      </>
+    ))}
+  </nav>
+  <p class="docs-eyebrow">User Documentation</p>
+  <h1 id={PAGE_TITLE_ID}>{title}</h1>
+</div>

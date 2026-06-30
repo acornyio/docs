@@ -1,103 +1,264 @@
 ---
-import config from 'virtual:starlight/user-config';
+import config from 'virtual:starlight/user-config'
 
-import LanguageSelect from 'virtual:starlight/components/LanguageSelect';
-import Search from 'virtual:starlight/components/Search';
-import SiteTitle from 'virtual:starlight/components/SiteTitle';
-import SocialIcons from 'virtual:starlight/components/SocialIcons';
-import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
+import LanguageSelect from 'virtual:starlight/components/LanguageSelect'
+import Search from 'virtual:starlight/components/Search'
+import SocialIcons from 'virtual:starlight/components/SocialIcons'
+import ThemeToggle from './ThemeToggle.astro'
 
-const shouldRenderSearch =
-  config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
+const shouldRenderSearch = config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro'
+const tabs = [
+  // This site *is* the user docs, so the User docs tab is always the active
+  // doc-set. Developer docs is a separate doc-set hosted on the app site.
+  { label: 'User docs', href: '/', icon: 'book', active: true, external: false },
+  {
+    label: 'Developer docs',
+    href: 'https://acorny.io/developers',
+    icon: 'code',
+    active: false,
+    external: true,
+  },
+]
 ---
 
-<div class="header">
-  <div class="title-wrapper sl-flex">
-    <SiteTitle />
-  </div>
-  <div class="sl-flex print:hidden">
-    {shouldRenderSearch && <Search />}
-  </div>
-  <div class="sl-hidden md:sl-flex print:hidden right-group">
-    <div class="sl-flex social-icons">
-      <a href="https://acorny.io" class="back-link" rel="noopener noreferrer" target="_blank">Back to Acorny</a>
-      <SocialIcons />
+<div class="docs-header-frame">
+  <div class="header header-shell docs-header-top">
+    <div class="title-wrapper sl-flex">
+      <a href="/" class="docs-brand" aria-label="Acorny Docs home">
+        <img src="/android-chrome-192x192.png" alt="Acorny logo" width="28" height="28" />
+        <span class="docs-brand-name" translate="no">Acorny</span>
+        <span class="docs-brand-divider" aria-hidden="true"></span>
+        <span class="docs-brand-section">Docs</span>
+      </a>
     </div>
-    <ThemeSelect />
-    <LanguageSelect />
+    <div class="header-search sl-flex print:hidden">
+      {shouldRenderSearch && <Search />}
+    </div>
+    <div class="sl-hidden md:sl-flex print:hidden right-group">
+      <ThemeToggle />
+      <div class="sl-hidden lg:sl-flex desktop-extras">
+        <SocialIcons />
+        <LanguageSelect />
+      </div>
+      <a href="https://acorny.io" class="docs-cta" rel="noopener noreferrer" target="_blank">Open Acorny</a>
+    </div>
   </div>
+  <nav class="docs-section-tabs header-shell" aria-label="Documentation sections">
+    {
+      tabs.map((tab) => (
+        <a
+          href={tab.href}
+          class:list={['docs-section-tab', { active: tab.active }]}
+          aria-current={tab.active ? 'page' : undefined}
+          {...(tab.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          {tab.icon === 'book' ? (
+            <svg
+              class="docs-section-tab__icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+          ) : (
+            <svg
+              class="docs-section-tab__icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg>
+          )}
+          <span>{tab.label}</span>
+        </a>
+      ))
+    }
+  </nav>
 </div>
 
 <style>
   @layer starlight.core {
-    .header {
-      display: flex;
-      gap: var(--sl-nav-gap);
-      justify-content: space-between;
-      align-items: center;
+    .docs-header-frame {
+      display: grid;
+      grid-template-rows: 3.75rem 3rem;
       height: 100%;
     }
 
+    .header {
+      display: flex;
+      gap: var(--sl-nav-gap);
+      align-items: center;
+      height: 3.75rem;
+    }
+
     .title-wrapper {
-      /* Prevent long titles overflowing and covering the search and menu buttons on narrow viewports. */
       overflow: clip;
-      /* Avoid clipping focus ring around link inside title wrapper. */
-      padding: 0.25rem;
-      margin: -0.25rem;
       min-width: 0;
+      margin: -0.25rem;
+      padding: 0.25rem;
+    }
+
+    .docs-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.64rem;
+      min-width: 0;
+      color: var(--ac-doc-text);
+      font-size: 0.98rem;
+      font-weight: 720;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .docs-brand img {
+      flex: none;
+      width: 1.9rem;
+      height: 1.9rem;
+      border-radius: 0.55rem;
+      box-shadow: 0 10px 20px rgba(40, 24, 46, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+    }
+
+    .docs-brand-divider {
+      width: 1px;
+      height: 1.15rem;
+      background: var(--sl-color-hairline);
+    }
+
+    .docs-brand-section {
+      color: color-mix(in oklch, var(--ac-doc-text) 68%, var(--ac-doc-muted));
+      font-weight: 560;
+    }
+
+    .header-search {
+      flex: 1 1 28.75rem;
+      max-width: 28.75rem;
+    }
+
+    .header-search :global(button[data-open-modal]) {
+      max-width: none;
+    }
+
+    .docs-section-tabs {
+      display: flex;
+      align-items: end;
+      gap: 2.15rem;
+      height: 3rem;
+      margin-inline: auto;
+      border-bottom: 1px solid transparent;
+    }
+
+    .docs-section-tab {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.46rem;
+      height: 100%;
+      color: color-mix(in oklch, var(--ac-doc-text) 58%, var(--ac-doc-muted));
+      font-size: 0.9rem;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+
+    .docs-section-tab__icon {
+      flex: none;
+      width: 1.02rem;
+      height: 1.02rem;
+    }
+
+    .docs-section-tab:hover {
+      color: var(--ac-doc-text);
+    }
+
+    .docs-section-tab.active {
+      color: var(--ac-doc-text);
+    }
+
+    .docs-section-tab.active::after {
+      content: "";
+      position: absolute;
+      inset-inline: -0.08rem;
+      bottom: 0;
+      height: 2px;
+      border-radius: 999px 999px 0 0;
+      background: var(--ac-doc-grad);
+      box-shadow: 0 -8px 24px color-mix(in oklch, var(--ac-doc-accent) 24%, transparent);
     }
 
     .right-group,
-    .social-icons {
-      gap: 1rem;
+    .desktop-extras {
       align-items: center;
-    }
-    .social-icons::after {
-      content: '';
-      height: 2rem;
-      border-inline-end: 1px solid var(--sl-color-gray-5);
+      gap: 0.75rem;
     }
 
-    .back-link {
-      color: var(--sl-color-text-accent);
-      text-decoration: none;
-      font-size: var(--sl-text-sm);
+    /* Push the trailing controls to the far edge so the search field hugs the
+     * brand on the left, matching the reference header (search is left-aligned,
+     * not centred). */
+    .right-group {
+      margin-inline-start: auto;
+    }
+
+    .docs-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.5rem;
+      padding: 0 1rem;
+      border-radius: 999px;
+      color: white;
+      background: var(--ac-doc-grad);
+      box-shadow: 0 8px 22px rgba(224, 78, 157, 0.22);
+      font-size: 0.82rem;
       font-weight: 600;
-      padding: 0.5em;
-      margin: -0.5em;
-    }
-    .back-link:hover {
-      color: var(--sl-color-white);
+      letter-spacing: -0.005em;
+      text-decoration: none;
+      transition: transform 0.18s var(--ease), box-shadow 0.18s;
     }
 
-    @media (min-width: 50rem) {
-      :global(:root[data-has-sidebar]) {
-        --__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
+    .docs-cta:hover,
+    .docs-cta:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(224, 78, 157, 0.32);
+    }
+
+    .desktop-extras {
+      gap: 0.75rem;
+    }
+
+    .desktop-extras:empty {
+      display: none;
+    }
+
+    @media (max-width: 50rem) {
+      .docs-header-frame {
+        grid-template-rows: 3.6rem;
       }
-      :global(:root:not([data-has-toc])) {
-        --__toc-width: 0rem;
-      }
+
       .header {
-        --__sidebar-width: max(0rem, var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x));
-        --__main-column-fr: calc(
-          (
-              100% + var(--__sidebar-pad, 0rem) - var(--__toc-width, var(--sl-sidebar-width)) -
-                (2 * var(--__toc-width, var(--sl-nav-pad-x))) - var(--sl-content-inline-start, 0rem) -
-                var(--sl-content-width)
-            ) / 2
-        );
-        display: grid;
-        grid-template-columns:
-          /* 1 (site title): runs up until the main content column's left edge or the width of the title, whichever is the largest  */
-          minmax(
-            calc(var(--__sidebar-width) + max(0rem, var(--__main-column-fr) - var(--sl-nav-gap))),
-            auto
-          )
-          /* 2 (search box): all free space that is available. */
-          1fr
-          /* 3 (right items): use the space that these need. */
-          auto;
-        align-content: center;
+        height: 3.6rem;
+      }
+
+      .header-search {
+        flex: 0 0 auto;
+        margin-inline-start: auto;
+        margin-inline-end: 3.25rem;
+      }
+
+      .docs-section-tabs {
+        display: none;
       }
     }
   }

@@ -1,0 +1,114 @@
+---
+title: Turn highlights into a reviewable reading memory
+description: Acorny helps you capture highlights, import existing reading notes, and review important ideas as recall cards with spaced repetition.
+hero:
+  title: Turn highlights into a reviewable reading memory
+  tagline: Acorny helps you capture highlights, import existing reading notes, and review important ideas as recall cards with spaced repetition.
+---
+
+import IntroPanel from '../../components/docs/IntroPanel.astro'
+import FlowStack from '../../components/docs/FlowStack.astro'
+import QuickGrid from '../../components/docs/QuickGrid.astro'
+import Callout from '../../components/docs/Callout.astro'
+import CodeBar from '../../components/docs/CodeBar.astro'
+import Pager from '../../components/docs/Pager.astro'
+
+<IntroPanel path="docs/introduction" label="Acorny quick start" title="Keep the highlight and its source together." copy="Acorny keeps saved text tied to the article, book, file, or reading tool it came from, so review starts with useful context instead of an isolated sentence.">
+  <FlowStack slot="aside" steps={[
+    { number: '01', title: 'Capture', copy: 'Save or import a complete idea with its source.' },
+    { number: '02', title: 'Prepare', copy: 'Acorny makes saved highlights eligible for review.' },
+    { number: '03', title: 'Review', copy: 'Rate recall so the next interval can move sooner or later.' },
+  ]} />
+</IntroPanel>
+
+## Start here
+
+<QuickGrid items={[
+  { title: 'Quick start', description: 'Save a first highlight and begin a review session.', href: '/getting-started/quick-start/' },
+  { title: 'Import & sync', description: 'Choose the correct path for files, APIs, or connected services.', href: '/import-sync/overview/' },
+  { title: 'Review & recall', description: 'Understand recall cards, ratings, and review intervals.', href: '/review-recall/how-review-works/' },
+  { title: 'Privacy & data', description: 'See what the product stores and how to request a data copy.', href: '/account-data/privacy-beta-pricing/' },
+]} />
+
+<Callout variant="tip" title="Start with one complete idea">A full sentence with enough context is usually easier to review than a short fragment.</Callout>
+
+## The daily review loop
+
+<CodeBar language="workflow" targetId="review-loop" code={`save_or_import_highlight()
+make_highlight_eligible_for_review()
+show_recall_card_when_due()
+adjust_next_interval_from_rating()`} />
+
+## Supported sources
+
+### File and local imports
+
+Acorny accepts WeRead JSON, Readwise CSV, Moon+ Reader files, Cubox JSON, Diigo CSV, Kindle `My Clippings.txt`, annotated PDFs, Acorny JSON or CSV exports, and generic CSV files.
+
+### One-time API imports
+
+Readwise and Diigo can be imported through their APIs for a one-time transfer.
+
+### Connected sync
+
+Instapaper and Inoreader are the current connected sync providers. Koodo Reader, Moon+ Reader, and Readest can push highlights through Acorny’s Readwise-compatible endpoint using an Import API token.
+
+## Recall cards and ratings
+
+Acorny turns saved highlights into recall cards. Review asks you to remember the idea before rereading it, then rate the result.
+
+<table>
+  <caption>How each recall rating affects the next review interval</caption>
+  <thead>
+    <tr>
+      <th scope="col">Rating</th>
+      <th scope="col">Use it when</th>
+      <th scope="col">Scheduling effect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Forgot</th>
+      <td>You could not recall the idea</td>
+      <td>Bring the card back sooner</td>
+    </tr>
+    <tr>
+      <th scope="row">Hard</th>
+      <td>Recall required effort or missed details</td>
+      <td>Keep the interval short</td>
+    </tr>
+    <tr>
+      <th scope="row">Good</th>
+      <td>You remembered the main idea</td>
+      <td>Increase the interval</td>
+    </tr>
+    <tr>
+      <th scope="row">Easy</th>
+      <td>The idea felt immediate and stable</td>
+      <td>Increase the interval more</td>
+    </tr>
+  </tbody>
+</table>
+
+<Callout variant="note" title="Review timing">A highlight can exist in your library before it becomes due as a recall card. This is normal.</Callout>
+
+## Privacy and data export
+
+Acorny stores the highlights and account data needed to provide highlighting, import, sync, and review features. Self-serve data export is not a public Help Center workflow yet. If you need a copy of your data, contact support.
+
+## FAQ
+
+**Is Acorny still in beta?** Acorny is currently in public beta. Follow current in-product information for account-specific availability and pricing.
+
+**Does Acorny replace Readwise?** Acorny focuses on recall cards and review sessions. Start with a small migration before importing a full library.
+
+**Why is a saved highlight not in Review yet?** A highlight can be in your library before it becomes due. Check Highlights first, then return when cards are due.
+
+## Need help?
+
+Start with [Highlights are not showing up](/troubleshooting/highlights-not-showing/) or [Contact support](/account-data/contact-support/).
+
+<Pager
+  back={{ direction: 'back', label: 'Back to the Acorny app', href: 'https://acorny.io' }}
+  next={{ direction: 'next', label: 'Importing from sources', href: '/import-sync/overview/' }}
+/>

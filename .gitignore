@@ -42,3 +42,6 @@ playwright-report/
 .tmp/
 .tmp-*.png
 .tmp-*.log
+
+# MCP browser snapshots
+.playwright-mcp/

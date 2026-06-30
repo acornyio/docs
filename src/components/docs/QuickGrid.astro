@@ -1,0 +1,26 @@
+---
+interface Item {
+  title: string
+  description: string
+  href: string
+}
+
+interface Props {
+  items: Item[]
+}
+
+const { items } = Astro.props
+---
+
+<ul class="docs-home-quick" role="list">
+  {
+    items.map((item) => (
+      <li>
+        <a class="docs-home-quick__link" href={item.href}>
+          <strong>{item.title}</strong>
+          <span>{item.description}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
