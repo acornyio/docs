@@ -94,6 +94,21 @@ body::before {
   -webkit-backdrop-filter: blur(20px) saturate(165%);
 }
 
+/* Full-bleed divider between the top header row (brand / search / controls)
+ * and the section-tabs row below it. The header is sticky (a positioned
+ * containing block), so this pseudo resolves against it; the negative inline
+ * inset cancels the header's horizontal padding so the line reaches both
+ * viewport edges like the bottom border. The top row is 3.75rem tall. */
+.page > header::after {
+  content: "";
+  position: absolute;
+  top: 3.75rem;
+  inset-inline: calc(-1 * var(--sl-nav-pad-x));
+  height: 1px;
+  background: color-mix(in oklch, var(--ac-doc-border) 92%, transparent);
+  pointer-events: none;
+}
+
 .header-shell {
   width: min(var(--ac-doc-shell-width), calc(100vw - 2rem));
   margin-inline: auto;
@@ -127,41 +142,35 @@ body::before {
 }
 
 .header-shell kbd {
-  /* Reset: the outer shortcut wrapper is just a layout container, not a key.
-   * Without this, Starlight's default kbd background paints a dark slab around
-   * the inner key kbds. The descendant rule below overrides these on inner kbds. */
-  background: transparent;
-  border: 0;
-}
-
-.header-shell kbd kbd {
-  /* Starlight renders the Ctrl+K shortcut as a nested kbd wrapper around one
-   * inner kbd per key. Style only the inner keys so the wrapper stays
-   * transparent (see reset rule above).
-   *
-   * Matches the MarkText reference's `.docnav-search .kbd` (see
-   * marktext/packages/website/src/app/docs/docs.css line 101):
-   *   - thin border, monospace label, ~11px, padding 3px/7px, radius 6px
-   *   - subtle `background: var(--panel)` fill so the shortcut reads as a
-   *     keyboard cap against the search field, not as a floating outline
-   *     (the design mockup shows the same fill — the earlier "transparent"
-   *     interpretation was wrong, see commit 9529433 for the correction).
-   *
-   * MarkText's `--panel` is `rgba(255,255,255,0.025)` in dark mode and
-   * `rgba(10,10,25,0.025)` in light mode. Re-create that ~2.5% tint by mixing
-   * the text color into the panel at low opacity, so the shortcut stays
-   * theme-aware without depending on Starlight's --sl-color-gray-6 (which
-   * computed to a much heavier fill and re-introduced the original bug). */
-  border: 1px solid color-mix(in oklch, var(--ac-doc-text) 22%, transparent);
-  color: color-mix(in oklch, var(--ac-doc-text) 82%, var(--ac-doc-muted));
+  /* Render the whole Ctrl+K shortcut as ONE pill (the outer wrapper carries the
+   * border / fill), with the individual key labels as plain text inside it —
+   * a single combined-key cap, not two separate caps. */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  padding: 3px 8px;
+  border: 1px solid color-mix(in oklch, var(--ac-doc-text) 20%, transparent);
+  border-radius: 7px;
   background: color-mix(in oklch, var(--ac-doc-text) 4%, var(--ac-doc-panel));
+  color: color-mix(in oklch, var(--ac-doc-text) 82%, var(--ac-doc-muted));
   box-shadow: none;
-  border-radius: 6px;
-  padding: 3px 7px;
   font-size: 11px;
   line-height: 1;
   font-weight: 500;
   font-family: var(--ac-doc-mono, var(--__sl-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace));
+}
+
+.header-shell kbd kbd {
+  /* Inner per-key labels inherit everything from the pill and carry no chrome
+   * of their own — otherwise Ctrl and K read as two boxed caps instead of one
+   * combined shortcut. */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
 }
 
 .right-group select,
@@ -221,11 +230,13 @@ body::before {
 
 .sidebar-pane {
   border-inline-end: 0;
+  scrollbar-gutter: auto;
   background: color-mix(in oklch, var(--ac-doc-bg) 96%, transparent);
 }
 
 .sidebar-content {
-  padding: 2.2rem 1.2rem 0 1.75rem;
+  width: 100%;
+  padding: 2.2rem 0.75rem 0 1.625rem;
   gap: 1.28rem;
 }
 
@@ -531,18 +542,29 @@ body::before {
   color: inherit;
 }
 
-.pagination-links a span:first-child,
-.pagination-links a .label {
-  color: color-mix(in oklch, var(--ac-doc-text) 62%, var(--ac-doc-muted));
-  font-size: 0.82rem;
-  font-weight: 560;
+/* Starlight renders each pagination link as:
+ *   <a><svg/><span> Previous|Next <br/> <span class="link-title">Title</span> </span></a>
+ * so the direction label is loose text in the outer span and the page title is
+ * the inner `.link-title`. Style the outer span as the small uppercase label and
+ * the inner span as the larger bold title — mirroring the custom homepage pager
+ * (.docs-home-pager__card .dir / .nm). */
+.pagination-links a > span {
+  color: color-mix(in oklch, var(--ac-doc-text) 60%, var(--ac-doc-muted));
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-transform: uppercase;
 }
 
-.pagination-links a span:last-child,
-.pagination-links a .title {
+.pagination-links a .link-title {
+  display: block;
+  margin-top: 0.15rem;
   color: var(--ac-doc-text);
-  font-weight: 650;
+  font-size: 0.95rem;
+  font-weight: 620;
   letter-spacing: -0.015em;
+  text-transform: none;
 }
 
 .pagination-links a svg {
@@ -557,8 +579,7 @@ body::before {
     var(--ac-doc-panel-soft);
 }
 
-.pagination-links a:hover span:last-child,
-.pagination-links a:hover .title,
+.pagination-links a:hover .link-title,
 .pagination-links a:hover svg {
   color: var(--ac-doc-text);
 }
@@ -610,14 +631,23 @@ body::before {
 @media (min-width: 72rem) {
   :root {
     --sl-content-pad-x: 1.65rem;
+    --ac-doc-shell-offset: max(0rem, calc((100vw - var(--ac-doc-shell-width)) / 2));
   }
 
   .page {
     background: transparent;
   }
 
+  /* Center the fixed sidebar to align with the start of the shell */
+  .sidebar-pane {
+    inset-inline-start: var(--ac-doc-shell-offset);
+    width: var(--sl-sidebar-width);
+  }
+
+  /* Push the main frame right by the centering offset + sidebar width */
   .main-frame {
-    padding-inline-start: var(--sl-content-inline-start);
+    padding-inline-start: calc(var(--ac-doc-shell-offset) + var(--sl-content-inline-start));
+    padding-inline-end: var(--ac-doc-shell-offset);
   }
 
   [data-has-sidebar][data-has-toc] .main-pane {
@@ -645,6 +675,24 @@ body::before {
   .content-panel {
     padding-inline-start: var(--ac-doc-content-offset);
   }
+
+  /* Align the header shell with the content grid below it. The shell is wider
+   * than the actual sidebar+content+TOC grid, so centring it (margin: auto)
+   * left the brand and the trailing controls overhanging the columns. Instead,
+   * pin the left edge to the sidebar content baseline and the right edge to the
+   * right-hand TOC card. The header itself already contributes --sl-nav-pad-x
+   * padding, so the left margin uses the raw shell offset; the right margin
+   * keeps compensating for that padding and for the empty gutter inside the TOC
+   * container (container width - the 14rem TOC card), so the controls stop
+   * exactly at the card's edge. */
+  .header-shell {
+    width: auto;
+    max-width: none;
+    margin-inline-start: var(--ac-doc-shell-offset);
+    margin-inline-end: calc(
+      var(--ac-doc-shell-offset) - var(--sl-nav-pad-x) + var(--ac-doc-toc-width) + 2.25rem - 14rem
+    );
+  }
 }
 
 @media (max-width: 50rem) {
@@ -654,6 +702,12 @@ body::before {
 
   .header-shell {
     width: calc(100vw - 1rem);
+  }
+
+  /* The section-tabs row is hidden on mobile, so the inter-row divider must go
+   * too — otherwise it floats below the single-row header. */
+  .page > header::after {
+    display: none;
   }
 
   .download-link {

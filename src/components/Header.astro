@@ -39,12 +39,12 @@ const tabs = [
       {shouldRenderSearch && <Search />}
     </div>
     <div class="sl-hidden md:sl-flex print:hidden right-group">
-      <a href="https://acorny.io" class="docs-cta" rel="noopener noreferrer" target="_blank">Open app site</a>
       <ThemeToggle />
       <div class="sl-hidden lg:sl-flex desktop-extras">
         <SocialIcons />
         <LanguageSelect />
       </div>
+      <a href="https://acorny.io" class="docs-cta" rel="noopener noreferrer" target="_blank">Open app site</a>
     </div>
   </div>
   <nav class="docs-section-tabs header-shell" aria-label="Documentation sections">
@@ -73,7 +73,6 @@ const tabs = [
     .header {
       display: flex;
       gap: var(--sl-nav-gap);
-      justify-content: space-between;
       align-items: center;
       height: 3.75rem;
     }
@@ -166,6 +165,13 @@ const tabs = [
     .desktop-extras {
       align-items: center;
       gap: 0.75rem;
+    }
+
+    /* Push the trailing controls to the far edge so the search field hugs the
+     * brand on the left, matching the reference header (search is left-aligned,
+     * not centred). */
+    .right-group {
+      margin-inline-start: auto;
     }
 
     .docs-cta {

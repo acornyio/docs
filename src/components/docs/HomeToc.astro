@@ -28,25 +28,29 @@ const {
 } = Astro.props
 ---
 
-<aside class="docs-home-toc" aria-label="On this page">
-  <div class="docs-home-toc__head">On this page</div>
-  <nav class="docs-home-toc__list" id="docsHomeToc">
-    {
-      items.map((item) => (
-        <a href={item.href} class:list={[{ sub: item.sub }]}>
-          {item.label}
+<div class="right-sidebar-panel sl-hidden lg:sl-block">
+  <div class="sl-container">
+    <aside class="docs-home-toc" aria-label="On this page">
+      <div class="docs-home-toc__head">On this page</div>
+      <nav class="docs-home-toc__list" id="docsHomeToc">
+        {
+          items.map((item) => (
+            <a href={item.href} class:list={[{ sub: item.sub }]}>
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="docs-home-toc__aside">
+        <b>{ctaTitle}</b>
+        <p>{ctaCopy}</p>
+        <a class="docs-home-toc__cta" href={ctaHref} rel="noopener noreferrer" target="_blank">
+          {ctaLabel}
         </a>
-      ))
-    }
-  </nav>
-  <div class="docs-home-toc__aside">
-    <b>{ctaTitle}</b>
-    <p>{ctaCopy}</p>
-    <a class="docs-home-toc__cta" href={ctaHref} rel="noopener noreferrer" target="_blank">
-      {ctaLabel}
-    </a>
+      </div>
+    </aside>
   </div>
-</aside>
+</div>
 
 <script>
   const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('#docsHomeToc a'))
