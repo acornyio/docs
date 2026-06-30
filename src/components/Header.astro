@@ -7,20 +7,16 @@ import SocialIcons from 'virtual:starlight/components/SocialIcons'
 import ThemeToggle from './ThemeToggle.astro'
 
 const shouldRenderSearch = config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro'
-const pathname = Astro.url.pathname
 const tabs = [
-  { label: 'User docs', href: '/', active: pathname === '/' || pathname.startsWith('/getting-started/') },
-  { label: 'Importing', href: '/import-sync/overview/', active: pathname.startsWith('/import-sync/') },
-  { label: 'Recall cards', href: '/review-recall/how-review-works/', active: pathname.startsWith('/review-recall/') },
+  // This site *is* the user docs, so the User docs tab is always the active
+  // doc-set. Developer docs is a separate doc-set hosted on the app site.
+  { label: 'User docs', href: '/', icon: 'book', active: true, external: false },
   {
-    label: 'Privacy',
-    href: '/account-data/privacy-beta-pricing/',
-    active: pathname.includes('/privacy') || pathname.includes('/pricing'),
-  },
-  {
-    label: 'FAQ',
-    href: '/#faq',
+    label: 'Developer docs',
+    href: 'https://acorny.io/developers',
+    icon: 'code',
     active: false,
+    external: true,
   },
 ]
 ---
@@ -44,7 +40,7 @@ const tabs = [
         <SocialIcons />
         <LanguageSelect />
       </div>
-      <a href="https://acorny.io" class="docs-cta" rel="noopener noreferrer" target="_blank">Open app site</a>
+      <a href="https://acorny.io" class="docs-cta" rel="noopener noreferrer" target="_blank">Open Acorny</a>
     </div>
   </div>
   <nav class="docs-section-tabs header-shell" aria-label="Documentation sections">
@@ -54,8 +50,38 @@ const tabs = [
           href={tab.href}
           class:list={['docs-section-tab', { active: tab.active }]}
           aria-current={tab.active ? 'page' : undefined}
+          {...(tab.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         >
-          {tab.label}
+          {tab.icon === 'book' ? (
+            <svg
+              class="docs-section-tab__icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+          ) : (
+            <svg
+              class="docs-section-tab__icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg>
+          )}
+          <span>{tab.label}</span>
         </a>
       ))
     }
@@ -138,12 +164,23 @@ const tabs = [
       position: relative;
       display: inline-flex;
       align-items: center;
+      gap: 0.46rem;
       height: 100%;
       color: color-mix(in oklch, var(--ac-doc-text) 58%, var(--ac-doc-muted));
       font-size: 0.9rem;
       font-weight: 650;
       letter-spacing: -0.01em;
       text-decoration: none;
+    }
+
+    .docs-section-tab__icon {
+      flex: none;
+      width: 1.02rem;
+      height: 1.02rem;
+    }
+
+    .docs-section-tab:hover {
+      color: var(--ac-doc-text);
     }
 
     .docs-section-tab.active {

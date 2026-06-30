@@ -6,20 +6,21 @@
   --ac-doc-shell-width: 92.5rem;
   --ac-doc-content-offset: 1.4rem;
   --ac-doc-main-gutter: 3rem;
-  --ac-doc-accent: oklch(65.6% 0.212 354.3);
-  --ac-doc-accent-2: oklch(73% 0.153 310);
-  --ac-doc-accent-3: oklch(74% 0.104 22);
-  --ac-doc-accent-ink: oklch(53% 0.16 351);
-  --ac-doc-grad: linear-gradient(110deg, var(--ac-doc-accent-2) 0%, var(--ac-doc-accent) 54%, var(--ac-doc-accent-3) 100%);
+  /* MarkText brand — exact values. Light theme. */
+  --ac-doc-accent: #ec4899;
+  --ac-doc-accent-2: #a855f7;
+  --ac-doc-accent-3: #fb7185;
+  --ac-doc-accent-ink: #c01d63; /* darkened pink for link/eyebrow contrast on white */
+  --ac-doc-grad: linear-gradient(110deg, var(--ac-doc-accent-2) 0%, var(--ac-doc-accent) 52%, var(--ac-doc-accent-3) 100%);
   --ac-doc-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --ac-doc-bg: oklch(98.7% 0.004 286);
-  --ac-doc-panel: oklch(100% 0 0);
-  --ac-doc-panel-soft: oklch(97.6% 0.006 286);
-  --ac-doc-text: oklch(20.3% 0.014 285);
-  --ac-doc-muted: oklch(54.8% 0.017 286);
-  --ac-doc-border: oklch(91.8% 0.01 286);
-  --ac-doc-border-strong: oklch(85.5% 0.018 286);
-  --ac-doc-shadow: 0 22px 60px rgba(79, 30, 63, 0.07);
+  --ac-doc-bg: #fafafc;
+  --ac-doc-panel: #ffffff;
+  --ac-doc-panel-soft: #f3f3f7;
+  --ac-doc-text: #16161d;
+  --ac-doc-muted: #74747f;
+  --ac-doc-border: rgba(12, 12, 30, 0.1);
+  --ac-doc-border-strong: rgba(12, 12, 30, 0.16);
+  --ac-doc-shadow: 0 40px 100px -34px rgba(60, 20, 80, 0.18);
   --sl-font: "Geist", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
   --sl-font-mono: "Geist Mono", "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
   --sl-content-width: 46rem;
@@ -45,18 +46,19 @@
 }
 
 :root[data-theme="dark"] {
-  --ac-doc-accent: oklch(67% 0.22 354);
-  --ac-doc-accent-2: oklch(72% 0.15 310);
-  --ac-doc-accent-3: oklch(75% 0.12 22);
-  --ac-doc-accent-ink: oklch(72% 0.18 354);
-  --ac-doc-bg: oklch(19% 0.015 286);
-  --ac-doc-panel: oklch(22.4% 0.016 290);
-  --ac-doc-panel-soft: oklch(25.4% 0.017 290);
-  --ac-doc-text: oklch(94.5% 0.006 290);
-  --ac-doc-muted: oklch(72% 0.012 290);
-  --ac-doc-border: oklch(31% 0.02 290);
-  --ac-doc-border-strong: oklch(40% 0.024 290);
-  --ac-doc-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+  /* MarkText brand — exact values. Dark theme = true near-black #08080b. */
+  --ac-doc-accent: #ec4899;
+  --ac-doc-accent-2: #a855f7;
+  --ac-doc-accent-3: #fb7185;
+  --ac-doc-accent-ink: #f472b6; /* lifted pink for link contrast on near-black */
+  --ac-doc-bg: #08080b;
+  --ac-doc-panel: #111119;
+  --ac-doc-panel-soft: #16161d;
+  --ac-doc-text: #ededf2;
+  --ac-doc-muted: #7c7c8c;
+  --ac-doc-border: rgba(255, 255, 255, 0.09);
+  --ac-doc-border-strong: rgba(255, 255, 255, 0.14);
+  --ac-doc-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.8);
   --sl-color-accent-low: color-mix(in oklch, var(--ac-doc-accent) 18%, black);
 }
 
@@ -253,10 +255,10 @@ body::before {
 .sidebar-content summary {
   min-height: 1.85rem;
   padding: 0.2rem 0.68rem;
-  color: color-mix(in oklch, var(--ac-doc-muted) 74%, var(--ac-doc-text));
-  font-size: 0.72rem;
-  font-weight: 680;
-  letter-spacing: 0.08em;
+  color: color-mix(in oklch, var(--ac-doc-text) 66%, var(--ac-doc-muted));
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.085em;
   text-transform: uppercase;
   opacity: 1;
 }
@@ -277,10 +279,30 @@ body::before {
   margin-top: 1.22rem;
 }
 
+/* Nest each group's items under a hairline rail so the parent group label and
+ * its child pages read as one indented branch — restoring the primary/secondary
+ * hierarchy. The rail lives on the list; each link carries a transparent
+ * left-border that overlaps it, and the active page lights that border (same
+ * pattern as the right-hand TOC rail). */
+.sidebar-content ul ul {
+  margin-top: 0.45rem;
+  margin-inline-start: 0.82rem;
+  padding-inline-start: 0;
+  border-inline-start: 1px solid var(--ac-doc-border);
+}
+
 .sidebar-content ul ul li {
   margin-inline-start: 0;
   padding-inline-start: 0;
   border-inline-start: 0;
+}
+
+.sidebar-content ul ul a {
+  margin-inline-start: -1px;
+  padding-inline-start: 0.92rem;
+  border-inline-start: 2px solid transparent;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
 }
 
 .sidebar-content a {
@@ -307,8 +329,7 @@ body::before {
 .sidebar-content a[aria-current="true"] {
   color: var(--ac-doc-text);
   background: color-mix(in oklch, var(--ac-doc-accent) 17%, var(--ac-doc-bg));
-  border-inline-start: 2px solid var(--ac-doc-accent);
-  padding-inline-start: calc(0.72rem - 2px);
+  border-inline-start-color: var(--ac-doc-accent);
   font-weight: 650;
   box-shadow: none;
 }
@@ -447,19 +468,37 @@ body::before {
   background: var(--ac-doc-accent);
 }
 
+/* Wide tables (e.g. the import comparison tables) used to be clipped: the table
+ * carried `overflow: hidden` with no scroll, so anything past the 46rem content
+ * column was cut off. Make the table its own horizontal scroll container so the
+ * rounded frame is preserved AND wide content scrolls instead of vanishing. */
 .sl-markdown-content table:not(:where(.not-content *)) {
-  overflow: hidden;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
   border: 1px solid var(--ac-doc-border);
+  border-collapse: collapse;
   border-radius: 0.9rem;
   background: var(--ac-doc-panel);
-  box-shadow: 0 1px 0 color-mix(in oklch, white 45%, transparent) inset;
+}
+
+.sl-markdown-content :is(th, td):not(:where(.not-content *)) {
+  padding: 0.62rem 0.95rem;
+  border-bottom: 1px solid var(--ac-doc-border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.sl-markdown-content tbody tr:last-child :is(th, td):not(:where(.not-content *)) {
+  border-bottom: 0;
 }
 
 .sl-markdown-content th:not(:where(.not-content *)) {
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ac-doc-muted);
+  font-size: 0.86rem;
+  font-weight: 650;
+  letter-spacing: -0.005em;
+  color: var(--ac-doc-text);
   background: var(--ac-doc-panel-soft);
 }
 
