@@ -39,6 +39,19 @@ const sectionBreadcrumbs = {
   },
 }
 
+const sectionBreadcrumbsZh = {
+  'getting-started': { name: '入门', item: `${siteUrl}/zh/getting-started/what-is-acorny/` },
+  'import-sync': { name: '导入与同步', item: `${siteUrl}/zh/import-sync/overview/` },
+  'review-recall': { name: '复习与回顾', item: `${siteUrl}/zh/review-recall/how-review-works/` },
+  extensions: { name: '扩展与应用', item: `${siteUrl}/zh/extensions/browser-extension/` },
+  'account-data': { name: '账户与数据', item: `${siteUrl}/zh/account-data/privacy-beta-pricing/` },
+  troubleshooting: { name: '故障排查', item: `${siteUrl}/zh/troubleshooting/highlights-not-showing/` },
+}
+
+export function localeFromRoute(route) {
+  return route.startsWith('/zh/') ? 'zh-CN' : 'en'
+}
+
 async function listMarkdownFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true })
   const files = await Promise.all(
@@ -73,6 +86,9 @@ function routeFromMarkdownFile(filePath) {
   const relativePath = path.relative(contentRoot, filePath).replaceAll(path.sep, '/')
   if (relativePath === '404.md') return null
   if (/^index\.mdx?$/.test(relativePath)) return '/'
+  if (/\/index\.mdx?$/.test(relativePath)) {
+    return `/${relativePath.replace(/\/index\.mdx?$/, '')}/`
+  }
   return `/${relativePath.replace(/\.mdx?$/, '')}/`
 }
 
@@ -100,9 +116,11 @@ function stripMarkdown(markdown) {
 }
 
 function buildHowToSchema(page) {
-  // HowTo schema is limited to procedural docs whose titles follow current guide naming.
-  // Add frontmatter opt-in before broadening this to non-import/export workflows.
-  if (!/^(Import|Sync|Run|Quick start)/.test(page.title)) return null
+  // HowTo schema targets procedural guides. Titles are matched by prefix — English
+  // (Import/Sync/Run/Quick start) and the equivalent Chinese prefixes (从/导入/运行/快速开始).
+  // Every page whose title matches one of these is a procedural guide, and the numbered-list
+  // gate below still excludes non-procedural sections from becoming steps.
+  if (!/^(Import|Sync|Run|Quick start|从|导入|运行|快速开始)/.test(page.title)) return null
 
   const sections = [...page.source.matchAll(/^##\s+(.+)$/gm)]
   const steps = []
@@ -136,10 +154,13 @@ function buildHowToSchema(page) {
 }
 
 function buildBreadcrumbSchema(page) {
-  if (page.route === '/') return null
+  if (page.route === '/' || page.route === '/zh/') return null
 
-  const sectionKey = page.route.split('/').filter(Boolean)[0]
-  const section = sectionBreadcrumbs[sectionKey]
+  const parts = page.route.split('/').filter(Boolean)
+  const isZh = parts[0] === 'zh'
+  const sectionKey = isZh ? parts[1] : parts[0]
+  const sections = isZh ? sectionBreadcrumbsZh : sectionBreadcrumbs
+  const section = sections[sectionKey]
   if (!section) return null
 
   return {
@@ -148,8 +169,8 @@ function buildBreadcrumbSchema(page) {
     itemListElement: [
       {
         position: 1,
-        name: 'Home',
-        item: `${siteUrl}/`,
+        name: isZh ? '首页' : 'Home',
+        item: isZh ? `${siteUrl}/zh/` : `${siteUrl}/`,
         '@type': 'ListItem',
       },
       {
@@ -168,7 +189,7 @@ function buildBreadcrumbSchema(page) {
   }
 }
 
-function buildJsonLd(page) {
+export function buildJsonLd(page) {
   const graph = [
     {
       '@type': 'Organization',
@@ -200,7 +221,7 @@ function buildJsonLd(page) {
       url: page.url,
       isPartOf: { '@id': websiteId },
       publisher: { '@id': organizationId },
-      inLanguage: 'en',
+      inLanguage: localeFromRoute(page.route),
     },
   ]
 

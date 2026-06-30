@@ -30,21 +30,21 @@ Imports are best for migrations, restores, and one-time transfers.
 
 ## Sync
 
-Use sync when a connected service keeps sending new highlights after initial setup.
+Use sync when a service keeps sending new highlights after initial setup.
 
 Current sync providers:
 
 - Instapaper
 - Inoreader
 
-Push sync via Import API token:
+Reader app sync with an Import API token:
 
 - Koodo Reader
 - Moon+ Reader
 - Readest
 
-Koodo Reader, Moon+ Reader, and Readest can keep sending new highlights to Acorny through the Readwise-compatible endpoint. They are configured with an Acorny Import API token in Settings. They do not appear as Extensions & Apps connection cards because Acorny does not pull from these apps; the apps push highlights into Acorny.
+Koodo Reader, Moon+ Reader, and Readest are set up inside the reader app. In Acorny, you create an Import API token in Settings and paste it into the reader's Readwise integration settings. These apps do not appear as Extensions & Apps cards because the connection is started from the reader app.
 
 ## Choosing the right path
 
-If you have a file, use Upload File. If you have Readwise or Diigo credentials for a one-time pull, use Import from API. If Acorny shows a connected service card for your source, use Extensions & Apps. If your app can send highlights to a Readwise-compatible URL, use an Import API token.
+If you have a file, use Upload File. If you have Readwise or Diigo credentials for a one-time pull, use Import from API. If Acorny shows a connection card for your source, use Extensions & Apps. If your reader app has Readwise sync settings, open that app's guide and create an Import API token in Acorny Settings.

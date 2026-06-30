@@ -57,18 +57,26 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
     '/account-data/contact-support/',
     '/account-data/pricing/',
     '/troubleshooting/highlights-not-showing/',
+    '/zh/',
+    '/zh/import-sync/kindle/',
+    '/zh/getting-started/quick-start/',
   ]) {
     assert.match(sitemap, new RegExp(`<loc>https://docs\\.acorny\\.io${route.replaceAll('/', '\\/')}</loc>`))
   }
 
   const home = await readDist('index.html')
-  assert.match(home, /<title>Turn highlights into a reviewable reading memory \| Acorny Docs<\/title>/)
+  assert.match(home, /<title>Turn highlights into a reviewable reading memory \| Acorny Help Center<\/title>/)
   assert.match(home, /<link rel="canonical" href="https:\/\/docs\.acorny\.io\/" ?\/?>/)
   assert.match(home, /Acorny helps you capture highlights, import existing reading notes, and review important ideas as recall cards with spaced repetition\./)
   assert.match(home, /property="og:image" content="https:\/\/docs\.acorny\.io\/acorny_og-image\.png"/)
   assert.match(home, /rel="shortcut icon" href="\/favicon\.ico"/)
   assert.match(home, /Last updated:/)
   assert.match(home, /Built with Starlight/)
+
+  const kindleEn = await readDist('import-sync/kindle/index.html')
+  assert.match(kindleEn, /hreflang="zh-CN"/)
+  assert.match(kindleEn, /hreflang="en"/)
+  assert.match(kindleEn, /hreflang="x-default"/)
 
   const notFound = await readDist('404.html')
   assert.match(notFound, /<link rel="canonical" href="https:\/\/docs\.acorny\.io\/" ?\/?>/)
@@ -147,10 +155,15 @@ test('docs shell renders synchronized theme toggles', async () => {
 test('docs shell exposes real tabs and collapsed dense groups', async () => {
   const home = await readDist('index.html')
   const config = await readFile(new URL('../astro.config.mjs', import.meta.url), 'utf8')
-  for (const label of ['User docs', 'Importing', 'Recall cards', 'Privacy', 'FAQ']) {
+  for (const label of ['User docs', 'Developer docs']) {
     assert.match(home, new RegExp(`>\\s*${label}\\s*<`))
   }
-  assert.doesNotMatch(home, /Developer docs/)
+  // The old per-section tabs (Importing / Recall cards / …) were replaced by the
+  // two-tab doc-set switcher; make sure they are no longer rendered as tabs.
+  for (const removed of ['Importing', 'Recall cards']) {
+    assert.doesNotMatch(home, new RegExp(`>\\s*${removed}\\s*<`))
+  }
+  assert.match(home, /href="https:\/\/acorny\.io\/developers"/)
   assert.match(config, /label: 'Import & Sync',[\s\S]{0,120}collapsed: true/)
   assert.match(config, /label: 'Account & Data',[\s\S]{0,120}collapsed: true/)
 })
@@ -199,6 +212,10 @@ test('required first-wave pages render as static HTML', async () => {
     'account-data/contact-support/index.html',
     'account-data/pricing/index.html',
     'troubleshooting/highlights-not-showing/index.html',
+    'zh/index.html',
+    'zh/import-sync/kindle/index.html',
+    'zh/getting-started/quick-start/index.html',
+    'zh/account-data/contact-support/index.html',
   ]
 
   for (const file of requiredFiles) {
@@ -269,7 +286,7 @@ test('phase 2 content foundation includes screenshots and expanded search-intent
   assert.match(moonReader, /alt="Moon\+ Reader share menu with notes and highlights export options"/)
   assert.match(moonReader, /alt="Moon\+ Reader bookmarks screen with the settings button highlighted"/)
   assert.match(moonReader, /alt="Moon\+ Reader bookmark settings with Readwise sharing enabled"/)
-  assert.match(moonReader, /alt="Moon\+ Reader Readwise sync settings with Acorny endpoint fields"/)
+  assert.match(moonReader, /alt="Moon\+ Reader Readwise sync settings with Acorny token and URL fields"/)
 
   const cubox = await readDist('import-sync/cubox/index.html')
   assert.match(cubox, /What transfers/)
@@ -295,4 +312,26 @@ test('phase 2 content foundation includes screenshots and expanded search-intent
   const support = await readDist('account-data/contact-support/index.html')
   assert.match(support, /Do not send passwords/)
   assert.match(support, /source name/)
+})
+
+test('zh pages are built with translated titles and content', async () => {
+  const zhKindle = await readDist('zh/import-sync/kindle/index.html')
+  assert.match(zhKindle, /从 Kindle 导入/)
+  assert.match(zhKindle, /My Clippings\.txt/)
+  assert.match(zhKindle, /Acorny/)
+
+  const zhHome = await readDist('zh/index.html')
+  assert.match(zhHome, /记住你读过的内容。/)
+  assert.match(zhHome, /Acorny 帮助中心/)
+})
+
+test('zh pages emit locale-aware structured data', async () => {
+  const zhKindle = await readDist('zh/import-sync/kindle/index.html')
+  assert.match(zhKindle, /"@type":"WebPage"/)
+  assert.match(zhKindle, /"inLanguage":"zh-CN"/)
+  assert.match(zhKindle, /"@type":"BreadcrumbList"/)
+  assert.match(zhKindle, /"name":"首页"/)
+  assert.match(zhKindle, /"item":"https:\/\/docs\.acorny\.io\/zh\/import-sync\/overview\/"/)
+  assert.match(zhKindle, /"name":"导入与同步"/)
+  assert.match(zhKindle, /"@type":"HowTo"/)
 })

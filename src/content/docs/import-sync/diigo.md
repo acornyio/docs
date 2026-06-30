@@ -45,7 +45,7 @@ Diigo import can preserve:
 - Tags when present
 - Notes or sticky notes when the export provides enough structure
 - Created date when present
-- Diigo identity fields when present
+- Details Diigo provides to help avoid duplicates
 
 This is useful when you want web annotations from Diigo to become searchable highlights and review candidates in Acorny.
 

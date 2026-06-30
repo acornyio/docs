@@ -29,12 +29,19 @@ Thumbs.db
 coverage/
 test-results/
 playwright-report/
+.playwright/
 
 # TypeScript cache
 *.tsbuildinfo
 
-# Local Git worktrees
+# Local tooling caches and scratch files
+.claude/
+.agents/
 .worktrees/
+.pnpm-store/
+.tmp/
+.tmp-*.png
+.tmp-*.log
 
 # MCP browser snapshots
 .playwright-mcp/
