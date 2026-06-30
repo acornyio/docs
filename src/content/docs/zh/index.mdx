@@ -1,0 +1,114 @@
+---
+title: 把高亮变成可复习的阅读记忆
+description: Acorny 帮助你捕获高亮、导入现有的阅读笔记，并以间隔重复把重要想法作为复习卡来复习。
+hero:
+  title: 把高亮变成可复习的阅读记忆
+  tagline: Acorny 帮助你捕获高亮、导入现有的阅读笔记，并以间隔重复把重要想法作为复习卡来复习。
+---
+
+import IntroPanel from '../../../components/docs/IntroPanel.astro'
+import FlowStack from '../../../components/docs/FlowStack.astro'
+import QuickGrid from '../../../components/docs/QuickGrid.astro'
+import Callout from '../../../components/docs/Callout.astro'
+import CodeBar from '../../../components/docs/CodeBar.astro'
+import Pager from '../../../components/docs/Pager.astro'
+
+<IntroPanel path="docs/introduction" label="Acorny 快速开始" title="让高亮和它的来源待在一起。" copy="Acorny 会把保存的文本与它出自的文章、书籍、文件或阅读工具绑定在一起，因此复习时从有用的上下文开始，而不是一句孤立的话。">
+  <FlowStack slot="aside" steps={[
+    { number: '01', title: '捕获', copy: '保存或导入一个完整的想法，连同它的来源。' },
+    { number: '02', title: '准备', copy: 'Acorny 让保存的高亮可以进入复习。' },
+    { number: '03', title: '复习', copy: '为回忆评分，下一次的间隔便会相应提前或推后。' },
+  ]} />
+</IntroPanel>
+
+## 从这里开始
+
+<QuickGrid items={[
+  { title: '快速开始', description: '保存第一条高亮，并开始一次复习会话。', href: '/zh/getting-started/quick-start/' },
+  { title: '导入与同步', description: '为文件、API 或已连接的服务选择正确的路径。', href: '/zh/import-sync/overview/' },
+  { title: '复习与回顾', description: '了解复习卡、评分和复习间隔。', href: '/zh/review-recall/how-review-works/' },
+  { title: '隐私与数据', description: '了解产品存储了什么，以及如何申请数据副本。', href: '/zh/account-data/privacy-beta-pricing/' },
+]} />
+
+<Callout variant="tip" title="从一个完整的想法开始">一句包含足够上下文的话，通常比一个简短的片段更容易复习。</Callout>
+
+## 每日复习循环
+
+<CodeBar language="workflow" targetId="review-loop" code={`save_or_import_highlight()
+make_highlight_eligible_for_review()
+show_recall_card_when_due()
+adjust_next_interval_from_rating()`} />
+
+## 支持的来源
+
+### 文件与本地导入
+
+Acorny 支持微信读书 JSON、Readwise CSV、Moon+ Reader 文件、Cubox JSON、Diigo CSV、Kindle 的 `My Clippings.txt`、带批注的 PDF、Acorny 的 JSON 或 CSV 导出，以及通用 CSV 文件。
+
+### 一次性 API 导入
+
+Readwise 和 Diigo 可以通过它们的 API 进行一次性导入。
+
+### 持续同步
+
+Instapaper 和 Inoreader 是目前的持续同步服务。Koodo Reader、Moon+ Reader 和 Readest 可以使用 Import API 令牌，通过 Acorny 的 Readwise 兼容端点推送高亮。
+
+## 复习卡与评分
+
+Acorny 会把保存的高亮变成复习卡。复习会让你在重读之前先回忆这个想法，然后为结果评分。
+
+<table>
+  <caption>每个复习评分如何影响下一次复习间隔</caption>
+  <thead>
+    <tr>
+      <th scope="col">评分</th>
+      <th scope="col">何时使用</th>
+      <th scope="col">排程效果</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Forgot</th>
+      <td>你无法回忆起该想法</td>
+      <td>让卡片更早返回</td>
+    </tr>
+    <tr>
+      <th scope="row">Hard</th>
+      <td>回忆需要费劲，或遗漏了细节</td>
+      <td>让间隔保持较短</td>
+    </tr>
+    <tr>
+      <th scope="row">Good</th>
+      <td>你记住了主要想法</td>
+      <td>增大间隔</td>
+    </tr>
+    <tr>
+      <th scope="row">Easy</th>
+      <td>这个想法立刻就能想起且稳固</td>
+      <td>更大幅度地增大间隔</td>
+    </tr>
+  </tbody>
+</table>
+
+<Callout variant="note" title="复习时机">高亮可能先存在于你的库中，之后才作为复习卡到期。这是正常的。</Callout>
+
+## 隐私与数据导出
+
+Acorny 会存储提供高亮、导入、同步和复习功能所需的高亮内容与账户数据。自助式数据导出目前还不是公开的帮助中心流程。如果你需要数据副本，请联系支持。
+
+## 常见问题
+
+**Acorny 还处于 Beta 阶段吗？** Acorny 目前处于公开 Beta。具体到账户的可用性与定价，请以产品内的最新信息为准。
+
+**Acorny 会取代 Readwise 吗？** Acorny 专注于复习卡和复习会话。在导入整个库之前，先从小规模迁移开始。
+
+**为什么保存的高亮还没出现在复习里？** 高亮可能先在你的库中，之后才到期。先查看高亮列表，等卡片到期后再回来。
+
+## 需要帮助？
+
+先查看[高亮未显示](/zh/troubleshooting/highlights-not-showing/)或[联系支持](/zh/account-data/contact-support/)。
+
+<Pager
+  back={{ direction: 'back', label: '返回 Acorny 应用', href: 'https://acorny.io' }}
+  next={{ direction: 'next', label: '从来源导入', href: '/zh/import-sync/overview/' }}
+/>

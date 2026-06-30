@@ -321,8 +321,12 @@ test('zh pages are built with translated titles and content', async () => {
   assert.match(zhKindle, /Acorny/)
 
   const zhHome = await readDist('zh/index.html')
-  assert.match(zhHome, /记住你读过的内容。/)
+  assert.match(zhHome, /把高亮变成可复习的阅读记忆/)
   assert.match(zhHome, /Acorny 帮助中心/)
+  // The zh homepage mirrors the English redesigned shell (components, not the
+  // old plain-markdown page), so the translated section headings are present.
+  assert.match(zhHome, /每日复习循环/)
+  assert.match(zhHome, /class="docs-home-intro"/)
 })
 
 test('zh pages emit locale-aware structured data', async () => {

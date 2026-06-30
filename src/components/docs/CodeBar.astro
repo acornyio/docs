@@ -6,13 +6,28 @@ interface Props {
 }
 
 const { language, targetId, code } = Astro.props
+
+// Localize the copy-button copy per Starlight locale. The labels are also pushed
+// onto data-* attributes so the inline (page-global) script can read the right
+// strings without re-detecting the locale.
+const isZh = Astro.locals.starlightRoute?.locale === 'zh'
+const labels = isZh
+  ? { copy: '复制', copied: '已复制', failed: '复制失败', aria: '复制工作流代码' }
+  : { copy: 'Copy', copied: 'Copied', failed: 'Copy failed', aria: 'Copy workflow code' }
 ---
 
 <figure class="docs-home-code">
   <figcaption class="docs-home-code__bar">
     <span>{language}</span>
-    <button type="button" data-copy-target={targetId} aria-label="Copy workflow code">
-      <span aria-live="polite">Copy</span>
+    <button
+      type="button"
+      data-copy-target={targetId}
+      data-copy-label={labels.copy}
+      data-copied-label={labels.copied}
+      data-failed-label={labels.failed}
+      aria-label={labels.aria}
+    >
+      <span aria-live="polite">{labels.copy}</span>
     </button>
   </figcaption>
   <pre id={targetId}><code>{code}</code></pre>
@@ -26,14 +41,15 @@ const { language, targetId, code } = Astro.props
       const label = button.querySelector<HTMLElement>('[aria-live]')
       if (!target || !label) return
 
+      const copyLabel = button.dataset.copyLabel ?? 'Copy'
       try {
         await navigator.clipboard.writeText(target.textContent ?? '')
-        label.textContent = 'Copied'
+        label.textContent = button.dataset.copiedLabel ?? 'Copied'
         window.setTimeout(() => {
-          label.textContent = 'Copy'
+          label.textContent = copyLabel
         }, 1400)
       } catch {
-        label.textContent = 'Copy failed'
+        label.textContent = button.dataset.failedLabel ?? 'Copy failed'
       }
     })
   }

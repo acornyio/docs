@@ -3,23 +3,43 @@ const { starlightRoute } = Astro.locals
 const hero = starlightRoute.entry.data.hero
 const title = hero?.title ?? starlightRoute.entry.data.title
 const tagline = hero?.tagline ?? starlightRoute.entry.data.description
-const meta = [
-  'Capture from web pages and reading tools',
-  'Import files and connected services',
-  'Review recall cards with spaced repetition',
-]
+
+// The hero chrome (breadcrumb / eyebrow / meta pills) is fixed copy, so it has to
+// be localized per Starlight locale — otherwise the zh homepage shows English
+// chrome wrapped around Chinese title/body. `locale` is the locale key from the
+// config (undefined for the English root, 'zh' for the zh-CN locale).
+const isZh = starlightRoute.locale === 'zh'
+const t = isZh
+  ? {
+      homeLabel: '用户文档',
+      homeHref: '/zh/',
+      current: '介绍',
+      eyebrow: '用户文档',
+      meta: ['从网页和阅读工具中捕获', '导入文件与已连接的服务', '用间隔重复复习卡片'],
+    }
+  : {
+      homeLabel: 'User docs',
+      homeHref: '/',
+      current: 'Introduction',
+      eyebrow: 'User Documentation',
+      meta: [
+        'Capture from web pages and reading tools',
+        'Import files and connected services',
+        'Review recall cards with spaced repetition',
+      ],
+    }
 ---
 
 <section class="docs-home-hero" aria-labelledby="docs-home-title">
   <nav class="docs-home-hero__breadcrumb" aria-label="Breadcrumb">
-    <a href="/">User docs</a>
+    <a href={t.homeHref}>{t.homeLabel}</a>
     <span aria-hidden="true">/</span>
-    <span aria-current="page">Introduction</span>
+    <span aria-current="page">{t.current}</span>
   </nav>
-  <p class="docs-home-hero__eyebrow">User Documentation</p>
+  <p class="docs-home-hero__eyebrow">{t.eyebrow}</p>
   <h1 id="docs-home-title">{title}</h1>
   {tagline && <p class="docs-home-hero__lead">{tagline}</p>}
   <ul class="docs-home-hero__meta" role="list">
-    {meta.map((item) => <li>{item}</li>)}
+    {t.meta.map((item) => <li>{item}</li>)}
   </ul>
 </section>

@@ -7,10 +7,13 @@ import SocialIcons from 'virtual:starlight/components/SocialIcons'
 import ThemeToggle from './ThemeToggle.astro'
 
 const shouldRenderSearch = config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro'
+// Locale-aware home URL ('/' for English, '/zh/' for Simplified Chinese) so the
+// brand logo and User docs tab keep the visitor in their current language.
+const { siteTitleHref } = Astro.locals.starlightRoute
 const tabs = [
   // This site *is* the user docs, so the User docs tab is always the active
   // doc-set. Developer docs is a separate doc-set hosted on the app site.
-  { label: 'User docs', href: '/', icon: 'book', active: true, external: false },
+  { label: 'User docs', href: siteTitleHref, icon: 'book', active: true, external: false },
   {
     label: 'Developer docs',
     href: 'https://acorny.io/developers',
@@ -24,7 +27,7 @@ const tabs = [
 <div class="docs-header-frame">
   <div class="header header-shell docs-header-top">
     <div class="title-wrapper sl-flex">
-      <a href="/" class="docs-brand" aria-label="Acorny Docs home">
+      <a href={siteTitleHref} class="docs-brand" aria-label="Acorny Docs home">
         <img src="/android-chrome-192x192.png" alt="Acorny logo" width="28" height="28" />
         <span class="docs-brand-name" translate="no">Acorny</span>
         <span class="docs-brand-divider" aria-hidden="true"></span>
