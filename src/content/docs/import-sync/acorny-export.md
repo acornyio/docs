@@ -26,4 +26,4 @@ If an exported highlight already exists in your library, Acorny skips the duplic
 
 ## When to use provider-specific import instead
 
-If the file came directly from another service, choose that provider first. Provider-specific import can preserve more metadata than a generic CSV file.
+If the file came directly from another service, choose that provider first so Acorny can apply the supported schema and preserve source-specific metadata.

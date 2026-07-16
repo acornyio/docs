@@ -1,6 +1,7 @@
 ---
 title: 从 Readwise 导入
 description: 将你现有的 Readwise 高亮移入 Acorny。
+lastUpdated: 2026-07-16
 ---
 
 当你希望迁移已保存在 Readwise 中的高亮时，请使用 Readwise 导入。

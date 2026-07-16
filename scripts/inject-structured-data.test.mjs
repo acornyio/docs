@@ -145,3 +145,125 @@ test('buildJsonLd omits HowTo for a Chinese non-procedural title', () => {
   const graph = Object.fromEntries(schema['@graph'].map((n) => [n['@type'], n]))
   assert.equal(graph.HowTo, undefined, 'a non-procedural Chinese title must not produce HowTo')
 })
+
+test('buildJsonLd uses the audited quick-start sections as HowTo steps and emits dateModified', () => {
+  const schema = buildJsonLd({
+    route: '/getting-started/quick-start/',
+    source: [
+      '## 1. Create or sign in to your account',
+      'Create an account.',
+      '## 2. Install the browser extension',
+      'Install the extension.',
+      '## 3. Save your first highlight',
+      'Save a highlight.',
+      '## 4. Check your highlights',
+      'Check the library.',
+      '## 5. Start your first review',
+      'Open Review.',
+      '## 6. Import existing highlights',
+      'Choose an import path.',
+      '## 7. Know what "caught up" means',
+      'Read the scheduling explanation.',
+      '## Next steps',
+      '- Read more.',
+    ].join('\n'),
+    title: 'Quick start',
+    description: 'Install Acorny, save your first highlight, and start your first review.',
+    url: 'https://docs.acorny.io/getting-started/quick-start/',
+    dateModified: '2026-07-16',
+  })
+  const graph = Object.fromEntries(schema['@graph'].map((node) => [node['@type'], node]))
+
+  assert.equal(graph.WebPage.dateModified, '2026-07-16')
+  assert.deepEqual(
+    graph.HowTo.step.map((step) => step.name),
+    [
+      '1. Create or sign in to your account',
+      '2. Install the browser extension',
+      '3. Save your first highlight',
+      '4. Check your highlights',
+      '5. Start your first review',
+      '6. Import existing highlights',
+      '7. Know what "caught up" means',
+    ],
+  )
+  assert.equal(
+    graph.HowTo.step[0].url,
+    'https://docs.acorny.io/getting-started/quick-start/#1-create-or-sign-in-to-your-account',
+  )
+})
+
+test('buildJsonLd uses the actual Chinese quick-start heading anchors', () => {
+  const schema = buildJsonLd({
+    route: '/zh/getting-started/quick-start/',
+    source: [
+      '## 1. 创建账户或登录',
+      '创建账户。',
+      '## 2. 安装浏览器扩展',
+      '安装扩展。',
+      '## 3. 保存你的第一条高亮',
+      '保存高亮。',
+      '## 4. 检查你的高亮',
+      '检查高亮。',
+      '## 5. 开始你的第一次复习',
+      '打开复习。',
+      '## 6. 导入现有高亮',
+      '选择导入方式。',
+      '## 7. 了解“caught up”（复习完）是什么意思',
+      '了解排程。',
+      '## 后续步骤',
+      '- 继续阅读。',
+    ].join('\n'),
+    title: '快速开始',
+    description: '安装 Acorny、保存你的第一条高亮，并开始你的第一次复习。',
+    url: 'https://docs.acorny.io/zh/getting-started/quick-start/',
+  })
+  const howTo = schema['@graph'].find((node) => node['@type'] === 'HowTo')
+
+  assert.equal(howTo.step.length, 7)
+  assert.equal(
+    howTo.step[6].url,
+    'https://docs.acorny.io/zh/getting-started/quick-start/#7-了解caught-up复习完是什么意思',
+  )
+})
+
+test('buildJsonLd represents the complete Readwise migration path instead of one checklist section', () => {
+  const schema = buildJsonLd({
+    route: '/import-sync/readwise/',
+    source: [
+      '## Import options',
+      'Choose CSV or API import.',
+      '## What transfers',
+      'Highlight content transfers.',
+      '## Large migrations',
+      '1. Check the preview.',
+      '## After import',
+      'Check Highlights and Review.',
+      '## Troubleshooting',
+      'Retry with a valid export.',
+    ].join('\n'),
+    title: 'Import from Readwise',
+    description: 'Move your existing Readwise highlights into Acorny.',
+    url: 'https://docs.acorny.io/import-sync/readwise/',
+  })
+  const howTo = schema['@graph'].find((node) => node['@type'] === 'HowTo')
+
+  assert.deepEqual(
+    howTo.step.map((step) => step.name),
+    ['Import options', 'Large migrations', 'After import'],
+  )
+})
+
+test('buildJsonLd omits an invalid dateModified value', () => {
+  const schema = buildJsonLd({
+    route: '/getting-started/what-is-acorny/',
+    source: '## What is Acorny\nAcorny is a tool.',
+    title: 'What is Acorny?',
+    description: 'Learn what Acorny does.',
+    url: 'https://docs.acorny.io/getting-started/what-is-acorny/',
+    dateModified: 'recently',
+  })
+  const webPage = schema['@graph'].find((node) => node['@type'] === 'WebPage')
+
+  assert.equal(webPage.dateModified, undefined)
+})

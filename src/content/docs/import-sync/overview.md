@@ -1,50 +1,48 @@
 ---
 title: 'Overview: import vs sync'
-description: Understand the difference between one-time imports and connected sync in Acorny.
+description: Compare every current Acorny import and sync path, then open the guide for your source.
 ---
 
-Acorny supports two ways to bring highlights from other tools into your library.
+Acorny has three current ways to bring highlights into your library: a one-time file or API import, a connected service that keeps syncing, or a reader app that sends highlights with an Acorny Import API token.
 
-## Import
+## Choose by goal
 
-Use import when you have an export file, a local document, or credentials that Acorny uses only for a one-time pull.
+- **Moving an existing library once:** use a file import or a one-time API import.
+- **Receiving new highlights from a connected service:** connect Instapaper or Inoreader in Extensions & Apps.
+- **Sending highlights from a reader app:** create an Import API token in Acorny Settings, then configure the reader's Readwise-compatible sync.
 
-File and local import sources:
+## Current source matrix
 
-- WeRead JSON exported by the Acorny browser extension
-- Readwise CSV export
-- Moon+ Reader TXT, `.mrexpt`, `.mrstd`, or `.mrpro`
-- Cubox JSON export
-- Diigo CSV export
-- Kindle `My Clippings.txt`
-- PDF files with extractable annotations
-- Acorny exported JSON or CSV
-- Generic CSV files
+| Source | Current path | Transfer type | Open the guide |
+| --- | --- | --- | --- |
+| Acorny export | Upload exported JSON or CSV | One-time file import | [Import an Acorny export](/import-sync/acorny-export/) |
+| Supported CSV | Upload an Acorny, Readwise, or Diigo CSV export | One-time file import | [Import a CSV file](/import-sync/csv/) |
+| Cubox | Upload a Cubox JSON export | One-time file import | [Import from Cubox](/import-sync/cubox/) |
+| Diigo | Upload CSV or use Diigo credentials for a pull | One-time file or API import | [Import from Diigo](/import-sync/diigo/) |
+| Inoreader | Connect the service in Extensions & Apps | Connected sync | [Sync Inoreader highlights](/import-sync/inoreader/) |
+| Instapaper | Connect the service in Extensions & Apps | Connected sync | [Sync Instapaper highlights](/import-sync/instapaper/) |
+| Kindle | Upload `My Clippings.txt` | One-time file import | [Import from Kindle](/import-sync/kindle/) |
+| Koodo Reader | Configure Readwise sync with an Acorny Import API token | Reader app sync | [Sync Koodo Reader](/import-sync/koodo-reader/) |
+| Moon+ Reader | Upload a supported backup or configure Readwise sync | File import or reader app sync | [Import or sync Moon+ Reader](/import-sync/moon-reader/) |
+| PDF | Upload a PDF with extractable annotations | One-time local import | [Import highlights from PDF](/import-sync/pdf/) |
+| Readest | Configure its Readwise-compatible API with an Acorny token and URL | Reader app sync | [Sync Readest](/import-sync/readest/) |
+| Readwise | Upload CSV or use a Readwise access token for a pull | One-time file or API import | [Import from Readwise](/import-sync/readwise/) |
+| WeRead | Export `weread-export.json` with the Acorny extension, then upload it | One-time file import | [Import from WeRead](/import-sync/weread/) |
 
-One-time API import sources:
+## What each type means
 
-- Readwise API
-- Diigo API
+### One-time import
 
-Imports are best for migrations, restores, and one-time transfers.
+A one-time import copies the highlights available in the selected file or API response. Use it for migrations, restores, and occasional transfers. Repeating an import is not the same as keeping a provider connected.
 
-## Sync
+### Connected sync
 
-Use sync when a service keeps sending new highlights after initial setup.
+Instapaper and Inoreader appear as connection cards in Extensions & Apps. After setup, use [Manual sync](/import-sync/manual-sync/) when you need to request a sync outside the normal connected flow.
 
-Current sync providers:
+### Reader app sync
 
-- Instapaper
-- Inoreader
+Koodo Reader, Moon+ Reader, and Readest are configured inside the reader app. Create an Import API token in Acorny Settings and paste the documented URL and token into that app's Readwise integration settings. These reader apps do not appear as connected provider cards in Acorny.
 
-Reader app sync with an Import API token:
+## After highlights arrive
 
-- Koodo Reader
-- Moon+ Reader
-- Readest
-
-Koodo Reader, Moon+ Reader, and Readest are set up inside the reader app. In Acorny, you create an Import API token in Settings and paste it into the reader's Readwise integration settings. These apps do not appear as Extensions & Apps cards because the connection is started from the reader app.
-
-## Choosing the right path
-
-If you have a file, use Upload File. If you have Readwise or Diigo credentials for a one-time pull, use Import from API. If Acorny shows a connection card for your source, use Extensions & Apps. If your reader app has Readwise sync settings, open that app's guide and create an Import API token in Acorny Settings.
+Open your library and confirm the expected source and highlight text are present. If an import or connection does not complete, use [Import and sync troubleshooting](/import-sync/troubleshooting/). When the content is ready, continue with [How review sessions work](/review-recall/how-review-works/).
