@@ -1,6 +1,7 @@
 ---
 title: Quick start
 description: Install Acorny, save your first highlight, and start your first review.
+lastUpdated: 2026-07-16
 ---
 
 Use this guide when you want to get from a new account to your first saved highlight and first review session. The fastest path is to install the browser extension, save one passage from an article, confirm it appears in your library, and open Review.

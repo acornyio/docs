@@ -48,6 +48,40 @@ const sectionBreadcrumbsZh = {
   troubleshooting: { name: '故障排查', item: `${siteUrl}/zh/troubleshooting/highlights-not-showing/` },
 }
 
+const auditedHowToSections = {
+  '/getting-started/quick-start/': [
+    { name: '1. Create or sign in to your account', anchor: '1-create-or-sign-in-to-your-account' },
+    { name: '2. Install the browser extension', anchor: '2-install-the-browser-extension' },
+    { name: '3. Save your first highlight', anchor: '3-save-your-first-highlight' },
+    { name: '4. Check your highlights', anchor: '4-check-your-highlights' },
+    { name: '5. Start your first review', anchor: '5-start-your-first-review' },
+    { name: '6. Import existing highlights', anchor: '6-import-existing-highlights' },
+    { name: '7. Know what "caught up" means', anchor: '7-know-what-caught-up-means' },
+  ],
+  '/zh/getting-started/quick-start/': [
+    { name: '1. 创建账户或登录', anchor: '1-创建账户或登录' },
+    { name: '2. 安装浏览器扩展', anchor: '2-安装浏览器扩展' },
+    { name: '3. 保存你的第一条高亮', anchor: '3-保存你的第一条高亮' },
+    { name: '4. 检查你的高亮', anchor: '4-检查你的高亮' },
+    { name: '5. 开始你的第一次复习', anchor: '5-开始你的第一次复习' },
+    { name: '6. 导入现有高亮', anchor: '6-导入现有高亮' },
+    {
+      name: '7. 了解“caught up”（复习完）是什么意思',
+      anchor: '7-了解caught-up复习完是什么意思',
+    },
+  ],
+  '/import-sync/readwise/': [
+    { name: 'Import options', anchor: 'import-options' },
+    { name: 'Large migrations', anchor: 'large-migrations' },
+    { name: 'After import', anchor: 'after-import' },
+  ],
+  '/zh/import-sync/readwise/': [
+    { name: '导入选项', anchor: '导入选项' },
+    { name: '大批量迁移', anchor: '大批量迁移' },
+    { name: '导入之后', anchor: '导入之后' },
+  ],
+}
+
 export function localeFromRoute(route) {
   return route.startsWith('/zh/') ? 'zh-CN' : 'en'
 }
@@ -115,31 +149,56 @@ function stripMarkdown(markdown) {
     .trim()
 }
 
+function extractSections(source) {
+  const headings = [...source.matchAll(/^##\s+(.+)$/gm)]
+
+  return headings.map((heading, index) => {
+    const sectionStart = heading.index + heading[0].length
+    const sectionEnd = headings[index + 1]?.index ?? source.length
+
+    return {
+      heading: heading[1].trim(),
+      body: source.slice(sectionStart, sectionEnd),
+    }
+  })
+}
+
 function buildHowToSchema(page) {
-  // HowTo schema targets procedural guides. Titles are matched by prefix — English
-  // (Import/Sync/Run/Quick start) and the equivalent Chinese prefixes (从/导入/运行/快速开始).
-  // Every page whose title matches one of these is a procedural guide, and the numbered-list
-  // gate below still excludes non-procedural sections from becoming steps.
-  if (!/^(Import|Sync|Run|Quick start|从|导入|运行|快速开始)/.test(page.title)) return null
+  const auditedSections = auditedHowToSections[page.route]
+  if (!auditedSections && !/^(Import|Sync|Run|Quick start|从|导入|运行|快速开始)/.test(page.title)) {
+    return null
+  }
 
-  const sections = [...page.source.matchAll(/^##\s+(.+)$/gm)]
-  const steps = []
+  const sections = extractSections(page.source)
+  let steps
 
-  for (let index = 0; index < sections.length; index += 1) {
-    const heading = sections[index][1].trim()
-    if (/^(Related pages|What transfers|What does not transfer)$/i.test(heading)) continue
+  if (auditedSections) {
+    const sectionsByHeading = new Map(sections.map((section) => [section.heading, section]))
+    steps = auditedSections.map(({ name, anchor }) => {
+      const section = sectionsByHeading.get(name)
+      const text = section ? stripMarkdown(section.body) : ''
+      if (!text) return null
 
-    const sectionStart = sections[index].index + sections[index][0].length
-    const sectionEnd = sections[index + 1]?.index ?? page.source.length
-    const sectionBody = page.source.slice(sectionStart, sectionEnd)
-    if (!/^\d+\.\s+/m.test(sectionBody)) continue
-
-    steps.push({
-      '@type': 'HowToStep',
-      name: heading,
-      text: stripMarkdown(sectionBody),
-      url: `${page.url}#${slugifyHeading(heading)}`,
+      return {
+        '@type': 'HowToStep',
+        name,
+        text,
+        url: `${page.url}#${anchor}`,
+      }
     })
+
+    // Do not publish a partial workflow if an audited visible heading is renamed or removed.
+    if (steps.some((step) => step === null)) return null
+  } else {
+    steps = sections
+      .filter((section) => !/^(Related pages|What transfers|What does not transfer)$/i.test(section.heading))
+      .filter((section) => /^\d+\.\s+/m.test(section.body))
+      .map((section) => ({
+        '@type': 'HowToStep',
+        name: section.heading,
+        text: stripMarkdown(section.body),
+        url: `${page.url}#${slugifyHeading(section.heading)}`,
+      }))
   }
 
   if (steps.length === 0) return null
@@ -189,6 +248,15 @@ function buildBreadcrumbSchema(page) {
   }
 }
 
+function normalizeDateModified(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value ?? '')) return undefined
+
+  const date = new Date(`${value}T00:00:00.000Z`)
+  if (Number.isNaN(date.valueOf()) || date.toISOString().slice(0, 10) !== value) return undefined
+
+  return value
+}
+
 export function buildJsonLd(page) {
   const graph = [
     {
@@ -218,6 +286,7 @@ export function buildJsonLd(page) {
       '@id': `${page.url}#webpage`,
       name: page.title,
       description: page.description,
+      dateModified: normalizeDateModified(page.dateModified),
       url: page.url,
       isPartOf: { '@id': websiteId },
       publisher: { '@id': organizationId },
@@ -278,6 +347,7 @@ async function main() {
       source,
       title: frontmatter.title ?? 'Acorny Docs',
       description: frontmatter.description ?? 'Learn how to import, sync, save, and review highlights with Acorny.',
+      dateModified: frontmatter.lastUpdated,
       url: `${siteUrl}${route}`,
     })
   }

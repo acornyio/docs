@@ -9,6 +9,13 @@ async function readDist(relativePath) {
   return readFile(new URL(relativePath, distDir), 'utf8')
 }
 
+function readJsonLd(html) {
+  const match = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)
+  assert.ok(match, 'expected a JSON-LD script in built HTML')
+
+  return JSON.parse(match[1])
+}
+
 async function readBuiltCss() {
   const files = await readdir(astroAssetsDir)
   const cssFiles = files.filter((file) => file.endsWith('.css'))
@@ -142,7 +149,7 @@ test('docs homepage uses verified facts and avoids unsupported promises', async 
   assert.match(home, /<table/)
   assert.doesNotMatch(
     home,
-    /SM-2|scheduler\.ts|encrypted at rest|within 24 hours|Connect Amazon account|folder watch|The beta is free|export ZIP|JSON \+ Markdown/i,
+    /SM-2|scheduler\.ts|encrypted at rest|within 24 hours|Connect Amazon account|folder watch|The beta is free|export ZIP|JSON \+ Markdown|generic CSV files/i,
   )
 })
 test('docs shell renders synchronized theme toggles', async () => {
@@ -189,6 +196,37 @@ test('phase 3 structured data renders JSON-LD for web pages, breadcrumbs, and ho
   assert.match(kindle, /"name":"Get My Clippings.txt"/)
   assert.match(kindle, /"name":"Import into Acorny"/)
 })
+
+test('audited task pages emit complete visible HowTo steps and dateModified', async () => {
+  const quickStart = readJsonLd(await readDist('getting-started/quick-start/index.html'))
+  const quickStartGraph = Object.fromEntries(quickStart['@graph'].map((node) => [node['@type'], node]))
+  assert.equal(quickStartGraph.WebPage.dateModified, '2026-07-16')
+  assert.deepEqual(
+    quickStartGraph.HowTo.step.map((step) => step.name),
+    [
+      '1. Create or sign in to your account',
+      '2. Install the browser extension',
+      '3. Save your first highlight',
+      '4. Check your highlights',
+      '5. Start your first review',
+      '6. Import existing highlights',
+      '7. Know what "caught up" means',
+    ],
+  )
+
+  const readwise = readJsonLd(await readDist('import-sync/readwise/index.html'))
+  const readwiseHowTo = readwise['@graph'].find((node) => node['@type'] === 'HowTo')
+  assert.deepEqual(
+    readwiseHowTo.step.map((step) => step.name),
+    ['Import options', 'Large migrations', 'After import'],
+  )
+
+  const quickStartZh = readJsonLd(await readDist('zh/getting-started/quick-start/index.html'))
+  const quickStartHowToZh = quickStartZh['@graph'].find((node) => node['@type'] === 'HowTo')
+  assert.equal(quickStartHowToZh.step.length, 7)
+  assert.match(quickStartHowToZh.step[6].url, /#7-了解caught-up复习完是什么意思$/)
+})
+
 
 test('required first-wave pages render as static HTML', async () => {
   const requiredFiles = [
@@ -327,6 +365,7 @@ test('zh pages are built with translated titles and content', async () => {
   // old plain-markdown page), so the translated section headings are present.
   assert.match(zhHome, /每日复习循环/)
   assert.match(zhHome, /class="docs-home-intro"/)
+  assert.doesNotMatch(zhHome, /通用 CSV 文件/)
 })
 
 test('zh pages emit locale-aware structured data', async () => {
@@ -338,4 +377,114 @@ test('zh pages emit locale-aware structured data', async () => {
   assert.match(zhKindle, /"item":"https:\/\/docs\.acorny\.io\/zh\/import-sync\/overview\/"/)
   assert.match(zhKindle, /"name":"导入与同步"/)
   assert.match(zhKindle, /"@type":"HowTo"/)
+})
+
+test('browser extension and import overview expose complete bilingual task paths', async () => {
+  const browserEn = await readDist('extensions/browser-extension/index.html')
+  for (const copy of [
+    'Supported browsers',
+    'Chrome',
+    'Edge',
+    'Firefox',
+    'Safari',
+    'Confirm the highlight reached your library',
+    'Permissions',
+    'If saving fails',
+  ]) {
+    assert.match(browserEn, new RegExp(copy))
+  }
+  for (const image of [
+    ['step1-toolbar.png', 'Acorny browser extension toolbar button'],
+    ['step2-popup.png', 'Acorny browser extension popup for saving a highlight'],
+    ['step3-list.png', 'Acorny highlights list showing saved highlights'],
+  ]) {
+    assert.match(browserEn, new RegExp(`src="/images/quick-start/${image[0]}"`))
+    assert.match(browserEn, new RegExp(`alt="${image[1]}"`))
+  }
+  assert.match(browserEn, /href="\/review-recall\/how-review-works\/"/)
+  assert.match(browserEn, /href="\/import-sync\/overview\/"/)
+  assert.match(browserEn, /href="\/troubleshooting\/highlights-not-showing\/"/)
+
+  const browserZh = await readDist('zh/extensions/browser-extension/index.html')
+  for (const copy of ['支持的浏览器', '确认高亮已进入你的库', '权限', '如果保存失败']) {
+    assert.match(browserZh, new RegExp(copy))
+  }
+  assert.match(browserZh, /href="\/zh\/review-recall\/how-review-works\/"/)
+  assert.match(browserZh, /href="\/zh\/import-sync\/overview\/"/)
+
+  const providerRoutes = [
+    'acorny-export',
+    'csv',
+    'cubox',
+    'diigo',
+    'inoreader',
+    'instapaper',
+    'kindle',
+    'koodo-reader',
+    'moon-reader',
+    'pdf',
+    'readest',
+    'readwise',
+    'weread',
+  ]
+  const overviewEn = await readDist('import-sync/overview/index.html')
+  const overviewZh = await readDist('zh/import-sync/overview/index.html')
+  assert.match(overviewEn, /<table/)
+  assert.match(overviewZh, /<table/)
+  for (const route of providerRoutes) {
+    assert.match(overviewEn, new RegExp(`href="/import-sync/${route}/"`))
+    assert.match(overviewZh, new RegExp(`href="/zh/import-sync/${route}/"`))
+  }
+  assert.match(overviewEn, /href="\/import-sync\/manual-sync\/"/)
+  assert.match(overviewEn, /href="\/import-sync\/troubleshooting\/"/)
+  assert.match(overviewEn, /href="\/review-recall\/how-review-works\/"/)
+})
+
+test('thin integration guides match the current import and sync implementation', async () => {
+  const csv = await readDist('import-sync/csv/index.html')
+  assert.match(csv, /does not provide arbitrary column mapping/i)
+  assert.match(csv, /Acorny export CSV/)
+  assert.match(csv, /Readwise CSV/)
+  assert.match(csv, /Diigo CSV/)
+  assert.match(csv, /href="\/import-sync\/overview\/"/)
+  assert.match(csv, /href="\/import-sync\/troubleshooting\/"/)
+
+  const acornyExport = await readDist('import-sync/acorny-export/index.html')
+  assert.doesNotMatch(acornyExport, /generic CSV file/i)
+
+  const acornyExportZh = await readDist('zh/import-sync/acorny-export/index.html')
+  assert.doesNotMatch(acornyExportZh, /通用 CSV 文件/)
+
+  const instapaper = await readDist('import-sync/instapaper/index.html')
+  assert.match(instapaper, /xAuth/)
+  assert.match(instapaper, /discard[^.]*password/i)
+  assert.match(instapaper, /encrypted access token/i)
+  assert.match(instapaper, /Sync now/)
+  assert.match(instapaper, /href="\/import-sync\/manual-sync\/"/)
+  assert.match(instapaper, /href="\/import-sync\/troubleshooting\/"/)
+
+  const inoreader = await readDist('import-sync/inoreader/index.html')
+  assert.match(inoreader, /OAuth/)
+  assert.match(inoreader, /annotated highlights/i)
+  assert.match(inoreader, /one-time note backfill/i)
+  assert.match(inoreader, /Sync now/)
+  assert.match(inoreader, /href="\/import-sync\/manual-sync\/"/)
+
+  const manualSync = await readDist('import-sync/manual-sync/index.html')
+  assert.match(manualSync, /Instapaper/)
+  assert.match(manualSync, /Inoreader/)
+  for (const result of ['Imported', 'Backfilled', 'Skipped', 'Restored', 'Failed']) {
+    assert.match(manualSync, new RegExp(result))
+  }
+  assert.match(manualSync, /href="\/import-sync\/overview\/"/)
+  assert.match(manualSync, /href="\/import-sync\/troubleshooting\/"/)
+
+  const csvZh = await readDist('zh/import-sync/csv/index.html')
+  assert.match(csvZh, /不提供任意列映射/)
+  const instapaperZh = await readDist('zh/import-sync/instapaper/index.html')
+  assert.match(instapaperZh, /xAuth/)
+  assert.match(instapaperZh, /不会保存密码/)
+  const inoreaderZh = await readDist('zh/import-sync/inoreader/index.html')
+  assert.match(inoreaderZh, /OAuth/)
+  assert.match(inoreaderZh, /一次性笔记回填/)
 })

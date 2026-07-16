@@ -1,6 +1,7 @@
 ---
 title: Import from Readwise
 description: Move your existing Readwise highlights into Acorny.
+lastUpdated: 2026-07-16
 ---
 
 Use Readwise import when you want to migrate highlights you already saved in Readwise.

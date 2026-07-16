@@ -1,50 +1,48 @@
 ---
 title: '概览：导入与同步'
-description: 了解 Acorny 中一次性导入与连接式同步之间的区别。
+description: 比较 Acorny 当前所有导入与同步路径，然后打开与你的来源对应的指南。
 ---
 
-Acorny 支持两种方式将来自其他工具的高亮带入你的库。
+Acorny 当前有三种方式把高亮带入你的库：一次性文件或 API 导入、持续连接的服务，以及通过 Acorny 导入 API 令牌发送高亮的阅读器应用。
 
-## 导入
+## 按目标选择路径
 
-当你拥有导出文件、本地文档，或仅供 Acorny 做一次性拉取的凭据时，请使用导入。
+- **一次迁移现有书库：** 使用文件导入或一次性 API 导入。
+- **持续接收连接服务的新高亮：** 在 Extensions & Apps 中连接 Instapaper 或 Inoreader。
+- **从阅读器应用发送高亮：** 在 Acorny Settings 中创建导入 API 令牌，然后设置阅读器的 Readwise 兼容同步。
 
-文件与本地导入来源：
+## 当前来源矩阵
 
-- 由 Acorny 浏览器扩展导出的 WeRead JSON
-- Readwise CSV 导出
-- Moon+ Reader 的 TXT、`.mrexpt`、`.mrstd` 或 `.mrpro`
-- Cubox JSON 导出
-- Diigo CSV 导出
-- Kindle `My Clippings.txt`
-- 带有可提取批注的 PDF 文件
-- Acorny 导出的 JSON 或 CSV
-- 通用 CSV 文件
+| 来源 | 当前路径 | 传输类型 | 打开指南 |
+| --- | --- | --- | --- |
+| Acorny 导出 | 上传导出的 JSON 或 CSV | 一次性文件导入 | [导入 Acorny 导出文件](/zh/import-sync/acorny-export/) |
+| 受支持的 CSV | 上传 Acorny、Readwise 或 Diigo CSV 导出 | 一次性文件导入 | [导入 CSV 文件](/zh/import-sync/csv/) |
+| Cubox | 上传 Cubox JSON 导出 | 一次性文件导入 | [从 Cubox 导入](/zh/import-sync/cubox/) |
+| Diigo | 上传 CSV，或使用 Diigo 凭据拉取 | 一次性文件或 API 导入 | [从 Diigo 导入](/zh/import-sync/diigo/) |
+| Inoreader | 在 Extensions & Apps 中连接服务 | 连接式同步 | [同步 Inoreader 高亮](/zh/import-sync/inoreader/) |
+| Instapaper | 在 Extensions & Apps 中连接服务 | 连接式同步 | [同步 Instapaper 高亮](/zh/import-sync/instapaper/) |
+| Kindle | 上传 `My Clippings.txt` | 一次性文件导入 | [从 Kindle 导入](/zh/import-sync/kindle/) |
+| Koodo Reader | 使用 Acorny 导入 API 令牌设置 Readwise 同步 | 阅读器应用同步 | [同步 Koodo Reader](/zh/import-sync/koodo-reader/) |
+| Moon+ Reader | 上传受支持的备份，或设置 Readwise 同步 | 文件导入或阅读器应用同步 | [导入或同步 Moon+ Reader](/zh/import-sync/moon-reader/) |
+| PDF | 上传带有可提取批注的 PDF | 一次性本地导入 | [从 PDF 导入高亮](/zh/import-sync/pdf/) |
+| Readest | 使用 Acorny 令牌和 URL 设置 Readwise 兼容 API | 阅读器应用同步 | [同步 Readest](/zh/import-sync/readest/) |
+| Readwise | 上传 CSV，或使用 Readwise access token 拉取 | 一次性文件或 API 导入 | [从 Readwise 导入](/zh/import-sync/readwise/) |
+| WeRead | 用 Acorny 扩展导出 `weread-export.json`，然后上传 | 一次性文件导入 | [从微信读书导入](/zh/import-sync/weread/) |
 
-一次性 API 导入来源：
+## 各类型的含义
 
-- Readwise API
-- Diigo API
+### 一次性导入
 
-导入最适合迁移、恢复和一次性转移。
+一次性导入会复制所选文件或 API 响应中当前可用的高亮，适合迁移、恢复和偶尔转移。重复执行导入不等同于让提供方保持连接。
 
-## 同步
+### 连接式同步
 
-当某个服务会在初次设置后持续发送新高亮时，请使用同步。
+Instapaper 和 Inoreader 会在 Extensions & Apps 中显示为连接卡片。完成设置后，如果需要在常规连接流程之外主动请求同步，请使用[手动同步](/zh/import-sync/manual-sync/)。
 
-当前同步提供方：
+### 阅读器应用同步
 
-- Instapaper
-- Inoreader
+Koodo Reader、Moon+ Reader 和 Readest 需要在阅读器应用内部设置。请在 Acorny Settings 中创建导入 API 令牌，并把指南中的 URL 和令牌粘贴到该应用的 Readwise 集成设置。这些阅读器应用不会在 Acorny 中显示为已连接的提供方卡片。
 
-使用导入 API 令牌的阅读器应用同步：
+## 高亮进入 Acorny 之后
 
-- Koodo Reader
-- Moon+ Reader
-- Readest
-
-Koodo Reader、Moon+ Reader 和 Readest 需要在阅读器应用内部设置。你只需要在 Acorny 的 Settings 中创建导入 API 令牌，再把它粘贴到阅读器的 Readwise 集成设置里。这些应用不会出现在 Extensions & Apps 卡片中，因为连接是从阅读器应用发起的。
-
-## 选择正确的路径
-
-如果你有文件，请使用 Upload File。如果你拥有用于一次性拉取的 Readwise 或 Diigo 凭据，请使用 Import from API。如果 Acorny 为你的来源显示了连接卡片，请使用 Extensions & Apps。如果你的阅读器应用里有 Readwise 同步设置，请打开对应应用的指南，并在 Acorny Settings 中创建导入 API 令牌。
+打开你的库，确认来源和高亮文字符合预期。如果导入或连接没有完成，请查看[导入与同步故障排查](/zh/import-sync/troubleshooting/)。内容就绪后，可以继续了解[复习会话的工作方式](/zh/review-recall/how-review-works/)。
