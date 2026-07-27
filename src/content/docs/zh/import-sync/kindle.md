@@ -1,11 +1,31 @@
 ---
 title: 从 Kindle 导入
-description: 从 Kindle My Clippings.txt 导入高亮和笔记。
+description: 通过 Chrome 扩展同步 Kindle Notebook 高亮，或导入 My Clippings.txt。
 ---
 
-当你的高亮保存在 Kindle `My Clippings.txt` 文件中时，请使用 Kindle 导入。这是 Kindle 设备为保存在设备上的高亮、笔记和书签所创建的文件。
+Acorny 支持通过两种方式导入 Kindle 高亮：
 
-当你希望把个人阅读历史移入 Acorny 时，Kindle 导入最为合适。当你的 Kindle 高亮从未经过 Readwise 或其他同步服务时，它同样很有用。
+- **使用 Chrome 扩展同步 Kindle Notebook**，适合保存在 Amazon 账户中的高亮和笔记。
+- **导入 `My Clippings.txt`**，适合迁移保存在 Kindle 设备中的阅读记录。
+
+如果高亮已显示在 Kindle Notebook 中，扩展同步是最快的方式；对于较早的记录或仅保存在设备上的剪贴，仍可使用文件导入。
+
+## 使用 Chrome 扩展同步 Kindle Notebook
+
+1. 安装 Acorny Chrome 扩展，并登录 Acorny 账户。
+2. 在同一浏览器中打开 [Kindle Notebook](https://read.amazon.com/notebook)，并登录 Amazon。
+3. 保持 Kindle Notebook 为当前页面，然后打开 Acorny 扩展 popup。
+4. 点击 **Sync Kindle Highlights**。
+5. 首次使用时，批准访问 Kindle Notebook 和 Amazon 登录页。
+6. 如果页面要求重新登录，请保持该 Amazon 标签页打开；同步结束后，在扩展 popup 中查看结果。
+
+扩展会导入书名、作者、高亮、笔记和 Kindle 位置标签。只有当你点击同步按钮时才会开始同步，并且会使用浏览器中已有的 Amazon 登录会话。Acorny 不会读取或收集你的 Amazon 密码、Cookie 或其他登录凭据，也不会将它们发送到 Acorny 服务器。
+
+## 导入 My Clippings.txt
+
+Kindle 设备会为保存在设备上的高亮、笔记和书签生成 `My Clippings.txt`。如果你要迁移设备中的阅读记录，或者这些高亮从未进入 Kindle Notebook、Readwise 或其他同步服务，请导入该文件。
+
+本页接下来的章节仅描述 `My Clippings.txt` 文件导入流程。
 
 ## 获取 My Clippings.txt
 

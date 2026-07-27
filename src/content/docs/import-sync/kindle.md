@@ -1,11 +1,31 @@
 ---
 title: Import from Kindle
-description: Import highlights and notes from Kindle My Clippings.txt.
+description: Sync Kindle Notebook highlights with the Acorny Chrome extension, or import My Clippings.txt.
 ---
 
-Use Kindle import when you have highlights stored in a Kindle `My Clippings.txt` file. This is the file Kindle devices create for highlights, notes, and bookmarks saved on the device.
+Acorny supports two ways to bring Kindle highlights into your library:
 
-Kindle import is best for moving a personal reading history into Acorny. It is also useful when your Kindle highlights never went through Readwise or another sync service.
+- **Sync Kindle Notebook with the Chrome extension** for highlights and notes stored in your Amazon account.
+- **Import `My Clippings.txt`** to move reading history stored on a Kindle device.
+
+Extension sync is the quickest option when your highlights appear in Kindle Notebook. File import remains useful for older or device-only clippings.
+
+## Sync Kindle Notebook with the Chrome extension
+
+1. Install the Acorny Chrome extension and sign in to your Acorny account.
+2. Open [Kindle Notebook](https://read.amazon.com/notebook) in the same browser and sign in to Amazon.
+3. While Kindle Notebook is the active page, open the Acorny extension popup.
+4. Click **Sync Kindle Highlights**.
+5. On first use, approve access to Kindle Notebook and Amazon's sign-in page.
+6. Keep the Amazon tab open if you are asked to sign in, then review the sync result in the extension popup.
+
+The extension imports book titles, authors, highlights, notes, and Kindle location labels. Sync starts only when you click the button and uses the Amazon session already open in your browser. Acorny does not read or collect your Amazon password, cookies, or other login credentials, and does not send them to Acorny's servers.
+
+## Import My Clippings.txt
+
+Kindle devices create `My Clippings.txt` for highlights, notes, and bookmarks saved on the device. Import this file when you want to move device history into Acorny or when those highlights never went through Kindle Notebook, Readwise, or another sync service.
+
+The remaining sections on this page describe only the `My Clippings.txt` file import path.
 
 ## Get My Clippings.txt
 
