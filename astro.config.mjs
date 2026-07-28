@@ -115,6 +115,15 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Export & Sync',
+          collapsed: true,
+          translations: { 'zh-CN': '导出与同步' },
+          items: [
+            { slug: 'export-sync/obsidian', label: 'Sync to Obsidian', translations: { 'zh-CN': '同步到 Obsidian' } },
+            { slug: 'export-sync/siyuan', label: 'Sync to SiYuan', translations: { 'zh-CN': '同步到思源笔记' } },
+          ],
+        },
+        {
           label: 'Review & Recall',
           collapsed: true,
           translations: { 'zh-CN': '复习与回顾' },

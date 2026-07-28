@@ -27,5 +27,9 @@ Acorny is a Readwise alternative that helps readers capture highlights from book
 ## Supported Sources
 Kindle, Readwise, Koodo Reader, Moon+ Reader, Readest, WeRead, Instapaper, Inoreader, Cubox, Diigo, PDF, CSV, and Acorny export files.
 
+## Note App Sync (Export)
+- Sync to Obsidian: https://docs.acorny.io/export-sync/obsidian/
+- Sync to SiYuan: https://docs.acorny.io/export-sync/siyuan/
+
 ## Support and Safety
 Do not include passwords, API tokens, session cookies, or private keys when asking for help. Use the support page to share source names, file formats, timestamps, and screenshots with sensitive values hidden.

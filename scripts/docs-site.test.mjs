@@ -58,6 +58,8 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
     '/import-sync/acorny-export/',
     '/import-sync/instapaper/',
     '/import-sync/inoreader/',
+    '/export-sync/obsidian/',
+    '/export-sync/siyuan/',
     '/account-data/privacy-beta-pricing/',
     '/getting-started/what-is-acorny/',
     '/review-recall/how-spaced-repetition-works/',
@@ -66,6 +68,8 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
     '/troubleshooting/highlights-not-showing/',
     '/zh/',
     '/zh/import-sync/kindle/',
+    '/zh/export-sync/obsidian/',
+    '/zh/export-sync/siyuan/',
     '/zh/getting-started/quick-start/',
   ]) {
     assert.match(sitemap, new RegExp(`<loc>https://docs\\.acorny\\.io${route.replaceAll('/', '\\/')}</loc>`))
@@ -244,6 +248,8 @@ test('required first-wave pages render as static HTML', async () => {
     'import-sync/acorny-export/index.html',
     'import-sync/instapaper/index.html',
     'import-sync/inoreader/index.html',
+    'export-sync/obsidian/index.html',
+    'export-sync/siyuan/index.html',
     'account-data/privacy-beta-pricing/index.html',
     'getting-started/what-is-acorny/index.html',
     'review-recall/how-spaced-repetition-works/index.html',
@@ -252,6 +258,8 @@ test('required first-wave pages render as static HTML', async () => {
     'troubleshooting/highlights-not-showing/index.html',
     'zh/index.html',
     'zh/import-sync/kindle/index.html',
+    'zh/export-sync/obsidian/index.html',
+    'zh/export-sync/siyuan/index.html',
     'zh/getting-started/quick-start/index.html',
     'zh/account-data/contact-support/index.html',
   ]
@@ -284,6 +292,24 @@ test('provider guides include setup-specific instructions', async () => {
   const weread = await readDist('import-sync/weread/index.html')
   assert.match(weread, /weread-export\.json/)
   assert.match(weread, /WeRead Debug Bundle/)
+
+  const obsidian = await readDist('export-sync/obsidian/index.html')
+  assert.match(obsidian, /Export tokens/)
+  assert.match(obsidian, /Community plugins/)
+  assert.match(obsidian, /one-way/)
+
+  const siyuan = await readDist('export-sync/siyuan/index.html')
+  assert.match(siyuan, /Export tokens/)
+  assert.match(siyuan, /https:\/\/github\.com\/acornyio\/siyuan-note-sync/)
+  assert.match(siyuan, /one-way/)
+
+  const obsidianZh = await readDist('zh/export-sync/obsidian/index.html')
+  assert.match(obsidianZh, /导出令牌/)
+
+  const siyuanZh = await readDist('zh/export-sync/siyuan/index.html')
+  assert.match(siyuanZh, /导出令牌/)
+  assert.match(siyuanZh, /集市/)
+  assert.match(siyuanZh, /https:\/\/github\.com\/acornyio\/siyuan-note-sync/)
 })
 
 test('phase 2 content foundation includes screenshots and expanded search-intent sections', async () => {
@@ -435,6 +461,10 @@ test('browser extension and import overview expose complete bilingual task paths
     assert.match(overviewEn, new RegExp(`href="/import-sync/${route}/"`))
     assert.match(overviewZh, new RegExp(`href="/zh/import-sync/${route}/"`))
   }
+  assert.match(overviewEn, /href="\/export-sync\/obsidian\/"/)
+  assert.match(overviewEn, /href="\/export-sync\/siyuan\/"/)
+  assert.match(overviewZh, /href="\/zh\/export-sync\/obsidian\/"/)
+  assert.match(overviewZh, /href="\/zh\/export-sync\/siyuan\/"/)
   assert.match(overviewEn, /href="\/import-sync\/manual-sync\/"/)
   assert.match(overviewEn, /href="\/import-sync\/troubleshooting\/"/)
   assert.match(overviewEn, /href="\/review-recall\/how-review-works\/"/)
