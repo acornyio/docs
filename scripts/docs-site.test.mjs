@@ -295,19 +295,16 @@ test('provider guides include setup-specific instructions', async () => {
 
   const obsidian = await readDist('export-sync/obsidian/index.html')
   assert.match(obsidian, /Export tokens/)
-  assert.match(obsidian, /Feed URL/)
   assert.match(obsidian, /Community plugins/)
   assert.match(obsidian, /one-way/)
 
   const siyuan = await readDist('export-sync/siyuan/index.html')
   assert.match(siyuan, /Export tokens/)
-  assert.match(siyuan, /Feed URL/)
   assert.match(siyuan, /https:\/\/github\.com\/acornyio\/siyuan-note-sync/)
   assert.match(siyuan, /one-way/)
 
   const obsidianZh = await readDist('zh/export-sync/obsidian/index.html')
   assert.match(obsidianZh, /导出令牌/)
-  assert.match(obsidianZh, /Feed URL/)
 
   const siyuanZh = await readDist('zh/export-sync/siyuan/index.html')
   assert.match(siyuanZh, /导出令牌/)

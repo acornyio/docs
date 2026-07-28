@@ -7,7 +7,7 @@ Use Obsidian sync when you take notes in Obsidian and want your Acorny highlight
 
 Obsidian sync is one-way: highlights flow from Acorny into Obsidian. Edits you make inside Obsidian do not change your Acorny library.
 
-The sync is set up inside Obsidian with the official Acorny Sync plugin. In Acorny, you only create an export token and copy the Feed URL the plugin needs.
+The sync is set up inside Obsidian with the official Acorny Sync plugin. In Acorny, you only create an export token.
 
 ## Setup
 
@@ -16,14 +16,12 @@ The sync is set up inside Obsidian with the official Acorny Sync plugin. In Acor
 3. Find **Export tokens**.
 4. Create a token named `Obsidian`.
 5. Copy the token immediately. It is only shown once.
-6. Copy the Feed URL shown in the same Settings section.
-7. Open Obsidian.
-8. Go to **Settings** → **Community plugins**, turn on community plugins if prompted, and browse the community plugin directory.
-9. Search for `Acorny` and install the Acorny Sync plugin, then enable it.
-10. Open the Acorny Sync plugin settings.
-11. Paste the Feed URL into the Feed URL field.
-12. Paste the export token into the token field.
-13. Save the settings and run a sync.
+6. Open Obsidian.
+7. Go to **Settings** → **Community plugins**, turn on community plugins if prompted, and browse the community plugin directory.
+8. Search for `Acorny` and install the Acorny Sync plugin, then enable it.
+9. Open the Acorny Sync plugin settings.
+10. Paste the export token into the token field.
+11. Save the settings and run a sync.
 
 After setup, the plugin pulls new highlights from Acorny on its sync schedule and writes them into your vault as Markdown notes.
 
@@ -43,6 +41,5 @@ Export tokens are read-only: they can read your highlights but cannot create or 
 
 If highlights do not appear in Obsidian, check the following:
 
-- Confirm the Feed URL in the plugin settings exactly matches the one shown in Acorny Settings.
 - Confirm the token field contains an Acorny export token, not an Import API token and not your Acorny login password.
 - Create a fresh export token and reconfigure the plugin if authentication fails.
