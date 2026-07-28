@@ -10,6 +10,7 @@ Acorny has three current ways to bring highlights into your library: a one-time 
 - **Moving an existing library once:** use a file import or a one-time API import.
 - **Receiving new highlights from a connected service:** connect Instapaper or Inoreader in Extensions & Apps.
 - **Sending highlights from a reader app:** create an Import API token in Acorny Settings, then configure the reader's Readwise-compatible sync.
+- **Sending highlights to a note app:** install the [Obsidian](/import-sync/obsidian/) or [SiYuan](/import-sync/siyuan/) plugin and create an export token in Acorny Settings.
 
 ## Current source matrix
 
