@@ -10,7 +10,7 @@ Acorny 当前有三种方式把高亮带入你的库：一次性文件或 API �
 - **一次迁移现有书库：** 使用文件导入或一次性 API 导入。
 - **持续接收连接服务的新高亮：** 在 Extensions & Apps 中连接 Instapaper 或 Inoreader。
 - **从阅读器应用发送高亮：** 在 Acorny Settings 中创建导入 API 令牌，然后设置阅读器的 Readwise 兼容同步。
-- **把高亮发送到笔记应用：** 安装 [Obsidian](/zh/import-sync/obsidian/) 或[思源笔记](/zh/import-sync/siyuan/)插件，并在 Acorny Settings 中创建导出令牌。
+- **把高亮发送到笔记应用：** 安装 [Obsidian](/zh/export-sync/obsidian/) 或[思源笔记](/zh/export-sync/siyuan/)插件，并在 Acorny Settings 中创建导出令牌。
 
 ## 当前来源矩阵
 

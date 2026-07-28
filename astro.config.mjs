@@ -110,10 +110,17 @@ export default defineConfig({
             { slug: 'import-sync/acorny-export', label: 'Import an Acorny export', translations: { 'zh-CN': '导入 Acorny 导出文件' } },
             { slug: 'import-sync/instapaper', label: 'Sync from Instapaper', translations: { 'zh-CN': '从 Instapaper 同步' } },
             { slug: 'import-sync/inoreader', label: 'Sync from Inoreader', translations: { 'zh-CN': '从 Inoreader 同步' } },
-            { slug: 'import-sync/obsidian', label: 'Sync to Obsidian', translations: { 'zh-CN': '同步到 Obsidian' } },
-            { slug: 'import-sync/siyuan', label: 'Sync to SiYuan', translations: { 'zh-CN': '同步到思源笔记' } },
             { slug: 'import-sync/manual-sync', label: 'Run a manual sync', translations: { 'zh-CN': '运行手动同步' } },
             { slug: 'import-sync/troubleshooting', label: 'Troubleshoot import and sync issues', translations: { 'zh-CN': '排查导入与同步问题' } },
+          ],
+        },
+        {
+          label: 'Export & Sync',
+          collapsed: true,
+          translations: { 'zh-CN': '导出与同步' },
+          items: [
+            { slug: 'export-sync/obsidian', label: 'Sync to Obsidian', translations: { 'zh-CN': '同步到 Obsidian' } },
+            { slug: 'export-sync/siyuan', label: 'Sync to SiYuan', translations: { 'zh-CN': '同步到思源笔记' } },
           ],
         },
         {

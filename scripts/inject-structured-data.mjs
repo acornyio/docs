@@ -29,6 +29,10 @@ const sectionBreadcrumbs = {
     name: 'Import & Sync',
     item: `${siteUrl}/import-sync/overview/`,
   },
+  'export-sync': {
+    name: 'Export & Sync',
+    item: `${siteUrl}/export-sync/obsidian/`,
+  },
   'review-recall': {
     name: 'Review & Recall',
     item: `${siteUrl}/review-recall/how-review-works/`,
@@ -42,6 +46,7 @@ const sectionBreadcrumbs = {
 const sectionBreadcrumbsZh = {
   'getting-started': { name: '入门', item: `${siteUrl}/zh/getting-started/what-is-acorny/` },
   'import-sync': { name: '导入与同步', item: `${siteUrl}/zh/import-sync/overview/` },
+  'export-sync': { name: '导出与同步', item: `${siteUrl}/zh/export-sync/obsidian/` },
   'review-recall': { name: '复习与回顾', item: `${siteUrl}/zh/review-recall/how-review-works/` },
   extensions: { name: '扩展与应用', item: `${siteUrl}/zh/extensions/browser-extension/` },
   'account-data': { name: '账户与数据', item: `${siteUrl}/zh/account-data/privacy-beta-pricing/` },

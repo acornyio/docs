@@ -58,8 +58,8 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
     '/import-sync/acorny-export/',
     '/import-sync/instapaper/',
     '/import-sync/inoreader/',
-    '/import-sync/obsidian/',
-    '/import-sync/siyuan/',
+    '/export-sync/obsidian/',
+    '/export-sync/siyuan/',
     '/account-data/privacy-beta-pricing/',
     '/getting-started/what-is-acorny/',
     '/review-recall/how-spaced-repetition-works/',
@@ -68,8 +68,8 @@ test('docs build emits SEO and crawler artifacts for docs.acorny.io', async () =
     '/troubleshooting/highlights-not-showing/',
     '/zh/',
     '/zh/import-sync/kindle/',
-    '/zh/import-sync/obsidian/',
-    '/zh/import-sync/siyuan/',
+    '/zh/export-sync/obsidian/',
+    '/zh/export-sync/siyuan/',
     '/zh/getting-started/quick-start/',
   ]) {
     assert.match(sitemap, new RegExp(`<loc>https://docs\\.acorny\\.io${route.replaceAll('/', '\\/')}</loc>`))
@@ -248,8 +248,8 @@ test('required first-wave pages render as static HTML', async () => {
     'import-sync/acorny-export/index.html',
     'import-sync/instapaper/index.html',
     'import-sync/inoreader/index.html',
-    'import-sync/obsidian/index.html',
-    'import-sync/siyuan/index.html',
+    'export-sync/obsidian/index.html',
+    'export-sync/siyuan/index.html',
     'account-data/privacy-beta-pricing/index.html',
     'getting-started/what-is-acorny/index.html',
     'review-recall/how-spaced-repetition-works/index.html',
@@ -258,8 +258,8 @@ test('required first-wave pages render as static HTML', async () => {
     'troubleshooting/highlights-not-showing/index.html',
     'zh/index.html',
     'zh/import-sync/kindle/index.html',
-    'zh/import-sync/obsidian/index.html',
-    'zh/import-sync/siyuan/index.html',
+    'zh/export-sync/obsidian/index.html',
+    'zh/export-sync/siyuan/index.html',
     'zh/getting-started/quick-start/index.html',
     'zh/account-data/contact-support/index.html',
   ]
@@ -293,23 +293,23 @@ test('provider guides include setup-specific instructions', async () => {
   assert.match(weread, /weread-export\.json/)
   assert.match(weread, /WeRead Debug Bundle/)
 
-  const obsidian = await readDist('import-sync/obsidian/index.html')
+  const obsidian = await readDist('export-sync/obsidian/index.html')
   assert.match(obsidian, /Export tokens/)
   assert.match(obsidian, /Feed URL/)
   assert.match(obsidian, /Community plugins/)
   assert.match(obsidian, /one-way/)
 
-  const siyuan = await readDist('import-sync/siyuan/index.html')
+  const siyuan = await readDist('export-sync/siyuan/index.html')
   assert.match(siyuan, /Export tokens/)
   assert.match(siyuan, /Feed URL/)
   assert.match(siyuan, /https:\/\/github\.com\/acornyio\/siyuan-note-sync/)
   assert.match(siyuan, /one-way/)
 
-  const obsidianZh = await readDist('zh/import-sync/obsidian/index.html')
+  const obsidianZh = await readDist('zh/export-sync/obsidian/index.html')
   assert.match(obsidianZh, /导出令牌/)
   assert.match(obsidianZh, /Feed URL/)
 
-  const siyuanZh = await readDist('zh/import-sync/siyuan/index.html')
+  const siyuanZh = await readDist('zh/export-sync/siyuan/index.html')
   assert.match(siyuanZh, /导出令牌/)
   assert.match(siyuanZh, /集市/)
   assert.match(siyuanZh, /https:\/\/github\.com\/acornyio\/siyuan-note-sync/)
@@ -451,11 +451,9 @@ test('browser extension and import overview expose complete bilingual task paths
     'kindle',
     'koodo-reader',
     'moon-reader',
-    'obsidian',
     'pdf',
     'readest',
     'readwise',
-    'siyuan',
     'weread',
   ]
   const overviewEn = await readDist('import-sync/overview/index.html')
@@ -466,6 +464,10 @@ test('browser extension and import overview expose complete bilingual task paths
     assert.match(overviewEn, new RegExp(`href="/import-sync/${route}/"`))
     assert.match(overviewZh, new RegExp(`href="/zh/import-sync/${route}/"`))
   }
+  assert.match(overviewEn, /href="\/export-sync\/obsidian\/"/)
+  assert.match(overviewEn, /href="\/export-sync\/siyuan\/"/)
+  assert.match(overviewZh, /href="\/zh\/export-sync\/obsidian\/"/)
+  assert.match(overviewZh, /href="\/zh\/export-sync\/siyuan\/"/)
   assert.match(overviewEn, /href="\/import-sync\/manual-sync\/"/)
   assert.match(overviewEn, /href="\/import-sync\/troubleshooting\/"/)
   assert.match(overviewEn, /href="\/review-recall\/how-review-works\/"/)
