@@ -123,15 +123,15 @@ test('buildJsonLd keeps English breadcrumb and inLanguage for root pages', () =>
 
 test('buildJsonLd emits HowTo for a Chinese procedural title with numbered steps', () => {
   const schema = buildJsonLd({
-    route: '/zh/import-sync/kindle/',
+    route: '/zh/import-sync/cubox/',
     source: '## Import into Acorny\n1. Open Acorny, then go to Import.\n2. Choose Upload File.',
-    title: '从 Kindle 导入',
-    description: '从 Kindle My Clippings.txt 导入高亮和笔记。',
-    url: 'https://docs.acorny.io/zh/import-sync/kindle/',
+    title: '从 Cubox 导入',
+    description: '从 Cubox JSON 导出文件导入高亮和笔记。',
+    url: 'https://docs.acorny.io/zh/import-sync/cubox/',
   })
   const graph = Object.fromEntries(schema['@graph'].map((n) => [n['@type'], n]))
   assert.ok(graph.HowTo, 'expected a HowTo node for a Chinese procedural title')
-  assert.equal(graph.HowTo.name, '从 Kindle 导入')
+  assert.equal(graph.HowTo.name, '从 Cubox 导入')
 })
 
 test('buildJsonLd omits HowTo for a Chinese non-procedural title', () => {

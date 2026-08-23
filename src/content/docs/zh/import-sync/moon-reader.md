@@ -10,9 +10,17 @@ description: 导入 Moon+ Reader 导出文件，或配置 Moon+ Reader 把新高
 
 Moon+ Reader 同步是在 Moon+ Reader 内部设置的。在 Acorny 中，你只需要创建导入 API 令牌，并复制 Moon+ Reader 需要使用的 Readwise URL。
 
+## 何时选择导入或同步
+
+对于现有书库，请使用文件导入。如果你继续在 Moon+ Reader 中阅读并希望新高亮自动到达，之后请使用 Readwise 同步。
+
+除非你在检查重复项如何处理，否则不要对同一小批测试高亮重复使用两种路径。Acorny 会使用可用信息来避免重复，但更干净的导入更容易检查。
+
 ## 一次性导入
 
 当你已经拥有 Moon+ Reader 高亮并希望把它们迁移到 Acorny 时，请使用一次性导入。
+
+### 从 Moon+ Reader 导出
 
 支持的输入：
 
@@ -25,7 +33,7 @@ Moon+ Reader 同步是在 Moon+ Reader 内部设置的。在 Acorny 中，你只
 
 ![Moon+ Reader 分享菜单，带有笔记和高亮的导出选项](/images/import-sync/moon-reader/export_moon_reader.jpg)
 
-导入流程：
+### 导入到 Acorny
 
 1. 打开 Acorny，然后进入 Import。
 2. 选择 Upload File。
@@ -37,7 +45,7 @@ Moon+ Reader 同步是在 Moon+ Reader 内部设置的。在 Acorny 中，你只
 5. 预览导入。
 6. 选择 Confirm import。
 
-## 会保留哪些内容
+### 会保留哪些内容
 
 Moon+ Reader 导入可以保留：
 
@@ -53,13 +61,15 @@ Moon+ Reader 导入可以保留：
 
 如果某条 Moon+ Reader 高亮已在 Acorny 中但笔记为空，当 Acorny 能安全匹配这条高亮时，后续的 Moon+ Reader 导入可以补上缺失的笔记。
 
-## 不会保留哪些内容
+### 不会保留哪些内容
 
 Moon+ Reader 导入不会转移完整的电子书文件、应用主题、阅读进度、书架文件夹，或每一个 Moon+ Reader 设置。备份文件可能比 TXT 导出包含更多细节，因此当你希望导入内容更完整时，请使用 `.mrexpt`、`.mrstd` 或 `.mrpro`。
 
 ## 从 Moon+ Reader 进行 Readwise 同步
 
 当你继续在 Moon+ Reader 中阅读，并希望未来的高亮无需每次手动上传文件就能出现在 Acorny 中时，请使用这个同步选项。
+
+### 配置同步
 
 1. 打开 Acorny。
 2. 进入 Settings。
@@ -87,17 +97,11 @@ Moon+ Reader 会通过它的 Readwise 同步功能把高亮发送到 Acorny。Ac
 
 ![Moon+ Reader 的 Readwise 同步设置，带有 Acorny 令牌和 URL 字段](/images/import-sync/moon-reader/sync_step3.jpg)
 
-## 何时选择导入或同步
-
-对于现有书库，请使用文件导入。如果你继续在 Moon+ Reader 中阅读并希望新高亮自动到达，之后请使用 Readwise 同步。
-
-除非你在检查重复项如何处理，否则不要对同一小批测试高亮重复使用两种路径。Acorny 会使用可用信息来避免重复，但更干净的导入更容易检查。
-
-## 令牌安全
+### 令牌安全
 
 导入 API 令牌可以在你的 Acorny 账户中创建高亮。请像密码一样保管它们。如果令牌泄露，请在 Settings 中撤销它并创建一个新令牌。
 
-## 同步故障排查
+### 同步故障排查
 
 如果 Moon+ Reader 报告身份验证失败，请创建一个新的 Import API token，并确保 Token 字段中填入的是 Acorny 令牌，而不是你的 Acorny 登录密码。
 
