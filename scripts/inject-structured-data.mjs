@@ -70,6 +70,30 @@ const auditedHowToSections = {
       anchor: '7-了解caught-up复习完是什么意思',
     },
   ],
+  '/import-sync/kindle/': [
+    { name: 'Get My Clippings.txt', anchor: 'get-my-clippingstxt' },
+    { name: 'Import into Acorny', anchor: 'import-into-acorny' },
+  ],
+  '/zh/import-sync/kindle/': [
+    { name: '获取 My Clippings.txt', anchor: '获取-my-clippingstxt' },
+    { name: '导入到 Acorny', anchor: '导入到-acorny' },
+  ],
+  '/import-sync/moon-reader/': [
+    { name: 'Export from Moon+ Reader', anchor: 'export-from-moon-reader' },
+    { name: 'Import into Acorny', anchor: 'import-into-acorny' },
+  ],
+  '/zh/import-sync/moon-reader/': [
+    { name: '从 Moon+ Reader 导出', anchor: '从-moon-reader-导出' },
+    { name: '导入到 Acorny', anchor: '导入到-acorny' },
+  ],
+  '/import-sync/diigo/': [
+    { name: 'Export from Diigo', anchor: 'export-from-diigo' },
+    { name: 'Upload into Acorny', anchor: 'upload-into-acorny' },
+  ],
+  '/zh/import-sync/diigo/': [
+    { name: '从 Diigo 导出', anchor: '从-diigo-导出' },
+    { name: '上传到 Acorny', anchor: '上传到-acorny' },
+  ],
   '/import-sync/readwise/': [
     { name: 'Import options', anchor: 'import-options' },
     { name: 'Large migrations', anchor: 'large-migrations' },
@@ -150,14 +174,15 @@ function stripMarkdown(markdown) {
 }
 
 function extractSections(source) {
-  const headings = [...source.matchAll(/^##\s+(.+)$/gm)]
+  const headings = [...source.matchAll(/^(#{2,3})\s+(.+)$/gm)]
 
   return headings.map((heading, index) => {
     const sectionStart = heading.index + heading[0].length
     const sectionEnd = headings[index + 1]?.index ?? source.length
 
     return {
-      heading: heading[1].trim(),
+      level: heading[1].length,
+      heading: heading[2].trim(),
       body: source.slice(sectionStart, sectionEnd),
     }
   })
@@ -191,6 +216,7 @@ function buildHowToSchema(page) {
     if (steps.some((step) => step === null)) return null
   } else {
     steps = sections
+      .filter((section) => section.level === 2)
       .filter((section) => !/^(Related pages|What transfers|What does not transfer)$/i.test(section.heading))
       .filter((section) => /^\d+\.\s+/m.test(section.body))
       .map((section) => ({

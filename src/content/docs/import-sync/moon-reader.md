@@ -10,9 +10,17 @@ Use Moon+ Reader with Acorny in two different ways:
 
 Moon+ Reader sync is set up inside Moon+ Reader. In Acorny, you only create an Import API token and copy the Readwise URL that Moon+ Reader needs.
 
+## When to choose import vs sync
+
+Use file import for your existing library. Use Readwise-compatible sync after that if you continue reading in Moon+ Reader and want new highlights to arrive automatically.
+
+Do not use both paths repeatedly for the same small set of test highlights unless you are checking how duplicates are handled. Acorny uses available details to avoid duplicates, but cleaner imports are easier to inspect.
+
 ## One-time import
 
 Use one-time import when you already have Moon+ Reader highlights and want to migrate them into Acorny.
+
+### Export from Moon+ Reader
 
 Supported inputs:
 
@@ -25,7 +33,7 @@ For a single-book TXT export, open the Moon+ Reader bookmarks view and use the s
 
 ![Moon+ Reader share menu with notes and highlights export options](/images/import-sync/moon-reader/export_moon_reader.jpg)
 
-Import flow:
+### Import into Acorny
 
 1. Open Acorny, then go to Import.
 2. Choose Upload File.
@@ -37,7 +45,7 @@ Import flow:
 5. Preview the import.
 6. Choose Confirm import.
 
-## What transfers
+### What transfers
 
 Moon+ Reader imports can preserve:
 
@@ -53,13 +61,15 @@ For `.mrexpt` and backup imports, Acorny can use details such as chapter, positi
 
 If a Moon+ Reader highlight already exists in Acorny but its note is empty, a later Moon+ Reader import can fill in the missing note when Acorny can safely match the highlights.
 
-## What does not transfer
+### What does not transfer
 
 Moon+ Reader import does not transfer the full ebook file, app theme, reading progress, library folders, or every Moon+ Reader setting. Backup files can contain more detail than TXT exports, so use `.mrexpt`, `.mrstd`, or `.mrpro` when you want a more complete import.
 
 ## Readwise-compatible sync from Moon+ Reader
 
 Use this sync option when you keep reading in Moon+ Reader and want future highlights to appear in Acorny without manually uploading files each time.
+
+### Set up sync
 
 1. Open Acorny.
 2. Go to Settings.
@@ -87,17 +97,11 @@ Paste the Acorny token and Readwise URL into the Readwise settings dialog.
 
 ![Moon+ Reader Readwise sync settings with Acorny token and URL fields](/images/import-sync/moon-reader/sync_step3.jpg)
 
-## When to choose import vs sync
-
-Use file import for your existing library. Use Readwise-compatible sync after that if you continue reading in Moon+ Reader and want new highlights to arrive automatically.
-
-Do not use both paths repeatedly for the same small set of test highlights unless you are checking how duplicates are handled. Acorny uses available details to avoid duplicates, but cleaner imports are easier to inspect.
-
-## Token safety
+### Token safety
 
 Import API tokens can create highlights in your Acorny account. Store them like passwords. If a token is exposed, revoke it in Settings and create a new one.
 
-## Troubleshooting sync
+### Troubleshooting sync
 
 If Moon+ Reader reports an authentication failure, create a fresh Import API token and make sure the Token field contains the Acorny token, not your Acorny login password.
 

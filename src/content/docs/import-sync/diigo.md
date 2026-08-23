@@ -11,13 +11,18 @@ Diigo can export web annotations as CSV. Some Acorny environments may also expos
 
 Export your Diigo annotations as CSV, then upload the CSV file in Import Highlights.
 
-1. Export your Diigo annotations as CSV.
-2. Open Acorny, then go to Import.
-3. Choose Upload File.
-4. Set Source type to Diigo CSV.
-5. Upload the CSV file.
-6. Review the preview.
-7. Choose Confirm import.
+### Export from Diigo
+
+In Diigo, export your annotations as CSV and save the file where you can find it again. Acorny reads the file you upload, so nothing needs to be configured in Diigo beyond the export itself.
+
+### Upload into Acorny
+
+1. Open Acorny, then go to Import.
+2. Choose Upload File.
+3. Set Source type to Diigo CSV.
+4. Upload the CSV file.
+5. Review the preview.
+6. Choose Confirm import.
 
 A single Diigo row can contain more than one highlighted passage, so Acorny may create multiple highlights from one row.
 
@@ -37,7 +42,7 @@ Acorny uses those credentials only for the import request. If Diigo API fields a
 
 ## What transfers
 
-Diigo import can preserve:
+Both Diigo paths can preserve:
 
 - Highlight text
 - Source title
@@ -61,9 +66,13 @@ If a sticky note appears without a matching highlight, check the preview before 
 
 ## Troubleshooting
 
-If the preview count is lower than expected, the CSV may contain bookmarks without highlighted text. Acorny may skip those because they do not create useful recall cards.
+### If the CSV preview count is lower than expected
 
-If API import fails, verify the Diigo API key at `https://www.diigo.com/api_keys` and confirm the username belongs to the account that owns the annotations.
+The CSV may contain bookmarks without highlighted text. Acorny may skip those because they do not create useful recall cards.
+
+### If API import fails
+
+Verify the Diigo API key at `https://www.diigo.com/api_keys` and confirm the username belongs to the account that owns the annotations.
 
 ## Related pages
 

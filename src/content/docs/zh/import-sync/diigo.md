@@ -11,13 +11,18 @@ Diigo 可以将网页批注导出为 CSV。某些 Acorny 环境可能也会显�
 
 将你的 Diigo 批注导出为 CSV，然后在 Import Highlights 中上传该 CSV 文件。
 
-1. 将你的 Diigo 批注导出为 CSV。
-2. 打开 Acorny，然后进入 Import。
-3. 选择 Upload File。
-4. 将 Source type 设为 Diigo CSV。
-5. 上传该 CSV 文件。
-6. 查看预览。
-7. 选择 Confirm import。
+### 从 Diigo 导出
+
+在 Diigo 中把批注导出为 CSV，并把文件保存在你能再次找到的位置。Acorny 只读取你上传的文件，因此除了导出本身之外，Diigo 中不需要额外配置。
+
+### 上传到 Acorny
+
+1. 打开 Acorny，然后进入 Import。
+2. 选择 Upload File。
+3. 将 Source type 设为 Diigo CSV。
+4. 上传该 CSV 文件。
+5. 查看预览。
+6. 选择 Confirm import。
 
 单行 Diigo 数据可能包含多个被高亮的段落，因此 Acorny 可能会从一行创建多条高亮。
 
@@ -37,7 +42,7 @@ Acorny 仅将那些凭据用于本次导入请求。如果你的环境中没有 
 
 ## 会保留哪些内容
 
-Diigo 导入可以保留：
+两条 Diigo 路径都可以保留：
 
 - 高亮文本
 - 来源标题
@@ -61,9 +66,13 @@ Diigo 导入不会重建你的完整 Diigo 账户、群组、浏览器扩展设�
 
 ## 故障排查
 
-如果预览数量低于预期，CSV 可能包含没有高亮文本的书签。Acorny 可能会跳过这些，因为它们不会生成有用的复习卡。
+### 如果 CSV 预览数量低于预期
 
-如果 API 导入失败，请在 `https://www.diigo.com/api_keys` 核实 Diigo API key，并确认用户名属于拥有这些批注的账户。
+CSV 可能包含没有高亮文本的书签。Acorny 可能会跳过这些，因为它们不会生成有用的复习卡。
+
+### 如果 API 导入失败
+
+请在 `https://www.diigo.com/api_keys` 核实 Diigo API key，并确认用户名属于拥有这些批注的账户。
 
 ## 相关页面
 
